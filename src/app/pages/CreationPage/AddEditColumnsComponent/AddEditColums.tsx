@@ -23,7 +23,6 @@ export const AddEditColumns  = observer(({
     const classes = useStyles();
 
     return (
-        <Container className={classes.tableCo}>
             <Container className={classes.tableCoUp}>
                 <TextField 
                     label="Enter Column Name"
@@ -48,6 +47,5 @@ export const AddEditColumns  = observer(({
                     onClick={() => addOrEditColumn(table.id)}
                 > {buttonLabel}</Button> 
             </Container>
-    </Container>
     );
 });

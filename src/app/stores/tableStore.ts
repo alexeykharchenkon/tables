@@ -27,5 +27,10 @@ export class TableStore {
         this.tableTitleValue = value;
     }
 
+    deleteTable = (tableId: string) => {
+        this.tables = this.tables.filter(table => table.id !== tableId);
+        tableService.save(this.tables);
+    }
+
     loadTables = () => { this.tables = tableService.load(); }
 }

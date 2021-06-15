@@ -13,6 +13,7 @@ export const CreationPageComponent = observer(() => {
 
     return (
         <Container className={classes.creationCo}>
+             <h2>Tables</h2>
             <CreateTableComponent
                 tableTitleValue ={tableStore.tableTitleValue}
                 tableTitleValueOnChange={tableStore.tableTitleValueOnChange}
@@ -33,6 +34,7 @@ export const CreationPageComponent = observer(() => {
                                 editColumn = {columnStore.editColumn}
                                 editMode = {columnStore.editMode}
                                 saveEditedColumn = {columnStore.saveEditedColumn}
+                                deleteTable = {tableStore.deleteTable}
                             />
                          </ListItem>
                     );

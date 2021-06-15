@@ -35,7 +35,7 @@ export const TableRowComponent = observer(({
                 </IconButton>
                 <IconButton 
                     edge="end" 
-                    aria-label="delete"
+                    aria-label="edit"
                     onClick={() => editColumn(table.id, col.id, col.label, col.type)}
                 >
                     <EditIcon />

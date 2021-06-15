@@ -29,6 +29,8 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         flexDirection: 'column',
         padding: '15px',
+        border: '1px solid #7d7d7d',
+        borderRadius: 5,        
     },
     tableCoHead: {
         background: '#abebeb',
@@ -45,5 +47,54 @@ export const useStyles = makeStyles((theme) => ({
     },
     tableCoRow: {
         
+    },
+    fillingCo: {
+        width: '100%',
+        background: '#bde7ec',
+        borderColor: '#000000',
+        borderRadius: 5,
+        padding: '15px 15px',
+    },
+    chooseTable: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        marginBottom: '25px',
+    },
+    chooseTableList: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+    },
+    chooseTableListItem: {
+        display: 'flex',
+        maxWidth: '250px',
+    },
+    fillingTableCoHead: {
+        background: '#abebeb',
+    },
+    fillingTableCo:{
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: theme.palette.grey[200],
+            border: '1px solid #ededee',
+            boredRadius: 5,
+        }
+    },
+    fillingTable: {
+        marginTop: '20px',
+    },
+    addRowFillingTable: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    fillingTableTitle: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
   }));

@@ -1,6 +1,7 @@
 import { Guid } from "guid-typescript";
 import { makeAutoObservable } from "mobx";
 import { DataType } from "../common/models/DataType";
+import { tableService } from "../services/TableService";
 import { TableStore } from "./tableStore";
 
 export class ColumnStore {
@@ -28,6 +29,8 @@ export class ColumnStore {
 
         this.columnTypeValue = DataType.Text;
         this.columnValue = "";
+
+        tableService.save(this.tableStore.tables);
     }
 
     columnTypeValueChange = (value: DataType) => {
@@ -41,6 +44,8 @@ export class ColumnStore {
     deleteColumn = (tableId: string, columnId: string) => {
         this.tableStore.tables.filter(table => table.id === tableId)
         .forEach(table => { table.columns = table.columns.filter(column => column.id !== columnId);})
+        
+        tableService.save(this.tableStore.tables);
     }
 
     editColumn = (tableId: string, columnId: string, value: string, type: DataType) => {
@@ -62,5 +67,7 @@ export class ColumnStore {
         this.editMode = false;
         this.columnValue = "";
         this.columnTypeValue = DataType.Text;
+
+        tableService.save(this.tableStore.tables);
     }
 }

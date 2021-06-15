@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Container } from '@material-ui/core';
+import { Button, Container } from '@material-ui/core';
 import { useStyles } from "../../../common/styles/styles"
 import { TableModel } from "../../../common/models/TableModel";
 import { DataType } from '../../../common/models/DataType';
@@ -19,16 +19,24 @@ interface CProps {
     editColumn: any;
     editMode: boolean;
     saveEditedColumn: any;
+    deleteTable: any
 }
 
 export const TableComponent = observer(({
     table, addColumn, columnTypeValue, columnTypeValueChange, 
     columnValue, columnValueChange, deleteColumn, editColumn,
-     editMode, saveEditedColumn} : CProps) => {
+     editMode, saveEditedColumn, deleteTable} : CProps) => {
     const classes = useStyles();
 
     return (
         <Container className={classes.tableCo}>
+            <Container>
+             <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => deleteTable(table.id)}
+            > Delete Table</Button> 
+            </Container>
             <AddEditColumnsComponent 
                 table = {table} 
                 addColumn = {addColumn}
