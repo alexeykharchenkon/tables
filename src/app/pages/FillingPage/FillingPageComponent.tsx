@@ -3,7 +3,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 
 
-export const FillingComponent = observer(() => {
+export const FillingPageComponent = observer(() => {
     return (
         <Container>
           Tables Filling

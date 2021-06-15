@@ -43,4 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     tableCoSelect: {
         width: '200px',
     },
+    tableCoRow: {
+        
+    },
   }));
