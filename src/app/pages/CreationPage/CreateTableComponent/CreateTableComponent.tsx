@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { Button, TextField } from '@material-ui/core';
+import { TextField, IconButton } from '@material-ui/core';
 import { useStyles } from "../../../common/styles/styles"
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 interface CProps {
     tableTitleValue: string;
@@ -21,11 +22,11 @@ export const CreateTableComponent = observer(({
                     value={tableTitleValue}
                     onChange={e => tableTitleValueOnChange(e.target.value)}
                 />
-                <Button
-                    variant="contained"
-                    color="primary"
+                <IconButton 
                     onClick={() => createTable()}
-                > Create New Table </Button> 
+                >
+                    <AddCircleOutlineIcon />
+                </IconButton>
             </Container>
       );
 });

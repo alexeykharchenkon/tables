@@ -30,7 +30,7 @@ export const AddEditColumnsComponent = observer(({
                 columnTypeValueChange = {columnTypeValueChange}
                 columnValue = {columnValue}
                 columnValueChange = {columnValueChange}
-                buttonLabel = {"Add Column"}
+                addMode = {true}
             />
             }
             {editMode &&
@@ -41,7 +41,7 @@ export const AddEditColumnsComponent = observer(({
                 columnTypeValueChange = {columnTypeValueChange}
                 columnValue = {columnValue}
                 columnValueChange = {columnValueChange}
-                buttonLabel = {"Save Column"}
+                addMode = {false}
             />
             }
         </>    

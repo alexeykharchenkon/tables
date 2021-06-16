@@ -10,7 +10,7 @@ interface RootStore {
 }
 
 const tableStore = new TableStore();
-//tableStore.loadTables();
+tableStore.loadTables();
 
 export const rootStore: RootStore = {
     tableStore,

@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button, Container } from '@material-ui/core';
+import { Container, IconButton } from '@material-ui/core';
 import { useStyles } from "../../../common/styles/styles"
 import { TableModel } from "../../../common/models/TableModel";
 import { DataType } from '../../../common/models/DataType';
 import { AddEditColumnsComponent } from '../AddEditColumnsComponent/AddEditColumnsComponent';
 import { TableBodyComponent } from './TableBodyComponent';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 interface CProps {
@@ -31,11 +32,11 @@ export const TableComponent = observer(({
     return (
         <Container className={classes.tableCo}>
             <Container>
-             <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => deleteTable(table.id)}
-            > Delete Table</Button> 
+            <IconButton 
+                    onClick={() => deleteTable(table.id)}
+            >
+                    <DeleteIcon />
+                </IconButton>
             </Container>
             <AddEditColumnsComponent 
                 table = {table} 

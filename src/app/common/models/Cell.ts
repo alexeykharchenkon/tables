@@ -1,8 +1,7 @@
 import { DataType } from "./DataType";
 
 export interface Cell {
-    value: any;
+    id: string;
     type: DataType;
-    row: number;
-    column: number; 
+    value: any;
 }

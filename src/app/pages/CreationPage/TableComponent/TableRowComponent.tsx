@@ -26,16 +26,12 @@ export const TableRowComponent = observer(({
             <TableCell>{DataType[col.type]}</TableCell>
             <TableCell>
                 <IconButton 
-                    edge="end" 
-                    aria-label="delete"
                     style={{marginRight:'5x'}}
                     onClick={() => deleteColumn(table.id, col.id)}
                 >
                      <DeleteIcon />
                 </IconButton>
                 <IconButton 
-                    edge="end" 
-                    aria-label="edit"
                     onClick={() => editColumn(table.id, col.id, col.label, col.type)}
                 >
                     <EditIcon />

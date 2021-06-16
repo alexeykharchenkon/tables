@@ -20,6 +20,12 @@ export const FillingPageComponent = observer(() => {
                 <FillingTableComponent
                     table = {fillingStore.fillingTable}
                     addRow = {fillingStore.addRow}
+                    saveRow = {fillingStore.saveRow}
+                    activeRow = {fillingStore.activeRow}
+                    cellValueChange={fillingStore.cellValueChange}
+                    addEditRowMode={fillingStore.addEditRowMode}
+                    editRow={fillingStore.editRow}
+                    deleteRow={fillingStore.deleteRow}
                 />) }
         </Container>
       );

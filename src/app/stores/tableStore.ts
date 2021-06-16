@@ -16,7 +16,8 @@ export class TableStore {
             id: Guid.create().toString(), 
             title: Boolean(this.tableTitleValue) ? this.tableTitleValue : "Table " + (this.tables.length + 1).toString(), 
             columns: [],
-            cells: [], });
+            rows: [], 
+        });
 
         this.tableTitleValue = "";    
 

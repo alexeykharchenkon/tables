@@ -1,47 +1,41 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { IconButton, Container, TableContainer, Typography, TableCell, TableRow, TableHead, Table, TableBody, Paper } from '@material-ui/core';
+import { Container, TableContainer, Paper } from '@material-ui/core';
 import { useStyles } from "../../../common/styles/styles"
 import { TableModel } from '../../../common/models/TableModel';
-import { AddRowComponent } from './AddRowComponent';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { TableTitleComponent } from './TableComponent/TableTitleComponent';
+import { TableComponent } from './TableComponent/TableComponent';
+import { Row } from '../../../common/models/Row';
 
 
 interface CProps {
     table: TableModel;
     addRow: any;
+    saveRow: any;
+    activeRow: Row;
+    cellValueChange: any;
+    addEditRowMode: boolean;
+    editRow: any;
+    deleteRow: any;
 }
 
-export const FillingTableComponent = observer(({table, addRow}: CProps) => {
+export const FillingTableComponent = observer(({table, addRow, saveRow, 
+    activeRow, cellValueChange, addEditRowMode, editRow, deleteRow}: CProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
             <TableContainer component={Paper}>
-                <Container className={classes.fillingTableTitle}>
-                    <Typography variant="h6" id="tableTitle">
-                        {table.title}
-                    </Typography>
-                    <IconButton
-                        onClick={() => addRow(table.id)}
-                    >
-                        <AddCircleOutlineIcon />
-                    </IconButton>
-                </Container>
-                <Table size="small" aria-label="a dense table">
-                    <TableHead className={classes.fillingTableCoHead}>
-                        <TableRow> 
-                            {table.columns.map((col) => (
-                                <TableCell key={col.id}>{col.label}</TableCell>
-                            ))}
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        
-                    </TableBody>
-                </Table>
+                <TableTitleComponent table={table} addRow={addRow} />
+                <TableComponent 
+                    table={table}
+                    saveRow={saveRow}
+                    activeRow={activeRow}
+                    cellValueChange={cellValueChange}
+                    addEditRowMode={addEditRowMode}    
+                    editRow={editRow}
+                    deleteRow={deleteRow}
+                />
             </TableContainer>
-            <AddRowComponent table={table}/>
         </Container>
       );
 });

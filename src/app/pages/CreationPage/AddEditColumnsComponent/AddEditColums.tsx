@@ -1,10 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { FormControl, Button, InputLabel, Select, TextField } from '@material-ui/core';
+import { FormControl, InputLabel, Select, TextField, IconButton } from '@material-ui/core';
 import { useStyles } from "../../../common/styles/styles"
 import { TableModel } from "../../../common/models/TableModel";
 import { DataType } from '../../../common/models/DataType';
+import SaveIcon from '@material-ui/icons/Save';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
 interface CProps {
@@ -14,12 +16,12 @@ interface CProps {
     columnTypeValueChange: any;
     columnValue: string;
     columnValueChange: any;
-    buttonLabel: string;
+    addMode: boolean;
 }
 
 export const AddEditColumns  = observer(({
     table, addOrEditColumn, columnTypeValue, columnTypeValueChange, 
-    columnValue, columnValueChange, buttonLabel} : CProps) => {
+    columnValue, columnValueChange, addMode} : CProps) => {
     const classes = useStyles();
 
     return (
@@ -41,11 +43,18 @@ export const AddEditColumns  = observer(({
                         <option value={DataType.DatePicker}>DatePicker</option>
                     </Select>
                 </FormControl>
-                <Button
-                    variant="contained"
-                    color="primary"
+                {!addMode &&  
+                    <IconButton 
+                        onClick={() => addOrEditColumn(table.id)}
+                    >
+                        <SaveIcon />
+                    </IconButton>}
+                {addMode &&  
+                <IconButton 
                     onClick={() => addOrEditColumn(table.id)}
-                > {buttonLabel}</Button> 
+                >
+                    <AddCircleOutlineIcon />
+                </IconButton>}
             </Container>
     );
 });
