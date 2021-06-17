@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { ColumnStore } from "./columnStore";
+import { ColumnStore } from "./creatingStore";
 import { FillingStore } from "./filllingStore";
 import { TableStore } from "./tableStore";
 
 interface RootStore {
     tableStore: TableStore;
-    columnStore: ColumnStore;
+    creatingStore: ColumnStore;
     fillingStore: FillingStore;
 }
 
@@ -14,7 +14,7 @@ tableStore.loadTables();
 
 export const rootStore: RootStore = {
     tableStore,
-    columnStore: new ColumnStore(tableStore),
+    creatingStore: new ColumnStore(tableStore),
     fillingStore : new FillingStore(tableStore),
 }
 

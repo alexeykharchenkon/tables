@@ -1,19 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
-import { useStyles } from "../../../common/styles/styles"
-import { TableModel } from "../../../common/models/TableModel";
+import { useStyles } from "@common/styles/styles"
+import { TableModel } from "@common/models/TableModel";
 import { TableRowComponent } from './TableRowComponent';
 
 
-interface CProps {
+interface TableBodyProps {
     table: TableModel;
     deleteColumn: any;
     editColumn: any;
 }
 
-export const TableBodyComponent = observer(({
-    table, deleteColumn, editColumn} : CProps) => {
+export const TableBodyComponent = observer(({table, deleteColumn, editColumn} : TableBodyProps) => {
     const classes = useStyles();
 
     return (

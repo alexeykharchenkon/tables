@@ -2,41 +2,37 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { FormControl, InputLabel, Select, TextField, IconButton } from '@material-ui/core';
-import { useStyles } from "../../../common/styles/styles"
-import { TableModel } from "../../../common/models/TableModel";
-import { DataType } from '../../../common/models/DataType';
+import { useStyles } from "@common/styles/styles"
+import { DataType } from '@common/models/DataType';
 import SaveIcon from '@material-ui/icons/Save';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { AdditionalTable } from '@common/models/AdditionalTable';
 
-
-interface CProps {
-    table: TableModel;
+interface AddEditColumnsProps {
+    table: AdditionalTable;
     addOrEditColumn: any;
-    columnTypeValue: DataType;
     columnTypeValueChange: any;
-    columnValue: string;
     columnValueChange: any;
     addMode: boolean;
 }
 
-export const AddEditColumns  = observer(({
-    table, addOrEditColumn, columnTypeValue, columnTypeValueChange, 
-    columnValue, columnValueChange, addMode} : CProps) => {
+export const AddEditColumns  = observer(({table, addOrEditColumn, 
+    columnTypeValueChange, columnValueChange, addMode} : AddEditColumnsProps) => {
     const classes = useStyles();
 
     return (
             <Container className={classes.tableCoUp}>
-                <TextField 
-                    label="Enter Column Name"
-                    value={ columnValue }
-                    onChange={e => columnValueChange(e.target.value)}
-                />
+                   <TextField 
+                        label="Enter Column Name"
+                        value={ table.columnValue }
+                        onChange={e => columnValueChange(e.target.value, table.id)}
+                    />
                 <FormControl className={classes.tableCoSelect}>
                     <InputLabel>Column Type</InputLabel>
                     <Select
                         native
-                        value={ columnTypeValue }
-                        onChange={e => columnTypeValueChange(e.target.value)}
+                        value={ table.columnTypeValue }
+                        onChange={e => columnTypeValueChange(e.target.value, table.id)}
                     >
                         <option value={DataType.Text}>Text</option>
                         <option value={DataType.Number}>Number</option>

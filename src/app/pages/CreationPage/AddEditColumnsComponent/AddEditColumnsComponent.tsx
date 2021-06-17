@@ -1,45 +1,35 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { TableModel } from "../../../common/models/TableModel";
-import { DataType } from '../../../common/models/DataType';
 import { AddEditColumns } from './AddEditColums';
+import { AdditionalTable } from '@common/models/AdditionalTable';
 
 
-interface CProps {
-    table: TableModel;
+interface AddEditColumnsProps {
+    table: AdditionalTable;
     addColumn: any;
-    columnTypeValue: DataType;
     columnTypeValueChange: any;
-    columnValue: string;
     columnValueChange: any;
-    editMode: boolean;
     saveEditedColumn: any;
 }
 
-export const AddEditColumnsComponent = observer(({
-    table, addColumn, columnTypeValue, columnTypeValueChange, 
-    columnValue, columnValueChange, editMode, saveEditedColumn} : CProps) => {
-
+export const AddEditColumnsComponent = observer(({table, addColumn, 
+    columnTypeValueChange, columnValueChange, saveEditedColumn} : AddEditColumnsProps) => {
     return (
         <>
-            {!editMode &&
+            {!table.editMode &&
             <AddEditColumns 
                 table = {table} 
                 addOrEditColumn = {addColumn}
-                columnTypeValue = {columnTypeValue}
                 columnTypeValueChange = {columnTypeValueChange}
-                columnValue = {columnValue}
                 columnValueChange = {columnValueChange}
                 addMode = {true}
             />
             }
-            {editMode &&
+            {table.editMode &&
             <AddEditColumns
                 table = {table} 
                 addOrEditColumn = {saveEditedColumn}
-                columnTypeValue = {columnTypeValue}
                 columnTypeValueChange = {columnTypeValueChange}
-                columnValue = {columnValue}
                 columnValueChange = {columnValueChange}
                 addMode = {false}
             />

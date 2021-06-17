@@ -1,14 +1,13 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Container, TableContainer, Paper } from '@material-ui/core';
-import { useStyles } from "../../../common/styles/styles"
-import { TableModel } from '../../../common/models/TableModel';
+import { useStyles } from "@common/styles/styles"
+import { TableModel } from '@common/models/TableModel';
 import { TableTitleComponent } from './TableComponent/TableTitleComponent';
 import { TableComponent } from './TableComponent/TableComponent';
-import { Row } from '../../../common/models/Row';
+import { Row } from '@common/models/Row';
 
 
-interface CProps {
+interface FillingTableProps {
     table: TableModel;
     addRow: any;
     saveRow: any;
@@ -19,8 +18,9 @@ interface CProps {
     deleteRow: any;
 }
 
-export const FillingTableComponent = observer(({table, addRow, saveRow, 
-    activeRow, cellValueChange, addEditRowMode, editRow, deleteRow}: CProps) => {
+export const FillingTableComponent = ({table, addRow, saveRow, 
+    activeRow, cellValueChange, addEditRowMode, editRow, 
+    deleteRow}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
@@ -38,4 +38,4 @@ export const FillingTableComponent = observer(({table, addRow, saveRow,
             </TableContainer>
         </Container>
       );
-});
+}

@@ -1,17 +1,16 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { useStyles } from "../../../common/styles/styles"
+import { useStyles } from "@common/styles/styles"
 import { List, ListItem } from '@material-ui/core';
-import { TableModel } from '../../../common/models/TableModel';
+import { TableModel } from '@common/models/TableModel';
 import { TableBodyComponent } from './TableBodyComponent';
 
-interface CProps {
+interface ChooseTableProps {
     tables: TableModel[];
     chooseTable: any;
 }
 
-export const ChooseTableComponent = observer(({tables, chooseTable} : CProps) => {
+export const ChooseTableComponent = ({tables, chooseTable} : ChooseTableProps) => {
     const classes = useStyles();
 
     return (
@@ -31,4 +30,4 @@ export const ChooseTableComponent = observer(({tables, chooseTable} : CProps) =>
             </List>
         </Container>
       );
-});
+}

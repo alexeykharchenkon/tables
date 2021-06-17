@@ -1,8 +1,8 @@
 import { Guid } from "guid-typescript";
 import { makeAutoObservable } from "mobx";
-import { Row } from "../common/models/Row";
-import { TableModel } from "../common/models/TableModel";
-import { tableService } from "../services/TableService";
+import { Row } from "@common/models/Row";
+import { TableModel } from "@common/models/TableModel";
+import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 
 export class FillingStore {

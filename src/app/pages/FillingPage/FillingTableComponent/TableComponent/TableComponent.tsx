@@ -1,13 +1,12 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Table} from '@material-ui/core';
-import { TableModel } from '../../../../common/models/TableModel';
-import { Row } from '../../../../common/models/Row';
+import { TableModel } from '@common/models/TableModel';
+import { Row } from '@common/models/Row';
 import { TableBodyComponent } from './TableBodyComponent';
 import { TableHeadComponent } from './TableHeadComponent';
 
 
-interface CProps {
+interface TableProps {
     table: TableModel;
     saveRow: any;
     activeRow: Row;
@@ -17,8 +16,8 @@ interface CProps {
     deleteRow: any;
 }
 
-export const TableComponent = observer(({table, saveRow, activeRow, 
-    cellValueChange, addEditRowMode, editRow, deleteRow}: CProps) => {
+export const TableComponent = ({table, saveRow, activeRow, 
+    cellValueChange, addEditRowMode, editRow, deleteRow}: TableProps) => {
     return (
         <Table size="small" aria-label="a dense table">
             <TableHeadComponent table={table}/>
@@ -33,4 +32,4 @@ export const TableComponent = observer(({table, saveRow, activeRow,
             />
         </Table>
       );
-});
+}

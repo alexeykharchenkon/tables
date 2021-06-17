@@ -1,15 +1,14 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { TableCell, TableRow, TableHead} from '@material-ui/core';
-import { useStyles } from "../../../../common/styles/styles"
-import { TableModel } from '../../../../common/models/TableModel';
+import { useStyles } from "@common/styles/styles"
+import { TableModel } from '@common/models/TableModel';
 
 
-interface CProps {
+interface TableHeadProps {
     table: TableModel;
 }
 
-export const TableHeadComponent = observer(({table}: CProps) => {
+export const TableHeadComponent = ({table}: TableHeadProps) => {
     const classes = useStyles();
     return (
             <TableHead className={classes.fillingTableCoHead}>
@@ -21,4 +20,4 @@ export const TableHeadComponent = observer(({table}: CProps) => {
                 </TableRow>
             </TableHead>
       );
-});
+}

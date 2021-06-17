@@ -1,14 +1,13 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
-import { Cell } from '../../../../common/models/Cell';
-import { DataType } from '../../../../common/models/DataType';
+import { Cell } from '@common/models/Cell';
+import { DataType } from '@common/models/DataType';
 
 
-interface CProps {
+interface CellProps {
     cell: Cell;
 }
 
-export const CellComponent = observer(({cell}: CProps) => {
+export const CellComponent = ({cell}: CellProps) => {
     return (
         <>
            {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() && cell.value}
@@ -16,4 +15,4 @@ export const CellComponent = observer(({cell}: CProps) => {
            {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() && cell.value}
         </>
       );
-});
+}

@@ -1,17 +1,16 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { IconButton, Container, Typography} from '@material-ui/core';
-import { useStyles } from "../../../../common/styles/styles"
-import { TableModel } from '../../../../common/models/TableModel';
+import { useStyles } from "@common/styles/styles"
+import { TableModel } from '@common/models/TableModel';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
-interface CProps {
+interface TableTitleProps {
     table: TableModel;
     addRow: any;
 }
 
-export const TableTitleComponent = observer(({table, addRow}: CProps) => {
+export const TableTitleComponent = ({table, addRow}: TableTitleProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTableTitle}>
@@ -23,4 +22,4 @@ export const TableTitleComponent = observer(({table, addRow}: CProps) => {
             </IconButton>
         </Container>
       );
-});
+}

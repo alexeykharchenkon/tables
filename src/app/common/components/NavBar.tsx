@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import { useStyles } from "../styles/styles"
+import { useStyles } from "@common/styles/styles"
 import { NavLink } from 'react-router-dom';
 
 export const NavBar = observer(() => {

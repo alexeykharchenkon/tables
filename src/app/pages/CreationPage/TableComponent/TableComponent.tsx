@@ -1,32 +1,26 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Container, IconButton } from '@material-ui/core';
-import { useStyles } from "../../../common/styles/styles"
-import { TableModel } from "../../../common/models/TableModel";
-import { DataType } from '../../../common/models/DataType';
+import { useStyles } from "@common/styles/styles"
 import { AddEditColumnsComponent } from '../AddEditColumnsComponent/AddEditColumnsComponent';
 import { TableBodyComponent } from './TableBodyComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { AdditionalTable } from '@common/models/AdditionalTable';
 
 
-interface CProps {
-    table: TableModel;
+interface TableProps {
+    table: AdditionalTable;
     addColumn: any;
-    columnTypeValue: DataType;
     columnTypeValueChange: any;
-    columnValue: string;
     columnValueChange: any;
     deleteColumn: any;
     editColumn: any;
-    editMode: boolean;
     saveEditedColumn: any;
-    deleteTable: any
+    deleteTable: any;
 }
 
-export const TableComponent = observer(({
-    table, addColumn, columnTypeValue, columnTypeValueChange, 
-    columnValue, columnValueChange, deleteColumn, editColumn,
-     editMode, saveEditedColumn, deleteTable} : CProps) => {
+export const TableComponent = ({table, addColumn, columnTypeValueChange, 
+    columnValueChange, deleteColumn, editColumn, saveEditedColumn, 
+    deleteTable} : TableProps) => {
     const classes = useStyles();
 
     return (
@@ -41,11 +35,8 @@ export const TableComponent = observer(({
             <AddEditColumnsComponent 
                 table = {table} 
                 addColumn = {addColumn}
-                columnTypeValue = {columnTypeValue}
                 columnTypeValueChange = {columnTypeValueChange}
-                columnValue = {columnValue}
                 columnValueChange = {columnValueChange}
-                editMode = {editMode}
                 saveEditedColumn ={saveEditedColumn}
             />
             <TableBodyComponent
@@ -55,4 +46,4 @@ export const TableComponent = observer(({
             />
     </Container>
     );
-});
+}

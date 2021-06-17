@@ -1,18 +1,17 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { TextField, IconButton } from '@material-ui/core';
-import { useStyles } from "../../../common/styles/styles"
+import { useStyles } from "@common/styles/styles"
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
-interface CProps {
+interface CreateTableProps {
     tableTitleValue: string;
     tableTitleValueOnChange: any;
     createTable: any;
 }
 
-export const CreateTableComponent = observer(({
-    tableTitleValue, tableTitleValueOnChange, createTable} : CProps) => {
+export const CreateTableComponent = ({tableTitleValue, 
+    tableTitleValueOnChange, createTable} : CreateTableProps) => {
     const classes = useStyles();
 
     return (
@@ -29,4 +28,4 @@ export const CreateTableComponent = observer(({
                 </IconButton>
             </Container>
       );
-});
+}

@@ -1,16 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { TextField } from '@material-ui/core';
-import { Cell } from '../../../../common/models/Cell';
-import { DataType } from '../../../../common/models/DataType';
+import { Cell } from '@common/models/Cell';
+import { DataType } from '@common/models/DataType';
 
-interface CProps {
+interface CellProps {
     cell: Cell;
     cellValueChange: any;
 }
 
-export const CellComponent = observer(({cell, 
-    cellValueChange}: CProps) => {
+export const CellComponent = observer(({cell, cellValueChange}: CellProps) => {
     return (
         <>
                    {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() &&

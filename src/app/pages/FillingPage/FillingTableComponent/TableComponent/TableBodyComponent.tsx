@@ -1,14 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { TableCell, TableRow, TableBody } from '@material-ui/core';
-import { TableModel } from '../../../../common/models/TableModel';
+import { TableModel } from '@common/models/TableModel';
 import { AddEditRowComponent } from '../AddEditRowComponent/AddEditRowComponent';
-import { Row } from '../../../../common/models/Row';
+import { Row } from '@common/models/Row';
 import { EditDeleteComponent } from '../EditDeleteComponent/EditDeleteComponent';
 import { CellComponent } from '../CellComponent/CellComponent';
 
 
-interface CProps {
+interface TableBodyProps {
     table: TableModel;
     saveRow: any;
     activeRow: Row;
@@ -19,7 +19,7 @@ interface CProps {
 }
 
 export const TableBodyComponent = observer(({table, saveRow, activeRow, 
-    cellValueChange, addEditRowMode, editRow, deleteRow}: CProps) => {
+    cellValueChange, addEditRowMode, editRow, deleteRow}: TableBodyProps) => {
     return (
             <TableBody>
                 {addEditRowMode && <AddEditRowComponent 
