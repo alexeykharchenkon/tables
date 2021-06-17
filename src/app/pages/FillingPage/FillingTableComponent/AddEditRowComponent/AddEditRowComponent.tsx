@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { IconButton, TableCell, TableRow, TextField } from '@material-ui/core';
+import { IconButton, TableCell, TableRow} from '@material-ui/core';
 import { TableModel } from '../../../../common/models/TableModel';
 import SaveIcon from '@material-ui/icons/Save';
 import { Row } from '../../../../common/models/Row';
-
+import { CellComponent } from './CellComponent';
 
 interface CProps {
     table: TableModel;
@@ -19,11 +19,10 @@ export const AddEditRowComponent = observer(({table, saveRow, activeRow,
         <TableRow>
             {activeRow.cells.map(cell => (
                <TableCell key={cell.id}>
-                    <TextField 
-                        label = 'Enter Data'
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id)}
-                    />
+                   <CellComponent
+                        cell = {cell} 
+                        cellValueChange = {cellValueChange}
+                   />
                </TableCell>
             ))}
             <TableCell>

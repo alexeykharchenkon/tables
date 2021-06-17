@@ -49,12 +49,12 @@ export class FillingStore {
             } else{
                     table.rows.filter(row => row.id === this.activeRow.id)
                     .forEach(row=> {
-                        row = this.activeRow;
+                        row.cells = this.activeRow.cells;
                     })
                 }
         });
 
-        this.activeRow= {id: "", cells: []};
+        this.activeRow = {id: "", cells: []};
 
         tableService.save(this.tableStore.tables);
     }

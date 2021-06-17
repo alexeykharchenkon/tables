@@ -9,14 +9,11 @@ interface CProps {
 }
 
 export const CellComponent = observer(({cell}: CProps) => {
-
-               
-    //{cell.type === DataType.Number && cell.value}
-   // {cell.type === DataType.DatePicker && 
-
     return (
         <>
-            {cell.value}
+           {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() && cell.value}
+           {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() && cell.value}
+           {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() && cell.value}
         </>
       );
 });
