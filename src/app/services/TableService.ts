@@ -1,4 +1,4 @@
-import { TableModel } from "../common/models/TableModel"
+import { TableModel } from "@common/models/TableModel"
 
 const requests = {
     get: () => JSON.parse(localStorage.getItem("tables") || "[]"),

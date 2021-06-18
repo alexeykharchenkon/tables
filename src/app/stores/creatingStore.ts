@@ -1,10 +1,9 @@
-import { Guid } from "guid-typescript";
 import { makeAutoObservable } from "mobx";
 import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
-
+import { workService } from "@services/WorkService";
 
 export class ColumnStore {
     additionalTables: AdditionalTable[] = [];
@@ -13,37 +12,15 @@ export class ColumnStore {
     
     constructor(tableStore: TableStore){
         this.tableStore = tableStore;
-        this.tableStore.tables.forEach(table => {
-            this.additionalTables.push({
-                id: table.id,
-                title: table.title,
-                columns: table.columns,
-                rows: table.rows,
-                columnTypeValue: DataType.Text,
-                columnValue: "",
-                editMode: false,
-                columnId: "",
-            });
-        })
+        workService.initAdditionalTable(this.tableStore.tables,this.additionalTables);
         makeAutoObservable(this)
     }
 
     createTable = () => {
-        this.additionalTables.unshift({
-            id: Guid.create().toString(), 
-            title: Boolean(this.tableTitleValue) ? this.tableTitleValue : "Table " + (this.additionalTables.length + 1).toString(), 
-            columns: [],
-            rows: [], 
-            columnTypeValue: DataType.Text,
-            columnValue: "",
-            editMode: false,
-            columnId: "",
-        });
-
-        this.tableTitleValue = "";    
-
-        this.tableStore.tables =this.additionalTables;
+        workService.createTable(this.additionalTables, this.tableTitleValue);
         tableService.save(this.tableStore.tables);
+        this.tableTitleValue = "";    
+        this.tableStore.tables =this.additionalTables;   
     }
 
     tableTitleValueOnChange = (value: string) => {
@@ -57,20 +34,8 @@ export class ColumnStore {
     }
 
     addColumn = (tableId: string) => {
-        this.additionalTables.filter(table => table.id === tableId)
-        .forEach(table=> { 
-            if(table.columns.length < 10){
-                table.columns.push({
-                    id: Guid.create().toString(),
-                    label: Boolean(table.columnValue) ? table.columnValue : "Column " + (table.columns.length + 1).toString(),
-                    type: table.columnTypeValue,
-                });
-            }
-            table.columnTypeValue = DataType.Text;
-            table.columnValue = "";
-        });
-
-        this.tableStore.tables =this.additionalTables;
+        workService.addColumn(this.additionalTables, tableId);
+        this.tableStore.tables = this.additionalTables;
         tableService.save(this.tableStore.tables);
     }
 
@@ -91,29 +56,11 @@ export class ColumnStore {
     }
 
     editColumn = (tableId: string, columnId: string, value: string, type: DataType) => {
-        this.additionalTables.filter(table => table.id === tableId)
-        .forEach(table => { 
-            table.editMode = true;
-            table.columnValue = value;
-            table.columnId = columnId;
-            table.columnTypeValue = type;
-        });
+        workService.editColumn(this.additionalTables, tableId, columnId, value, type);
     }
 
     saveEditedColumn = (tableId: string) => {
-        this.additionalTables.filter(table => table.id === tableId)
-        .forEach(table=> { 
-            table.columns.filter(col => col.id === table.columnId)
-             .forEach (col => { 
-                 col.label = table.columnValue; 
-                 col.type = table.columnTypeValue;
-                });
-            table.editMode = false;
-            table.columnValue = "";
-            table.columnId = "";
-            table.columnTypeValue = DataType.Text;
-        });
-       
+        workService.saveEditedColumn(this.additionalTables, tableId);
         this.tableStore.tables = this.additionalTables;
         tableService.save(this.tableStore.tables);
     }
