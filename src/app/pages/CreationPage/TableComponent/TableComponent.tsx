@@ -18,11 +18,10 @@ interface TableProps {
     deleteTable: any;
 }
 
-export const TableComponent = ({table, addColumn, columnTypeValueChange, 
+export const TableComponent = React.memo(({table, addColumn, columnTypeValueChange, 
     columnValueChange, deleteColumn, editColumn, saveEditedColumn, 
     deleteTable} : TableProps) => {
     const classes = useStyles();
-
     return (
         <Container className={classes.tableCo}>
             <Container>
@@ -46,4 +45,4 @@ export const TableComponent = ({table, addColumn, columnTypeValueChange,
             />
     </Container>
     );
-}
+});

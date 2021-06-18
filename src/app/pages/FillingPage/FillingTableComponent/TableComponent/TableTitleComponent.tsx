@@ -10,7 +10,7 @@ interface TableTitleProps {
     addRow: any;
 }
 
-export const TableTitleComponent = ({table, addRow}: TableTitleProps) => {
+export const TableTitleComponent = React.memo(({table, addRow}: TableTitleProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTableTitle}>
@@ -22,4 +22,4 @@ export const TableTitleComponent = ({table, addRow}: TableTitleProps) => {
             </IconButton>
         </Container>
       );
-}
+});

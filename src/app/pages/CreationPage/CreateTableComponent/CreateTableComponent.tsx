@@ -10,10 +10,9 @@ interface CreateTableProps {
     createTable: any;
 }
 
-export const CreateTableComponent = ({tableTitleValue, 
+export const CreateTableComponent = React.memo(({tableTitleValue, 
     tableTitleValueOnChange, createTable} : CreateTableProps) => {
     const classes = useStyles();
-
     return (
             <Container className={classes.creationCoUp}>
                 <TextField 
@@ -28,4 +27,4 @@ export const CreateTableComponent = ({tableTitleValue,
                 </IconButton>
             </Container>
       );
-}
+});

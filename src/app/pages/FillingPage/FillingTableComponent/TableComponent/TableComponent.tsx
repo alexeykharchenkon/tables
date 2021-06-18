@@ -16,9 +16,9 @@ interface TableProps {
     deleteRow: any;
 }
 
-export const TableComponent = ({table, saveRow, activeRow, 
+export const TableComponent = React.memo(({table, saveRow, activeRow, 
     cellValueChange, addEditRowMode, editRow, deleteRow}: TableProps) => {
-    return (
+        return (
         <Table size="small" aria-label="a dense table">
             <TableHeadComponent table={table}/>
             <TableBodyComponent
@@ -32,4 +32,4 @@ export const TableComponent = ({table, saveRow, activeRow,
             />
         </Table>
       );
-}
+});

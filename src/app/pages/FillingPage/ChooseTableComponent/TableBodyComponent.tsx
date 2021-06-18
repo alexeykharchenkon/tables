@@ -12,7 +12,6 @@ interface TableBodyProps {
 
 export const TableBodyComponent = ({table, chooseTable} : TableBodyProps) => {
     const classes = useStyles();
-
     return (
         <TableContainer 
             className={classes.fillingTableCo}

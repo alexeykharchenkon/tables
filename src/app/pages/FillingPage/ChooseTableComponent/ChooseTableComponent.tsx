@@ -10,9 +10,8 @@ interface ChooseTableProps {
     chooseTable: any;
 }
 
-export const ChooseTableComponent = ({tables, chooseTable} : ChooseTableProps) => {
+export const ChooseTableComponent = React.memo(({tables, chooseTable} : ChooseTableProps) => {
     const classes = useStyles();
-
     return (
         <Container className={classes.chooseTable}>
             <Container><h2>Choose Table to Fill</h2></Container>
@@ -30,4 +29,4 @@ export const ChooseTableComponent = ({tables, chooseTable} : ChooseTableProps) =
             </List>
         </Container>
       );
-}
+});

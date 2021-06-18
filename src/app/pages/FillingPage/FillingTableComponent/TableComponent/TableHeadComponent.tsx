@@ -8,7 +8,7 @@ interface TableHeadProps {
     table: TableModel;
 }
 
-export const TableHeadComponent = ({table}: TableHeadProps) => {
+export const TableHeadComponent = React.memo(({table}: TableHeadProps) => {
     const classes = useStyles();
     return (
             <TableHead className={classes.fillingTableCoHead}>
@@ -20,4 +20,4 @@ export const TableHeadComponent = ({table}: TableHeadProps) => {
                 </TableRow>
             </TableHead>
       );
-}
+});
