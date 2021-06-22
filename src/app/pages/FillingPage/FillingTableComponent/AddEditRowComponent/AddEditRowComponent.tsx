@@ -12,7 +12,7 @@ interface AddEditRowProps {
     cellValueChange: any;
 }
 
-export const AddEditRowComponent = ({table, saveRow, activeRow, 
+export const AddEditRowComponent =({table, saveRow, activeRow, 
     cellValueChange}: AddEditRowProps) => {
     return (
         <TableRow>

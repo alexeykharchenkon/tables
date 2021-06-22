@@ -97,4 +97,8 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    addSelect: {
+        backgroundColor: theme.palette.grey[200],
+        marginBottom: '10px',
+    },
   }));

@@ -32,6 +32,9 @@ export const CreationPageComponent = observer(() => {
                                 editColumn = {creatingStore.editColumn}
                                 saveEditedColumn = {creatingStore.saveEditedColumn}
                                 deleteTable = {creatingStore.deleteTable}
+                                addSelectField = {creatingStore.addSelectField}
+                                selectValueChange ={creatingStore.selectValueChange}
+                                deleteSelectField={creatingStore.deleteSelectField}
                             />
                          </ListItem>
                     );

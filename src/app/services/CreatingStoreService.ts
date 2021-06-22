@@ -1,44 +1,9 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
-import { Row } from "@common/models/Row";
 import { TableModel } from "@common/models/TableModel"
 import { Guid } from "guid-typescript";
 
 const requests = {
-    deleteRowById: (tables: TableModel[], tableId: string, id: string) => {
-           tables.filter(table => table.id === tableId)
-        .forEach(table => { table.rows = table.rows.filter(row => row.id !== id);})
-    },
-    getRowById: (tables: TableModel[], tableId: string, id: string) : any => {
-        return tables.find(table => table.id === tableId)
-            ?.rows.find(row => row.id === id);
-    },
-    saveRow:(tables: TableModel[], tableId: string, activeRow: Row) => {
-        if(!requests.getRowById(tables, tableId, activeRow.id)){
-            tables.find(table => table.id === tableId)?.rows
-            .push({id: activeRow.id, cells: activeRow.cells,});
-        }else{
-            tables.find(table => table.id === tableId)?.rows
-            .filter(row => row.id === activeRow.id)
-            .forEach(row => {row.cells = activeRow.cells;});
-        }
-        activeRow = {id: "", cells: []};
-    },
-    getTableById:(tables: TableModel[], tableId: string): any => {
-        return tables.find(table => table.id === tableId);
-    },
-    addRow:(tables: TableModel[], tableId: string, activeRow: Row) => {
-        activeRow.id = Guid.create().toString();
-        activeRow.cells = [];
-        tables.find(table => table.id === tableId)?.columns
-        .forEach(column => {
-            activeRow.cells.push({
-                id: Guid.create().toString(),
-                type: column.type,
-                value: "",
-            });
-        });
-    },
     initAdditionalTable: (tables: TableModel[], additionalTables: AdditionalTable[]) => {
         tables.forEach(table => {
             additionalTables.push({
@@ -50,6 +15,9 @@ const requests = {
                 columnValue: "",
                 editMode: false,
                 columnId: "",
+                selectMode: false,
+                selectOptions: [],
+                selectValue: "",
             });
         })
     },
@@ -63,6 +31,9 @@ const requests = {
             columnValue: "",
             editMode: false,
             columnId: "",
+            selectMode: false,
+            selectOptions: [],
+            selectValue: "",
         });
     },
     addColumn: (additionalTables: AdditionalTable[], tableId: string) => {
@@ -73,10 +44,13 @@ const requests = {
                     id: Guid.create().toString(),
                     label: Boolean(table.columnValue) ? table.columnValue : "Column " + (table.columns.length + 1).toString(),
                     type: table.columnTypeValue,
+                    selectOptions: table.selectOptions,
                 });
             }
             table.columnTypeValue = DataType.Text;
             table.columnValue = "";
+            table.selectOptions = [];
+            table.selectMode = false;
         });
     },
     editColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType) => {
@@ -86,6 +60,11 @@ const requests = {
             table.columnValue = value;
             table.columnId = columnId;
             table.columnTypeValue = type;
+            if(type.valueOf().toString() === DataType.Select.valueOf().toString()){
+                table.selectMode = true;
+                table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
+            }
+                
         });
     },
     saveEditedColumn: (additionalTables: AdditionalTable[], tableId: string) => {
@@ -95,24 +74,37 @@ const requests = {
              .forEach (col => { 
                  col.label = table.columnValue; 
                  col.type = table.columnTypeValue;
+                 col.selectOptions = table.selectOptions;
                 });
             table.editMode = false;
             table.columnValue = "";
             table.columnId = "";
             table.columnTypeValue = DataType.Text;
+            table.selectMode = false;
+            table.selectOptions = [];
+        });
+    },
+    deleteColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string) => {
+        additionalTables.filter(table => table.id === tableId)
+        .forEach(table => { table.columns = table.columns.filter(col => col.id !== columnId);});
+    },
+    addSelectField: (additionalTables: AdditionalTable[], tabId: string) => {
+        additionalTables.filter(tab => tab.id === tabId)
+        .forEach(tab => {
+            tab.selectOptions.push(
+                Boolean(tab.selectValue) ? tab.selectValue : "Select " + (tab.selectOptions.length + 1).toString(),
+            );
+            tab.selectValue = "";
         });
     },
 }
 
-export const workService = {
-    deleteRowById: (tables: TableModel[], tableId: string, id: string) => requests.deleteRowById(tables, tableId, id),
-    getRowById: (tables: TableModel[], tableId: string, id: string) => requests.getRowById(tables, tableId, id),
-    saveRow: (tables: TableModel[], tableId: string, activeRow: Row) => requests.saveRow(tables, tableId, activeRow),
-    getTableById: (tables: TableModel[], tableId: string) => requests.getTableById(tables, tableId),
-    addRow:(tables: TableModel[], tableId: string, activeRow: Row) => requests.addRow(tables, tableId, activeRow),
+export const creatingStoreService = {
     initAdditionalTable: (tables: TableModel[], additionalTables: AdditionalTable[]) => requests.initAdditionalTable(tables, additionalTables),
     createTable: (additionalTables: AdditionalTable[], tableTitleValue: string) => requests.createTable(additionalTables, tableTitleValue),
     addColumn: (additionalTables: AdditionalTable[], tableId: string)=> requests.addColumn(additionalTables, tableId),
     editColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType)=>requests.editColumn(additionalTables, tableId, columnId, value, type),
     saveEditedColumn: (additionalTables: AdditionalTable[], tableId: string) => requests.saveEditedColumn(additionalTables, tableId),
+    deleteColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(additionalTables, tableId, columnId),
+    addSelectField: (additionalTables: AdditionalTable[], tabId: string) => requests.addSelectField(additionalTables, tabId),
 }

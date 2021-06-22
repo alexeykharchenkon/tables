@@ -13,6 +13,7 @@ export const CellComponent = ({cell}: CellProps) => {
            {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() && cell.value}
            {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() && cell.value}
            {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() && cell.value}
+           {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() && cell.value}
         </>
       );
 }

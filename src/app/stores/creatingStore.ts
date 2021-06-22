@@ -3,7 +3,7 @@ import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
-import { workService } from "@services/WorkService";
+import { creatingStoreService } from "@services/CreatingStoreService";
 
 export class ColumnStore {
     additionalTables: AdditionalTable[] = [];
@@ -12,15 +12,14 @@ export class ColumnStore {
     
     constructor(tableStore: TableStore){
         this.tableStore = tableStore;
-        workService.initAdditionalTable(this.tableStore.tables,this.additionalTables);
-        makeAutoObservable(this)
+        creatingStoreService.initAdditionalTable(this.tableStore.tables,this.additionalTables);
+        makeAutoObservable(this);
     }
 
     createTable = () => {
-        workService.createTable(this.additionalTables, this.tableTitleValue);
-        tableService.save(this.tableStore.tables);
-        this.tableTitleValue = "";    
-        this.tableStore.tables =this.additionalTables;   
+        creatingStoreService.createTable(this.additionalTables, this.tableTitleValue);
+        this.tableTitleValue = "";
+        this.tableStore.tables = tableService.save(this.additionalTables);
     }
 
     tableTitleValueOnChange = (value: string) => {
@@ -28,19 +27,23 @@ export class ColumnStore {
     }
 
     deleteTable = (tableId: string) => {
-        this.additionalTables = this.additionalTables.filter(table => table.id !== tableId);
-        this.tableStore.tables =this.additionalTables;
-        tableService.save(this.tableStore.tables);
+        this.additionalTables = this.additionalTables.filter(tab => tab.id !== tableId);
+        this.tableStore.tables = tableService.save(this.additionalTables);
     }
 
     addColumn = (tableId: string) => {
-        workService.addColumn(this.additionalTables, tableId);
-        this.tableStore.tables = this.additionalTables;
-        tableService.save(this.tableStore.tables);
+        creatingStoreService.addColumn(this.additionalTables, tableId);
+        this.tableStore.tables = tableService.save(this.additionalTables);
     }
 
     columnTypeValueChange = (value: DataType, tabId: string) => {
         this.additionalTables.filter(tab => tab.id === tabId)[0].columnTypeValue = value;
+        
+        if(value.valueOf().toString() === DataType.Select.valueOf().toString()){
+            this.additionalTables.filter(tab => tab.id === tabId)[0].selectMode = true;
+        }else{
+            this.additionalTables.filter(tab => tab.id === tabId)[0].selectMode = false;
+        }
     }
 
     columnValueChange = (value: string, tabId: string) => {
@@ -48,20 +51,29 @@ export class ColumnStore {
     }
 
     deleteColumn = (tableId: string, columnId: string) => {
-        this.additionalTables.filter(table => table.id === tableId)
-        .forEach(table => { table.columns = table.columns.filter(column => column.id !== columnId);});
-        
-        this.tableStore.tables = this.additionalTables;
-        tableService.save(this.tableStore.tables);
+        creatingStoreService.deleteColumn(this.additionalTables, tableId, columnId);
+        this.tableStore.tables = tableService.save(this.additionalTables);
     }
 
     editColumn = (tableId: string, columnId: string, value: string, type: DataType) => {
-        workService.editColumn(this.additionalTables, tableId, columnId, value, type);
+        creatingStoreService.editColumn(this.additionalTables, tableId, columnId, value, type);
     }
 
     saveEditedColumn = (tableId: string) => {
-        workService.saveEditedColumn(this.additionalTables, tableId);
-        this.tableStore.tables = this.additionalTables;
-        tableService.save(this.tableStore.tables);
+        creatingStoreService.saveEditedColumn(this.additionalTables, tableId);
+        this.tableStore.tables = tableService.save(this.additionalTables);
+    }
+
+    addSelectField = (tabId: string) => {
+        creatingStoreService.addSelectField(this.additionalTables, tabId);
+    }
+
+    selectValueChange = (value: string, tabId: string) => {
+        this.additionalTables.filter(tab => tab.id === tabId)[0].selectValue = value;
+    }
+
+    deleteSelectField = (tabId: string, index: number) => {
+        this.additionalTables.filter(tab => tab.id === tabId)[0]
+        .selectOptions.splice(index,1);
     }
 }

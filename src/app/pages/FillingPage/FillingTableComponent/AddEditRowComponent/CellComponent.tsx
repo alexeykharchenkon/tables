@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { TextField } from '@material-ui/core';
+import { Select, TextField } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 
@@ -34,7 +34,23 @@ export const CellComponent = observer(({cell, cellValueChange}: CellProps) => {
                         onChange={e => cellValueChange(e.target.value, cell.id)}
                   />
                    }
-
+                   {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
+                        <Select
+                            native
+                            value={cell.value}
+                            onChange={e =>  cellValueChange(e.target.value, cell.id)}
+                        >
+                            <option>
+                            </option>
+                            {cell.selectOptions.map((s, index) => (
+                                <option 
+                                key={index}
+                                value={s}
+                                >{s}</option>
+                            ))}
+                            
+                        </Select>
+                   }
            </>
       );
 });

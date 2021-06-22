@@ -11,4 +11,7 @@ export interface AdditionalTable {
     columnValue: string;
     editMode: boolean;
     columnId: string;
+    selectMode: boolean;
+    selectOptions: string[];
+    selectValue: string;
 }

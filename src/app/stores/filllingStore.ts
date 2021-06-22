@@ -3,7 +3,7 @@ import { Row } from "@common/models/Row";
 import { TableModel } from "@common/models/TableModel";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
-import { workService } from "@services/WorkService";
+import { fillingStoreService } from "@services/FillingStoreService";
 
 export class FillingStore {
     tableStore: TableStore;
@@ -14,23 +14,23 @@ export class FillingStore {
     
     constructor(tableStore: TableStore){
         this.tableStore = tableStore;
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 
     chooseTable = (tableId: string) => {
-        this.fillingTable = workService.getTableById(this.tableStore.tables, tableId); 
+        this.fillingTable = fillingStoreService.getTableById(this.tableStore.tables, tableId); 
         this.fillingMode = true;
         this.addEditRowMode = false;
     }
 
     addRow = (tableId: string) => {
-        workService.addRow(this.tableStore.tables, tableId, this.activeRow);
+        fillingStoreService.addRow(this.tableStore.tables, tableId, this.activeRow);
         this.addEditRowMode = true;
     }
 
     saveRow = (tableId: string) => {
-        workService.saveRow(this.tableStore.tables, tableId, this.activeRow);
-        tableService.save(this.tableStore.tables);
+        fillingStoreService.saveRow(this.tableStore.tables, tableId, this.activeRow);
+        this.tableStore.tables = tableService.save(this.tableStore.tables);
         this.addEditRowMode = false;
     }
 
@@ -41,11 +41,17 @@ export class FillingStore {
 
     editRow = (tableId: string, rowId: string) => {
         this.addEditRowMode = true;
-        this.activeRow = workService.getRowById(this.tableStore.tables, tableId, rowId);   
+        this.activeRow = fillingStoreService.getRowById(this.tableStore.tables, tableId, rowId);   
     }
 
     deleteRow = (tableId: string, rowId: string) => {
-        workService.deleteRowById(this.tableStore.tables, tableId, rowId);
-        tableService.save(this.tableStore.tables);
+        fillingStoreService.deleteRowById(this.tableStore.tables, tableId, rowId);
+        this.tableStore.tables = tableService.save(this.tableStore.tables);
     }
+
+    selectValueChange = (value: string, cellId: string) => {
+        this.activeRow.cells.filter(cell => cell.id === cellId)
+        .forEach(cell => {cell.value = value;})
+    }
+
 }

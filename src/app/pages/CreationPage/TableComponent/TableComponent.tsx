@@ -16,11 +16,14 @@ interface TableProps {
     editColumn: any;
     saveEditedColumn: any;
     deleteTable: any;
+    addSelectField: any;
+    selectValueChange: any;
+    deleteSelectField: any;
 }
 
 export const TableComponent = React.memo(({table, addColumn, columnTypeValueChange, 
     columnValueChange, deleteColumn, editColumn, saveEditedColumn, 
-    deleteTable} : TableProps) => {
+    deleteTable, addSelectField, selectValueChange, deleteSelectField} : TableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.tableCo}>
@@ -37,6 +40,9 @@ export const TableComponent = React.memo(({table, addColumn, columnTypeValueChan
                 columnTypeValueChange = {columnTypeValueChange}
                 columnValueChange = {columnValueChange}
                 saveEditedColumn ={saveEditedColumn}
+                addSelectField = {addSelectField}
+                selectValueChange ={selectValueChange}
+                deleteSelectField={deleteSelectField}
             />
             <TableBodyComponent
                  table ={table}
