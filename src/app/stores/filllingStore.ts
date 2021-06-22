@@ -30,7 +30,7 @@ export class FillingStore {
 
     saveRow = (tableId: string) => {
         fillingStoreService.saveRow(this.tableStore.tables, tableId, this.activeRow);
-        this.tableStore.tables = tableService.save(this.tableStore.tables);
+        tableService.save(this.tableStore.tables);
         this.addEditRowMode = false;
     }
 
@@ -46,7 +46,7 @@ export class FillingStore {
 
     deleteRow = (tableId: string, rowId: string) => {
         fillingStoreService.deleteRowById(this.tableStore.tables, tableId, rowId);
-        this.tableStore.tables = tableService.save(this.tableStore.tables);
+        tableService.save(this.tableStore.tables);
     }
 
     selectValueChange = (value: string, cellId: string) => {

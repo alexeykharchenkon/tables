@@ -36,8 +36,8 @@ export const TableBodyComponent = observer(({table, saveRow, activeRow,
                             </TableCell>
                          ))}
                          <EditDeleteComponent 
-                            tableId = {table.id}
-                            rowId={row.id}
+                            table={table}
+                            row={row}
                             editRow={editRow}
                             deleteRow={deleteRow}
                          />
