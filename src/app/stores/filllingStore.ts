@@ -1,57 +1,66 @@
 import { makeAutoObservable } from "mobx";
-import { Row } from "@common/models/Row";
-import { TableModel } from "@common/models/TableModel";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { fillingStoreService } from "@services/FillingStoreService";
 
 export class FillingStore {
     tableStore: TableStore;
-    fillingMode: boolean = false;
-    addEditRowMode: boolean = false;
-    fillingTable: TableModel = {id: "", title: "", columns: [], rows: []};
-    activeRow: Row = {id: "", cells: []};
+    titleValue: string = "";
+    activeTableId: string = "";
     
     constructor(tableStore: TableStore){
-        this.tableStore = tableStore;
         makeAutoObservable(this);
+        this.tableStore = tableStore;
     }
 
     chooseTable = (tableId: string) => {
-        this.fillingTable = fillingStoreService.getTableById(this.tableStore.tables, tableId); 
-        this.fillingMode = true;
-        this.addEditRowMode = false;
+        this.tableStore.tables.filter(tab => tab.id === tableId)[0].fillingMode = true;
+        this.tableStore.tables.filter(tab => tab.id !== tableId)
+        .forEach(table => {table.fillingMode = false;});
     }
 
-    addRow = (tableId: string) => {
-        fillingStoreService.addRow(this.tableStore.tables, tableId, this.activeRow);
-        this.addEditRowMode = true;
+    addTable = (tableId: string) => {
+        fillingStoreService.addTable(this.tableStore.tables, tableId, this.titleValue);
+        this.titleValue = "";
     }
 
-    saveRow = (tableId: string) => {
-        fillingStoreService.saveRow(this.tableStore.tables, tableId, this.activeRow);
-        tableService.save(this.tableStore.tables);
-        this.addEditRowMode = false;
+    addRow = (tableId: string, tabDataId: string) => {
+        fillingStoreService.addRow(this.tableStore.tables, tableId);
+        this.activeTableId = tabDataId;
     }
 
-    cellValueChange = (value: string, cellId: string) => {
-        this.activeRow.cells.filter(cell => cell.id === cellId)
-        .forEach(cell => {cell.value = value;})
-    }
-
-    editRow = (tableId: string, rowId: string) => {
-        this.addEditRowMode = true;
-        this.activeRow = fillingStoreService.getRowById(this.tableStore.tables, tableId, rowId);   
-    }
-
-    deleteRow = (tableId: string, rowId: string) => {
-        fillingStoreService.deleteRowById(this.tableStore.tables, tableId, rowId);
+    saveRow = (tableId: string, tableDataId: string) => {
+        fillingStoreService.saveRow(this.tableStore.tables, tableId, tableDataId);
         tableService.save(this.tableStore.tables);
     }
 
-    selectValueChange = (value: string, cellId: string) => {
-        this.activeRow.cells.filter(cell => cell.id === cellId)
-        .forEach(cell => {cell.value = value;})
+    cellValueChange = (value: string, cellId: string, tableId: string, tableDataId: string) => {
+        this.tableStore.tables.filter(t => t.id === tableId).forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tableDataId)
+                .forEach(tabData => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                    .forEach(cell => {cell.value = value;})
+                });
+        }); 
     }
 
+    editRow = (tableId: string, tableDataId: string, rowId: string) => {
+        fillingStoreService.editRow(this.tableStore.tables, tableId, tableDataId, rowId);   
+        this.activeTableId = tableDataId;
+    }
+
+    deleteRow = (tableId: string, tableDataId: string, rowId: string) => {
+        fillingStoreService.deleteRowById(this.tableStore.tables, tableId, tableDataId, rowId);
+        tableService.save(this.tableStore.tables);
+    }
+
+    deleteTable = (tableId: string, tableDataId: string) => {
+        fillingStoreService.deleteTableById(this.tableStore.tables, tableId, tableDataId);
+        tableService.save(this.tableStore.tables);
+    }
+
+    titleValueOnChange = (value: string) => {
+        this.titleValue = value;
+    }
 }

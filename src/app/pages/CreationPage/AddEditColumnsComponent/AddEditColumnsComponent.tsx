@@ -19,7 +19,6 @@ interface AddEditColumnsProps {
 export const AddEditColumnsComponent = observer(({table, addColumn, 
     columnTypeValueChange, columnValueChange, saveEditedColumn,
     addSelectField, selectValueChange, deleteSelectField} : AddEditColumnsProps) => {
-        console.log(table.selectMode)
         return (
         <>
             {!table.editMode &&

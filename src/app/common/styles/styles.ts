@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     navbarToolbar: {
-        background: '#7bae7ec',
+        background: '#7aab7f',
     },
     navbarButton: {
         textDecoration: 'none',
@@ -55,6 +55,17 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: 5,
         padding: '15px 15px',
     },
+    fillingHeadComponent: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+    },
+    fillingHeadAddTableComponent: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     chooseTable: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -67,6 +78,8 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
+        border: '1px solid #7aab7f',
+        boredRadius: 5,
     },
     chooseTableListItem: {
         display: 'flex',
@@ -83,8 +96,14 @@ export const useStyles = makeStyles((theme) => ({
             boredRadius: 5,
         }
     },
+    fillingTablesList: {
+        padding: '10px',
+    },
     fillingTable: {
-        marginTop: '20px',
+        marginTop: '5px',
+        border: '1px solid #ededee',
+        boredRadius: 5,
+        padding: '10px',
     },
     addRowFillingTable: {
         display: 'flex',

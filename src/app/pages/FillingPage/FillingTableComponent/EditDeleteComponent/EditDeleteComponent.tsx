@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Row } from '@app/common/models/Row';
 import { TableModel } from '@app/common/models/TableModel';
 import { observer } from 'mobx-react-lite';
+import { TableData } from '@app/common/models/TableData';
 
 
 interface EditDeleteProps {
@@ -12,19 +13,20 @@ interface EditDeleteProps {
     row: Row;
     editRow: any;
     deleteRow: any;
+    tabData: TableData;
 }
 
 export const EditDeleteComponent = observer(({table, row,
-    editRow, deleteRow}: EditDeleteProps) => {
+    editRow, deleteRow, tabData}: EditDeleteProps) => {
     return (
         <TableCell>
             <IconButton 
-                onClick={() => editRow(table.id, row.id)}
+                onClick={() => editRow(table.id, tabData.id, row.id)}
             >
                 <EditIcon />
             </IconButton>
             <IconButton 
-                 onClick={() => deleteRow(table.id, row.id)}
+                 onClick={() => deleteRow(table.id,tabData.id, row.id)}
             >
                 <DeleteIcon />
             </IconButton>

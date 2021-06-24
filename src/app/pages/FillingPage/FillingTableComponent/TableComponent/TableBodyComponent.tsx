@@ -1,42 +1,45 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { TableCell, TableRow, TableBody } from '@material-ui/core';
-import { TableModel } from '@common/models/TableModel';
 import { AddEditRowComponent } from '../AddEditRowComponent/AddEditRowComponent';
-import { Row } from '@common/models/Row';
 import { EditDeleteComponent } from '../EditDeleteComponent/EditDeleteComponent';
 import { CellComponent } from '../CellComponent/CellComponent';
+import { AdditionalTable } from '@app/common/models/AdditionalTable';
+import { TableData } from '@app/common/models/TableData';
 
 
 interface TableBodyProps {
-    table: TableModel;
+    table: AdditionalTable;
     saveRow: any;
-    activeRow: Row;
     cellValueChange: any;
-    addEditRowMode: boolean;
     editRow: any;
     deleteRow: any;
+    tabData: TableData;
+    activeTableId: string;
 }
 
-export const TableBodyComponent = observer(({table, saveRow, activeRow, 
-    cellValueChange, addEditRowMode, editRow, deleteRow}: TableBodyProps) => {
+export const TableBodyComponent = observer(({table, saveRow,
+    cellValueChange, editRow, deleteRow, tabData, activeTableId}: TableBodyProps) => {
     return (
             <TableBody>
-                {addEditRowMode && <AddEditRowComponent 
+                {table.addEditRowMode && activeTableId === tabData.id && <AddEditRowComponent 
                     table={table} 
+                    tabData={tabData}
                     saveRow={saveRow} 
-                    activeRow={activeRow}
                     cellValueChange={cellValueChange}
                 />}  
-                {table.rows && table.rows.map(row => (
+                {tabData.rows && tabData.rows.map(row => (
                      <TableRow key={row.id}>
                          {row.cells.map(cell => (
                             <TableCell key={cell.id}>  
-                                <CellComponent cell={cell}/>
+                                <CellComponent 
+                                    cell={cell}
+                                />
                             </TableCell>
                          ))}
                          <EditDeleteComponent 
                             table={table}
+                            tabData={tabData}
                             row={row}
                             editRow={editRow}
                             deleteRow={deleteRow}

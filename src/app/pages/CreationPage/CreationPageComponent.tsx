@@ -9,7 +9,7 @@ import { CreateTableComponent } from './CreateTableComponent/CreateTableComponen
 
 export const CreationPageComponent = observer(() => {
     const classes = useStyles();
-    const { creatingStore } = useStore();
+    const { creatingStore, tableStore } = useStore();
 
     return (
         <Container className={classes.creationCo}>
@@ -20,7 +20,7 @@ export const CreationPageComponent = observer(() => {
                 createTable={creatingStore.createTable}
             />
             <List>
-                {creatingStore.additionalTables.map(table => {
+                {tableStore.tables.map(table => {
                     return (
                         <ListItem key={table.id}>
                             <TableComponent 

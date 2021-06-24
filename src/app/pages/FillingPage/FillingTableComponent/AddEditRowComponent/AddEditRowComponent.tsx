@@ -1,33 +1,35 @@
 import React from 'react';
 import { IconButton, TableCell, TableRow} from '@material-ui/core';
-import { TableModel } from '@common/models/TableModel';
 import SaveIcon from '@material-ui/icons/Save';
-import { Row } from '@common/models/Row';
 import { CellComponent } from './CellComponent';
+import { AdditionalTable } from '@app/common/models/AdditionalTable';
+import { TableData } from '@app/common/models/TableData';
 
 interface AddEditRowProps {
-    table: TableModel;
+    table: AdditionalTable;
     saveRow: any;
-    activeRow: Row;
     cellValueChange: any;
+    tabData: TableData;
 }
 
-export const AddEditRowComponent =({table, saveRow, activeRow, 
-    cellValueChange}: AddEditRowProps) => {
+export const AddEditRowComponent =({table, saveRow, 
+    cellValueChange, tabData}: AddEditRowProps) => {
     return (
         <TableRow>
-            {activeRow.cells.map(cell => (
+            {table.activeRow.cells.map(cell => (
                <TableCell key={cell.id}>
                    <CellComponent
                         cell = {cell} 
                         cellValueChange = {cellValueChange}
+                        tableId={table.id}
+                        tabDataId={tabData.id}
                    />
                </TableCell>
             ))}
             <TableCell>
                 <IconButton 
                     aria-label="save"
-                    onClick={() => saveRow(table.id)}
+                    onClick={() => saveRow(table.id, tabData.id)}
                 >
                     <SaveIcon />
                 </IconButton>

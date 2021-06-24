@@ -1,32 +1,14 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
-import { TableModel } from "@common/models/TableModel"
 import { Guid } from "guid-typescript";
 
 const requests = {
-    initAdditionalTable: (tables: TableModel[], additionalTables: AdditionalTable[]) => {
-        tables.forEach(table => {
-            additionalTables.push({
-                id: table.id,
-                title: table.title,
-                columns: table.columns,
-                rows: table.rows,
-                columnTypeValue: DataType.Text,
-                columnValue: "",
-                editMode: false,
-                columnId: "",
-                selectMode: false,
-                selectOptions: [],
-                selectValue: "",
-            });
-        })
-    },
     createTable: (additionalTables: AdditionalTable[], tableTitleValue: string) => {
         additionalTables.unshift({
             id: Guid.create().toString(), 
             title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (additionalTables.length + 1).toString(), 
             columns: [],
-            rows: [], 
+            tablesData: [], 
             columnTypeValue: DataType.Text,
             columnValue: "",
             editMode: false,
@@ -34,6 +16,9 @@ const requests = {
             selectMode: false,
             selectOptions: [],
             selectValue: "",
+            fillingMode: false,
+            addEditRowMode: false,
+            activeRow: {id: "", cells: []},
         });
     },
     addColumn: (additionalTables: AdditionalTable[], tableId: string) => {
@@ -100,7 +85,6 @@ const requests = {
 }
 
 export const creatingStoreService = {
-    initAdditionalTable: (tables: TableModel[], additionalTables: AdditionalTable[]) => requests.initAdditionalTable(tables, additionalTables),
     createTable: (additionalTables: AdditionalTable[], tableTitleValue: string) => requests.createTable(additionalTables, tableTitleValue),
     addColumn: (additionalTables: AdditionalTable[], tableId: string)=> requests.addColumn(additionalTables, tableId),
     editColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType)=>requests.editColumn(additionalTables, tableId, columnId, value, type),

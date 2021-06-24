@@ -1,13 +1,16 @@
 import { makeAutoObservable } from "mobx";
-import { TableModel } from "@common/models/TableModel";
 import { tableService } from "@services/TableService";
+import { AdditionalTable } from "@app/common/models/AdditionalTable";
 
 export class TableStore {
-    tables: TableModel[] = [];
+    tables: AdditionalTable[] = [];
     
     constructor(){
         makeAutoObservable(this);
     }
 
-    loadTables = () => { this.tables = tableService.load(); }
+    loadTables = () => { 
+        this.tables = tableService.load(); 
+    
+    }
 }

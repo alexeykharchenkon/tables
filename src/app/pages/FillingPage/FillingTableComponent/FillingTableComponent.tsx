@@ -1,39 +1,49 @@
 import React from 'react';
-import { Container, TableContainer, Paper } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
-import { TableModel } from '@common/models/TableModel';
+import { Container, TableContainer, Paper, IconButton } from '@material-ui/core';
+import { useStyles } from "@common/styles/styles";
 import { TableTitleComponent } from './TableComponent/TableTitleComponent';
 import { TableComponent } from './TableComponent/TableComponent';
-import { Row } from '@common/models/Row';
+import { AdditionalTable } from '@app/common/models/AdditionalTable';
+import { TableData } from '@app/common/models/TableData';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 
 interface FillingTableProps {
-    table: TableModel;
+    table: AdditionalTable;
     addRow: any;
     saveRow: any;
-    activeRow: Row;
     cellValueChange: any;
-    addEditRowMode: boolean;
     editRow: any;
     deleteRow: any;
+    tabData: TableData;
+    activeTableId: string;
+    deleteTable: any;
 }
 
 export const FillingTableComponent = ({table, addRow, saveRow, 
-    activeRow, cellValueChange, addEditRowMode, editRow, 
-    deleteRow}: FillingTableProps) => {
+    cellValueChange, editRow, deleteRow, tabData, activeTableId, deleteTable}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
+            <IconButton style={{marginTop: '-10px'}}
+                 onClick={() => deleteTable(table.id, tabData.id)}
+            >
+                <DeleteIcon />
+            </IconButton>
             <TableContainer component={Paper}>
-                <TableTitleComponent table={table} addRow={addRow} />
+                <TableTitleComponent 
+                    table={table}
+                    tabData={tabData} 
+                    addRow={addRow} 
+                />
                 <TableComponent 
+                    tabData={tabData}
                     table={table}
                     saveRow={saveRow}
-                    activeRow={activeRow}
                     cellValueChange={cellValueChange}
-                    addEditRowMode={addEditRowMode}    
                     editRow={editRow}
                     deleteRow={deleteRow}
+                    activeTableId={activeTableId}
                 />
             </TableContainer>
         </Container>

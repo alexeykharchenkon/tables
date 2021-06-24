@@ -1,9 +1,9 @@
 import { Column } from "./Column";
-import { Row } from "./Row";
+import { TableData } from "./TableData";
 
 export interface TableModel {
     id: string;
     title: string;
     columns: Column[];
-    rows: Row[];
+    tablesData: TableData[];
 }

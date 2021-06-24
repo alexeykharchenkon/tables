@@ -1,49 +1,89 @@
-import { Row } from "@common/models/Row";
-import { TableModel } from "@common/models/TableModel"
+import { AdditionalTable } from "@app/common/models/AdditionalTable";
+import { TableData } from "@app/common/models/TableData";
 import { Guid } from "guid-typescript";
 
 const requests = {
-    deleteRowById: (tables: TableModel[], tableId: string, id: string) => {
+    deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => {
            tables.filter(table => table.id === tableId)
-        .forEach(table => { table.rows = table.rows.filter(row => row.id !== id);})
-    },
-    getRowById: (tables: TableModel[], tableId: string, id: string) : any => {
-        return tables.find(table => table.id === tableId)
-            ?.rows.find(row => row.id === id);
-    },
-    saveRow:(tables: TableModel[], tableId: string, activeRow: Row) => {
-        if(!requests.getRowById(tables, tableId, activeRow.id)){
-            tables.find(table => table.id === tableId)?.rows
-            .push({id: activeRow.id, cells: activeRow.cells,});
-        }else{
-            tables.find(table => table.id === tableId)?.rows
-            .filter(row => row.id === activeRow.id)
-            .forEach(row => {row.cells = activeRow.cells;});
-        }
-        activeRow = {id: "", cells: []};
-    },
-    getTableById:(tables: TableModel[], tableId: string): any => {
-        return tables.find(table => table.id === tableId);
-    },
-    addRow:(tables: TableModel[], tableId: string, activeRow: Row) => {
-        activeRow.id = Guid.create().toString();
-        activeRow.cells = [];
-        tables.find(table => table.id === tableId)?.columns
-        .forEach(column => {
-            activeRow.cells.push({
-                id: Guid.create().toString(),
-                type: column.type,
-                value: "",
-                selectOptions: column.selectOptions,
+            .forEach(table => { 
+                table.tablesData
+                .filter(tabData => tabData.id === tableDataId)
+                    .forEach(tabData => {
+                        tabData.rows = tabData.rows.filter(row => row.id !== id);
+                    });
             });
+    },
+    editRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => {
+        tables.filter(t => t.id === tableId).forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tableDataId)
+                .forEach(tabData => {
+                    table.activeRow = requests.getRowById(tabData, tableId, id);
+                    table.addEditRowMode = true;
+                });
+        }); 
+    },
+    deleteTableById: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => {
+        tables.filter(table => table.id === tableId)
+         .forEach(table => { 
+             table.tablesData = table.tablesData.filter(t => t.id !== tableDataId);
+         });
+    },
+    getRowById: (tablesData: TableData, tableDataId: string, id: string) : any => {
+        return tablesData.rows.find(row => row.id === id);
+    },
+    saveRow:(tables: AdditionalTable[], tableId: string, tableDataId: string) => {
+        tables.filter(table => table.id === tableId)
+        .forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tableDataId)
+                .forEach(tabData => {
+                    if(!requests.getRowById(tabData, tableId, table.activeRow.id)){
+                        tabData.rows.push({
+                            id: table.activeRow.id, 
+                            cells: table.activeRow.cells,});
+                    }else{
+                        tabData.rows.filter(row => row.id === table.activeRow.id)
+                        .forEach(row => {row.cells = table.activeRow.cells;});
+                    }    
+            })
+           
+            table.activeRow = {id: "", cells: []};
+            table.addEditRowMode = false;
+        });
+    },
+    addRow:(tables: AdditionalTable[], tableId: string) => {
+        tables.filter(table => table.id === tableId)
+        .forEach(table => {
+            table.activeRow.id = Guid.create().toString();
+            table.activeRow.cells = [];
+            table.addEditRowMode = true;
+            table.columns.forEach(column => {
+                table.activeRow.cells.push({
+                    id: Guid.create().toString(),
+                    type: column.type,
+                    value: "",
+                    selectOptions: column.selectOptions,
+                });
+            });
+        });
+    },
+    addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => {
+        tables.filter(tab => tab.id === tableId)[0].tablesData
+        .unshift({
+            id: Guid.create().toString(),
+            title: Boolean(titleValue) ? titleValue : "Table " + (tables.filter(tab => tab.id === tableId)[0].tablesData.length + 1).toString(),
+            rows:[], 
         });
     },
 }
 
 export const fillingStoreService = {
-    deleteRowById: (tables: TableModel[], tableId: string, id: string) => requests.deleteRowById(tables, tableId, id),
-    getRowById: (tables: TableModel[], tableId: string, id: string) => requests.getRowById(tables, tableId, id),
-    saveRow: (tables: TableModel[], tableId: string, activeRow: Row) => requests.saveRow(tables, tableId, activeRow),
-    getTableById: (tables: TableModel[], tableId: string) => requests.getTableById(tables, tableId),
-    addRow:(tables: TableModel[], tableId: string, activeRow: Row) => requests.addRow(tables, tableId, activeRow),
+    deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.deleteRowById(tables, tableId, tableDataId, id),
+    editRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.editRow(tables, tableId, tableDataId, id),
+    deleteTableById: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.deleteTableById(tables, tableId, tableDataId),
+    getRowById: (tablesData: TableData, tableDataId: string, id: string) => requests.getRowById(tablesData, tableDataId, id),
+    saveRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.saveRow(tables, tableId, tableDataId),
+    addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
+    addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),
 }
