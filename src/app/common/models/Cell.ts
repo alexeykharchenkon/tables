@@ -5,4 +5,7 @@ export interface Cell {
     type: DataType;
     value: any;
     selectOptions: string[];
+    forbiddenSymbols: string;
+    multySelectMode: boolean;
+    dateFormat: string;
 }

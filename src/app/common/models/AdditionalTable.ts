@@ -13,7 +13,13 @@ export interface AdditionalTable {
     editMode: boolean;
     columnId: string;
     selectMode: boolean;
+    textMode: boolean;
+    dateMode: boolean;
     selectOptions: string[];
+    selectTypeValue: string;
+    forbiddenSymbols: string;
+    multySelectMode: boolean;
+    dateFormat: string;
     selectValue: string;
     fillingMode: boolean;
     addEditRowMode: boolean;

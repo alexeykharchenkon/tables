@@ -5,4 +5,7 @@ export interface Column {
     type: DataType;
     label: string;
     selectOptions: string[];
+    forbiddenSymbols: string;
+    multySelectMode: boolean;
+    dateFormat: string;
 }

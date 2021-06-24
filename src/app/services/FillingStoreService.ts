@@ -64,6 +64,9 @@ const requests = {
                     type: column.type,
                     value: "",
                     selectOptions: column.selectOptions,
+                    forbiddenSymbols: "",
+                    multySelectMode: true,
+                    dateFormat: "",
                 });
             });
         });

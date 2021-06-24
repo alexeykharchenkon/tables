@@ -32,7 +32,7 @@ export const TableRowComponent = observer(({table, deleteColumn,
                      <DeleteIcon />
                 </IconButton>
                 <IconButton 
-                    onClick={() => editColumn(table.id, col.id, col.label, col.type)}
+                    onClick={() => editColumn(table.id, col.id, col.label, col.type, col.multySelectMode)}
                 >
                     <EditIcon />
                 </IconButton>

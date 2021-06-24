@@ -1,8 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { AddEditColumns } from './AddEditColums';
-import { AddSelect } from './AddSelect';
+import { SelectModeComponent } from './SelectModeComponent';
 import { AdditionalTable } from '@common/models/AdditionalTable';
+import { TextModeComponent } from './TextModeComponent';
+import { DateModeComponent } from './DateModeComponent';
 
 
 interface AddEditColumnsProps {
@@ -14,11 +16,15 @@ interface AddEditColumnsProps {
     addSelectField: any;
     selectValueChange: any;
     deleteSelectField: any;
+    selectModeValueChange: any;
+    forbiddenValueChange: any;
+
 }
 
 export const AddEditColumnsComponent = observer(({table, addColumn, 
     columnTypeValueChange, columnValueChange, saveEditedColumn,
-    addSelectField, selectValueChange, deleteSelectField} : AddEditColumnsProps) => {
+    addSelectField, selectValueChange, deleteSelectField, 
+    selectModeValueChange, forbiddenValueChange} : AddEditColumnsProps) => {      
         return (
         <>
             {!table.editMode &&
@@ -40,11 +46,23 @@ export const AddEditColumnsComponent = observer(({table, addColumn,
             />
             }
              {table.selectMode &&
-             <AddSelect 
+             <SelectModeComponent
                 table = {table} 
                 addSelectField = {addSelectField}
                 selectValueChange ={selectValueChange}
                 deleteSelectField={deleteSelectField}
+                selectModeValueChange={selectModeValueChange}
+             />
+             }
+             {table.textMode &&
+             <TextModeComponent
+                table = {table} 
+                forbiddenValueChange ={forbiddenValueChange}
+             />
+             }
+             {table.dateMode &&
+             <DateModeComponent
+                table = {table}
              />
              }
         </>    

@@ -117,7 +117,23 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     addSelect: {
-        backgroundColor: theme.palette.grey[200],
+        background: '#efffff',
         marginBottom: '10px',
+        border: '1px solid #ededee',
+        boredRadius: 5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    addSelectLeft: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+    },
+    addSelectLeftUp: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
   }));

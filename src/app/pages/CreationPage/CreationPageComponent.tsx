@@ -35,6 +35,8 @@ export const CreationPageComponent = observer(() => {
                                 addSelectField = {creatingStore.addSelectField}
                                 selectValueChange ={creatingStore.selectValueChange}
                                 deleteSelectField={creatingStore.deleteSelectField}
+                                selectModeValueChange={creatingStore.selectModeValueChange}
+                                forbiddenValueChange={creatingStore.forbiddenValueChange}
                             />
                          </ListItem>
                     );

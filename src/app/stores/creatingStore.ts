@@ -35,12 +35,7 @@ export class ColumnStore {
 
     columnTypeValueChange = (value: DataType, tabId: string) => {
         this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnTypeValue = value;
-        
-        if(value.valueOf().toString() === DataType.Select.valueOf().toString()){
-            this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectMode = true;
-        }else{
-            this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectMode = false;
-        }
+        creatingStoreService.switchSelectMode(this.tableStore.tables, tabId, value);
     }
 
     columnValueChange = (value: string, tabId: string) => {
@@ -52,8 +47,8 @@ export class ColumnStore {
         tableService.save(this.tableStore.tables);
     }
 
-    editColumn = (tableId: string, columnId: string, value: string, type: DataType) => {
-        creatingStoreService.editColumn(this.tableStore.tables, tableId, columnId, value, type);
+    editColumn = (tableId: string, columnId: string, value: string, type: DataType, selectType: boolean) => {
+        creatingStoreService.editColumn(this.tableStore.tables, tableId, columnId, value, type, selectType);
     }
 
     saveEditedColumn = (tableId: string) => {
@@ -69,8 +64,17 @@ export class ColumnStore {
         this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectValue = value;
     }
 
+    selectModeValueChange = (value: string, tabId: string) => {
+        this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectTypeValue = value;
+        this.tableStore.tables.filter(tab => tab.id === tabId)[0].multySelectMode = value === "1" ? true : false;
+     }
+
     deleteSelectField = (tabId: string, index: number) => {
         this.tableStore.tables.filter(tab => tab.id === tabId)[0]
         .selectOptions.splice(index,1);
     }
+
+    forbiddenValueChange = (value: string, tabId: string) => {
+        this.tableStore.tables.filter(tab => tab.id === tabId)[0].forbiddenSymbols = value;
+     }
 }
