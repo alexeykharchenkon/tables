@@ -18,7 +18,7 @@ const requests = {
             table.tablesData
             .filter(tabData => tabData.id === tableDataId)
                 .forEach(tabData => {
-                    table.activeRow = requests.getRowById(tabData, tableId, id);
+                    table.activeRow = requests.getRowById(tabData, id);
                     table.addEditRowMode = true;
                 });
         }); 
@@ -29,7 +29,7 @@ const requests = {
              table.tablesData = table.tablesData.filter(t => t.id !== tableDataId);
          });
     },
-    getRowById: (tablesData: TableData, tableDataId: string, id: string) : any => {
+    getRowById: (tablesData: TableData, id: string) : any => {
         return tablesData.rows.find(row => row.id === id);
     },
     saveRow:(tables: AdditionalTable[], tableId: string, tableDataId: string) => {
@@ -38,7 +38,7 @@ const requests = {
             table.tablesData
             .filter(tabData => tabData.id === tableDataId)
                 .forEach(tabData => {
-                    if(!requests.getRowById(tabData, tableId, table.activeRow.id)){
+                    if(!requests.getRowById(tabData, table.activeRow.id)){
                         tabData.rows.push({
                             id: table.activeRow.id, 
                             cells: table.activeRow.cells,});
@@ -82,7 +82,7 @@ export const fillingStoreService = {
     deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.deleteRowById(tables, tableId, tableDataId, id),
     editRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.editRow(tables, tableId, tableDataId, id),
     deleteTableById: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.deleteTableById(tables, tableId, tableDataId),
-    getRowById: (tablesData: TableData, tableDataId: string, id: string) => requests.getRowById(tablesData, tableDataId, id),
+    getRowById: (tablesData: TableData, id: string) => requests.getRowById(tablesData, id),
     saveRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.saveRow(tables, tableId, tableDataId),
     addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
     addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),

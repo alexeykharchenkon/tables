@@ -3,10 +3,10 @@ import { DataType } from "@common/models/DataType";
 import { Guid } from "guid-typescript";
 
 const requests = {
-    createTable: (additionalTables: AdditionalTable[], tableTitleValue: string) => {
-        additionalTables.unshift({
+    createTable: (tables: AdditionalTable[], tableTitleValue: string) => {
+        tables.unshift({
             id: Guid.create().toString(), 
-            title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (additionalTables.length + 1).toString(), 
+            title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (tables.length + 1).toString(), 
             columns: [],
             tablesData: [], 
             columnTypeValue: DataType.Text,
@@ -21,8 +21,8 @@ const requests = {
             activeRow: {id: "", cells: []},
         });
     },
-    addColumn: (additionalTables: AdditionalTable[], tableId: string) => {
-        additionalTables.filter(table => table.id === tableId)
+    addColumn: (tables: AdditionalTable[], tableId: string) => {
+        tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             if(table.columns.length < 10){
                 table.columns.push({
@@ -31,6 +31,17 @@ const requests = {
                     type: table.columnTypeValue,
                     selectOptions: table.selectOptions,
                 });
+
+                table.tablesData.forEach(tabData => {
+                    tabData.rows.forEach(row => {
+                        row.cells.push({
+                            id: Guid.create().toString(),
+                            value: "",
+                            type: table.columnTypeValue,
+                            selectOptions: table.selectOptions,
+                        });
+                    });
+                });
             }
             table.columnTypeValue = DataType.Text;
             table.columnValue = "";
@@ -38,8 +49,8 @@ const requests = {
             table.selectMode = false;
         });
     },
-    editColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType) => {
-        additionalTables.filter(table => table.id === tableId)
+    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType) => {
+        tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.editMode = true;
             table.columnValue = value;
@@ -52,8 +63,8 @@ const requests = {
                 
         });
     },
-    saveEditedColumn: (additionalTables: AdditionalTable[], tableId: string) => {
-        additionalTables.filter(table => table.id === tableId)
+    saveEditedColumn: (tables: AdditionalTable[], tableId: string) => {
+        tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             table.columns.filter(col => col.id === table.columnId)
              .forEach (col => { 
@@ -61,6 +72,15 @@ const requests = {
                  col.type = table.columnTypeValue;
                  col.selectOptions = table.selectOptions;
                 });
+
+            const idx = table.columns.findIndex(col => col.id === table.columnId);
+            table.tablesData.forEach(tabData => {
+                tabData.rows.forEach(row => {
+                    row.cells[idx].type = table.columnTypeValue;
+                    row.cells[idx].selectOptions = table.selectOptions;
+                });
+            });
+
             table.editMode = false;
             table.columnValue = "";
             table.columnId = "";
@@ -69,12 +89,21 @@ const requests = {
             table.selectOptions = [];
         });
     },
-    deleteColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string) => {
-        additionalTables.filter(table => table.id === tableId)
-        .forEach(table => { table.columns = table.columns.filter(col => col.id !== columnId);});
+    deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => {
+        tables.filter(table => table.id === tableId)
+        .forEach(table => { 
+            table.columns = table.columns.filter(col => col.id !== columnId);
+            
+            const idx = table.columns.findIndex(col => col.id === columnId);
+            table.tablesData.forEach(tabData => {
+                tabData.rows.forEach(row => {
+                    row.cells.splice(idx,1);
+                });
+            });
+        });
     },
-    addSelectField: (additionalTables: AdditionalTable[], tabId: string) => {
-        additionalTables.filter(tab => tab.id === tabId)
+    addSelectField: (tables: AdditionalTable[], tabId: string) => {
+        tables.filter(tab => tab.id === tabId)
         .forEach(tab => {
             tab.selectOptions.push(
                 Boolean(tab.selectValue) ? tab.selectValue : "Select " + (tab.selectOptions.length + 1).toString(),
@@ -85,10 +114,10 @@ const requests = {
 }
 
 export const creatingStoreService = {
-    createTable: (additionalTables: AdditionalTable[], tableTitleValue: string) => requests.createTable(additionalTables, tableTitleValue),
-    addColumn: (additionalTables: AdditionalTable[], tableId: string)=> requests.addColumn(additionalTables, tableId),
-    editColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType)=>requests.editColumn(additionalTables, tableId, columnId, value, type),
-    saveEditedColumn: (additionalTables: AdditionalTable[], tableId: string) => requests.saveEditedColumn(additionalTables, tableId),
-    deleteColumn: (additionalTables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(additionalTables, tableId, columnId),
-    addSelectField: (additionalTables: AdditionalTable[], tabId: string) => requests.addSelectField(additionalTables, tabId),
+    createTable: (tables: AdditionalTable[], tableTitleValue: string) => requests.createTable(tables, tableTitleValue),
+    addColumn: (tables: AdditionalTable[], tableId: string)=> requests.addColumn(tables, tableId),
+    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType)=>requests.editColumn(tables, tableId, columnId, value, type),
+    saveEditedColumn: (tables: AdditionalTable[], tableId: string) => requests.saveEditedColumn(tables, tableId),
+    deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(tables, tableId, columnId),
+    addSelectField: (tables: AdditionalTable[], tabId: string) => requests.addSelectField(tables, tabId),
 }

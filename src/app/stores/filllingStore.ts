@@ -24,9 +24,24 @@ export class FillingStore {
         this.titleValue = "";
     }
 
+    deleteTable = (tableId: string, tableDataId: string) => {
+        fillingStoreService.deleteTableById(this.tableStore.tables, tableId, tableDataId);
+        tableService.save(this.tableStore.tables);
+    }
+
     addRow = (tableId: string, tabDataId: string) => {
         fillingStoreService.addRow(this.tableStore.tables, tableId);
         this.activeTableId = tabDataId;
+    }
+
+    editRow = (tableId: string, tableDataId: string, rowId: string) => {
+        fillingStoreService.editRow(this.tableStore.tables, tableId, tableDataId, rowId);   
+        this.activeTableId = tableDataId;
+    }
+
+    deleteRow = (tableId: string, tableDataId: string, rowId: string) => {
+        fillingStoreService.deleteRowById(this.tableStore.tables, tableId, tableDataId, rowId);
+        tableService.save(this.tableStore.tables);
     }
 
     saveRow = (tableId: string, tableDataId: string) => {
@@ -43,21 +58,6 @@ export class FillingStore {
                     .forEach(cell => {cell.value = value;})
                 });
         }); 
-    }
-
-    editRow = (tableId: string, tableDataId: string, rowId: string) => {
-        fillingStoreService.editRow(this.tableStore.tables, tableId, tableDataId, rowId);   
-        this.activeTableId = tableDataId;
-    }
-
-    deleteRow = (tableId: string, tableDataId: string, rowId: string) => {
-        fillingStoreService.deleteRowById(this.tableStore.tables, tableId, tableDataId, rowId);
-        tableService.save(this.tableStore.tables);
-    }
-
-    deleteTable = (tableId: string, tableDataId: string) => {
-        fillingStoreService.deleteTableById(this.tableStore.tables, tableId, tableDataId);
-        tableService.save(this.tableStore.tables);
     }
 
     titleValueOnChange = (value: string) => {
