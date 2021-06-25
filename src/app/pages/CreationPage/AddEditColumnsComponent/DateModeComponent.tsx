@@ -7,9 +7,10 @@ import { FormControl, InputLabel, Select } from '@material-ui/core';
 
 interface DateModeProps {
     table: AdditionalTable;
+    dateFormatValueChange: any;
 }
 
-export const DateModeComponent = observer(({table}: DateModeProps) => {
+export const DateModeComponent = observer(({table, dateFormatValueChange}: DateModeProps) => {
     const classes = useStyles();
 
     return (
@@ -21,9 +22,12 @@ export const DateModeComponent = observer(({table}: DateModeProps) => {
                     <Select
                         native
                         style={{marginBottom:'10px'}}
+                        value={ table.dateFormat }
+                        onChange={e => dateFormatValueChange(e.target.value, table.id)}
                     >
-                        <option value="0"></option>
-                        <option value="1"></option>
+                        <option value="date">Date</option>
+                        <option value="datetime-local">Date and Time</option>
+                        <option value="time">Time</option>
                     </Select> 
                 </FormControl>
            </Container>

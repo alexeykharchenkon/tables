@@ -16,17 +16,21 @@ interface TableBodyProps {
     deleteRow: any;
     tabData: TableData;
     activeTableId: string;
+    selectValueChange: any;
 }
 
 export const TableBodyComponent = observer(({table, saveRow,
-    cellValueChange, editRow, deleteRow, tabData, activeTableId}: TableBodyProps) => {
+    cellValueChange, editRow, deleteRow, tabData, activeTableId,
+    selectValueChange}: TableBodyProps) => {
     return (
             <TableBody>
-                {table.addEditRowMode && activeTableId === tabData.id && <AddEditRowComponent 
+                {table.addEditRowMode && activeTableId === tabData.id && 
+                <AddEditRowComponent 
                     table={table} 
                     tabData={tabData}
                     saveRow={saveRow} 
                     cellValueChange={cellValueChange}
+                    selectValueChange={selectValueChange}
                 />}  
                 {tabData.rows && tabData.rows.map(row => (
                      <TableRow key={row.id}>

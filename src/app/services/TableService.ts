@@ -23,7 +23,7 @@ const requests = {
                 selectTypeValue: "0",
                 forbiddenSymbols: "",
                 multySelectMode: false,
-                dateFormat: "",
+                dateFormat: "date",
                 selectValue: "",
                 fillingMode: false,
                 addEditRowMode: false,

@@ -14,10 +14,12 @@ interface TableProps {
     deleteRow: any;
     tabData: TableData;
     activeTableId: string;
+    selectValueChange: any;
 }
 
 export const TableComponent = React.memo(({table, saveRow, 
-    cellValueChange, editRow, deleteRow, tabData, activeTableId}: TableProps) => {
+    cellValueChange, editRow, deleteRow, tabData, activeTableId,
+    selectValueChange}: TableProps) => {
         return (
         <Table size="small" aria-label="a dense table">
             <TableHeadComponent table={table}/>
@@ -29,6 +31,7 @@ export const TableComponent = React.memo(({table, saveRow,
                 deleteRow={deleteRow}
                 tabData = {tabData}
                 activeTableId = {activeTableId}
+                selectValueChange ={selectValueChange}
             />
         </Table>
       );

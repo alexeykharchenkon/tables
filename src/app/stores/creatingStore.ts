@@ -77,4 +77,8 @@ export class ColumnStore {
     forbiddenValueChange = (value: string, tabId: string) => {
         this.tableStore.tables.filter(tab => tab.id === tabId)[0].forbiddenSymbols = value;
      }
+
+     dateFormatValueChange = (value: string, tabId: string) => {
+        this.tableStore.tables.filter(tab => tab.id === tabId)[0].dateFormat = value;
+     }
 }

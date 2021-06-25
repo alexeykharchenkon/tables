@@ -9,17 +9,18 @@ interface CellProps {
     cellValueChange: any;
     tableId: string;
     tabDataId: string;
+    selectValueChange: any;
 }
 
 export const CellComponent = observer(({cell, cellValueChange, 
-    tableId, tabDataId}: CellProps) => {
+    tableId, tabDataId, selectValueChange}: CellProps) => {
     return (
         <>
                    {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() &&
                     <TextField 
                         label = 'Enter Data'
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
                     />
                    }
                    {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() &&
@@ -27,32 +28,47 @@ export const CellComponent = observer(({cell, cellValueChange,
                         type = 'number'
                         label = 'Enter Data'
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
                     />
                    }
                    {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() &&
                     <TextField
-                        type="date"
+                        type={cell.dateFormat}
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
                   />
                    }
                    {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
-                        <Select
+                        cell.multySelectMode &&<Select
                             native
+                            multiple
                             style={{minWidth:'100px'}}
                             value={cell.value}
-                            onChange={e =>  cellValueChange(e.target.value, cell.id, tableId, tabDataId)}
+                            onChange={e =>  selectValueChange(e, cell.id, tableId, tabDataId)}
                         >
-                            <option>
-                            </option>
+                            <option></option>
                             {cell.selectOptions.map((s, index) => (
                                 <option 
-                                key={index}
-                                value={s}
+                                    key={index}
+                                    value={s}
                                 >{s}</option>
                             ))}
-                            
+                        </Select>
+                   }
+                   {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
+                        !cell.multySelectMode &&<Select
+                            native
+                            style={{minWidth:'100px'}}
+                            value={cell?.value[0]}
+                            onChange={e => selectValueChange(e, cell.id, tableId, tabDataId)}
+                        >
+                            <option></option>
+                            {cell.selectOptions.map((s, index) => (
+                                <option 
+                                    key={index}
+                                    value={s}
+                                >{s}</option>
+                            ))}
                         </Select>
                    }
            </>

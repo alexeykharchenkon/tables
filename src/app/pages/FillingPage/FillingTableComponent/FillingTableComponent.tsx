@@ -18,10 +18,12 @@ interface FillingTableProps {
     tabData: TableData;
     activeTableId: string;
     deleteTable: any;
+    selectValueChange: any;
 }
 
 export const FillingTableComponent = ({table, addRow, saveRow, 
-    cellValueChange, editRow, deleteRow, tabData, activeTableId, deleteTable}: FillingTableProps) => {
+    cellValueChange, editRow, deleteRow, tabData, activeTableId, 
+    deleteTable, selectValueChange}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
@@ -44,6 +46,7 @@ export const FillingTableComponent = ({table, addRow, saveRow,
                     editRow={editRow}
                     deleteRow={deleteRow}
                     activeTableId={activeTableId}
+                    selectValueChange={selectValueChange}
                 />
             </TableContainer>
         </Container>

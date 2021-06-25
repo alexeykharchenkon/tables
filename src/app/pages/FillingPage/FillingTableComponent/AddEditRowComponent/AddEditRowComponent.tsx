@@ -10,10 +10,11 @@ interface AddEditRowProps {
     saveRow: any;
     cellValueChange: any;
     tabData: TableData;
+    selectValueChange: any;
 }
 
 export const AddEditRowComponent =({table, saveRow, 
-    cellValueChange, tabData}: AddEditRowProps) => {
+    cellValueChange, tabData, selectValueChange}: AddEditRowProps) => {
     return (
         <TableRow>
             {table.activeRow.cells.map(cell => (
@@ -23,6 +24,7 @@ export const AddEditRowComponent =({table, saveRow,
                         cellValueChange = {cellValueChange}
                         tableId={table.id}
                         tabDataId={tabData.id}
+                        selectValueChange={selectValueChange}
                    />
                </TableCell>
             ))}

@@ -20,7 +20,7 @@ const requests = {
             selectTypeValue: "0",
             forbiddenSymbols: "",
             multySelectMode: false,
-            dateFormat: "",
+            dateFormat: "date",
             selectValue: "",
             fillingMode: false,
             addEditRowMode: false,
@@ -74,6 +74,7 @@ const requests = {
             table.columnValue = value;
             table.columnId = columnId;
             table.columnTypeValue = type;
+    
             switch(type.valueOf().toString()){
                 case DataType.Select.valueOf().toString():
                     table.selectMode = true;
@@ -92,6 +93,7 @@ const requests = {
                     table.dateMode = true;
                     table.selectMode = false;
                     table.textMode = false;
+                    table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
                     break;
                 case DataType.Number.valueOf().toString():
                     table.selectMode = false;

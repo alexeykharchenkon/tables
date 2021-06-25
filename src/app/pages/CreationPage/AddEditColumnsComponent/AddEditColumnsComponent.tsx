@@ -18,13 +18,13 @@ interface AddEditColumnsProps {
     deleteSelectField: any;
     selectModeValueChange: any;
     forbiddenValueChange: any;
-
+    dateFormatValueChange: any;
 }
 
 export const AddEditColumnsComponent = observer(({table, addColumn, 
     columnTypeValueChange, columnValueChange, saveEditedColumn,
     addSelectField, selectValueChange, deleteSelectField, 
-    selectModeValueChange, forbiddenValueChange} : AddEditColumnsProps) => {      
+    selectModeValueChange, forbiddenValueChange, dateFormatValueChange} : AddEditColumnsProps) => {      
         return (
         <>
             {!table.editMode &&
@@ -63,6 +63,7 @@ export const AddEditColumnsComponent = observer(({table, addColumn,
              {table.dateMode &&
              <DateModeComponent
                 table = {table}
+                dateFormatValueChange = {dateFormatValueChange}
              />
              }
         </>    

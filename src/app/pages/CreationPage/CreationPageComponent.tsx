@@ -37,6 +37,7 @@ export const CreationPageComponent = observer(() => {
                                 deleteSelectField={creatingStore.deleteSelectField}
                                 selectModeValueChange={creatingStore.selectModeValueChange}
                                 forbiddenValueChange={creatingStore.forbiddenValueChange}
+                                dateFormatValueChange={creatingStore.dateFormatValueChange}
                             />
                          </ListItem>
                     );

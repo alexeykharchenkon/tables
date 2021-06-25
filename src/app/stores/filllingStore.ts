@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { fillingStoreService } from "@services/FillingStoreService";
+import { DataType } from "@common/models/DataType";
 
 export class FillingStore {
     tableStore: TableStore;
@@ -49,7 +50,27 @@ export class FillingStore {
         tableService.save(this.tableStore.tables);
     }
 
-    cellValueChange = (value: string, cellId: string, tableId: string, tableDataId: string) => {
+    cellValueChange = (value: string, cellId: string, tableId: string, tableDataId: string, cellType: DataType) => {        
+        this.tableStore.tables.filter(t => t.id === tableId).forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tableDataId)
+                .forEach(tabData => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                    .forEach(cell => {
+                        cell.value = cellType.valueOf().toString() === DataType.Text.valueOf().toString() ?
+                            value = fillingStoreService.checkForbidSymbols(value, cell.forbiddenSymbols): value;
+                    })
+                });
+        }); 
+    }
+
+    selectValueChange = (event: any, cellId: string, tableId: string, tableDataId: string) => {
+        const { options } = event.target as HTMLSelectElement;
+        const value: string[] = [];
+        for (let i = 0, l = options.length; i < l; i += 1) 
+          if (options[i].selected) 
+            value.push(options[i].value);              
+
         this.tableStore.tables.filter(t => t.id === tableId).forEach(table => {
             table.tablesData
             .filter(tabData => tabData.id === tableDataId)

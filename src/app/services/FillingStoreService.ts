@@ -1,5 +1,6 @@
 import { AdditionalTable } from "@app/common/models/AdditionalTable";
-import { TableData } from "@app/common/models/TableData";
+import { DataType } from "@common/models/DataType";
+import { TableData } from "@common/models/TableData";
 import { Guid } from "guid-typescript";
 
 const requests = {
@@ -62,11 +63,11 @@ const requests = {
                 table.activeRow.cells.push({
                     id: Guid.create().toString(),
                     type: column.type,
-                    value: "",
+                    value: column.type.valueOf().toString() === DataType.Select.valueOf().toString() ? [""] : "",
                     selectOptions: column.selectOptions,
-                    forbiddenSymbols: "",
-                    multySelectMode: true,
-                    dateFormat: "",
+                    forbiddenSymbols: column.forbiddenSymbols,
+                    multySelectMode: column.multySelectMode,
+                    dateFormat: column.dateFormat,
                 });
             });
         });
@@ -79,6 +80,15 @@ const requests = {
             rows:[], 
         });
     },
+    checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => {
+        var forbidSymbArray = forbiddenSymbols.split(',');
+
+        for(var str of forbidSymbArray) {
+            value = value.split(str).join('');
+        }
+
+        return value;
+    },
 }
 
 export const fillingStoreService = {
@@ -89,4 +99,5 @@ export const fillingStoreService = {
     saveRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.saveRow(tables, tableId, tableDataId),
     addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
     addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),
+    checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => requests.checkForbidSymbols(value, forbiddenSymbols),
 }
