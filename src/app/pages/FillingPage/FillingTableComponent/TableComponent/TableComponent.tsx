@@ -15,11 +15,12 @@ interface TableProps {
     tabData: TableData;
     activeTableId: string;
     selectValueChange: any;
+    checkboxValueChange: any;
 }
 
 export const TableComponent = React.memo(({table, saveRow, 
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange}: TableProps) => {
+    selectValueChange, checkboxValueChange}: TableProps) => {
         return (
         <Table size="small" aria-label="a dense table">
             <TableHeadComponent table={table}/>
@@ -32,6 +33,7 @@ export const TableComponent = React.memo(({table, saveRow,
                 tabData = {tabData}
                 activeTableId = {activeTableId}
                 selectValueChange ={selectValueChange}
+                checkboxValueChange= {checkboxValueChange}
             />
         </Table>
       );

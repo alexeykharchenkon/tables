@@ -17,11 +17,12 @@ interface TableBodyProps {
     tabData: TableData;
     activeTableId: string;
     selectValueChange: any;
+    checkboxValueChange: any;
 }
 
 export const TableBodyComponent = observer(({table, saveRow,
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange}: TableBodyProps) => {
+    selectValueChange, checkboxValueChange}: TableBodyProps) => {
     return (
             <TableBody>
                 {table.addEditRowMode && activeTableId === tabData.id && 
@@ -31,6 +32,7 @@ export const TableBodyComponent = observer(({table, saveRow,
                     saveRow={saveRow} 
                     cellValueChange={cellValueChange}
                     selectValueChange={selectValueChange}
+                    checkboxValueChange={checkboxValueChange}
                 />}  
                 {tabData.rows && tabData.rows.map(row => (
                      <TableRow key={row.id}>

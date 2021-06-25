@@ -41,6 +41,7 @@ export const FillingPageComponent = observer(() => {
                                         activeTableId={fillingStore.activeTableId}
                                         deleteTable={fillingStore.deleteTable}
                                         selectValueChange={fillingStore.selectValueChange}
+                                        checkboxValueChange={fillingStore.checkboxValueChange}
                                     />
                                 </ListItem>
                              ))}

@@ -38,6 +38,7 @@ export const AddEditColumns  = observer(({table, addOrEditColumn,
                         <option value={DataType.Number}>Number</option>
                         <option value={DataType.DatePicker}>DatePicker</option>
                         <option value={DataType.Select}>Select</option>
+                        <option value={DataType.Checkbox}>Checkbox</option>
                     </Select>
                 </FormControl>
                 {!addMode &&  

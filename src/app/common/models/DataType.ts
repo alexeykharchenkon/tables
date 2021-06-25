@@ -3,4 +3,5 @@ export enum DataType {
     Number = 2,
     DatePicker = 3,
     Select = 4,
+    Checkbox = 5,
   }

@@ -60,10 +60,18 @@ const requests = {
             table.activeRow.cells = [];
             table.addEditRowMode = true;
             table.columns.forEach(column => {
+                var val;
+                switch(column.type.valueOf().toString()) {
+                    case DataType.Select.valueOf().toString():
+                        val = [""];
+                        break;
+                    case DataType.Checkbox.valueOf().toString():
+                        val = false;
+                } 
                 table.activeRow.cells.push({
                     id: Guid.create().toString(),
                     type: column.type,
-                    value: column.type.valueOf().toString() === DataType.Select.valueOf().toString() ? [""] : "",
+                    value: val ?? "",
                     selectOptions: column.selectOptions,
                     forbiddenSymbols: column.forbiddenSymbols,
                     multySelectMode: column.multySelectMode,
@@ -82,11 +90,8 @@ const requests = {
     },
     checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => {
         var forbidSymbArray = forbiddenSymbols.split(',');
-
-        for(var str of forbidSymbArray) {
+        for(var str of forbidSymbArray) 
             value = value.split(str).join('');
-        }
-
         return value;
     },
 }

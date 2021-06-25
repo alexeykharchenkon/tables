@@ -55,16 +55,7 @@ const requests = {
                     });
                 });
             }
-            table.columnTypeValue = DataType.Text;
-            table.columnValue = "";
-            table.selectOptions = [];
-            table.selectMode = false;
-            table.dateMode = false;
-            table.textMode = true;
-            table.forbiddenSymbols = "";
-            table.multySelectMode = false;
-            table.dateFormat = "";
-            table.selectTypeValue = "0";
+            requests.makeValuestoDefault(table);
         });
     },
     editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType, selectType: boolean) => {
@@ -100,6 +91,11 @@ const requests = {
                     table.textMode = false;
                     table.dateMode = false;
                     break;
+                case DataType.Checkbox.valueOf().toString():
+                    table.selectMode = false;
+                    table.textMode = false;
+                    table.dateMode = false;
+                    break;
             }    
         });
     },
@@ -127,18 +123,7 @@ const requests = {
                 });
             });
 
-            table.editMode = false;
-            table.columnValue = "";
-            table.columnId = "";
-            table.columnTypeValue = DataType.Text;
-            table.selectMode = false;
-            table.dateMode = false;
-            table.textMode = true;
-            table.selectOptions = [];
-            table.forbiddenSymbols = "";
-            table.multySelectMode = false;
-            table.dateFormat = "";
-            table.selectTypeValue = "0";
+            requests.makeValuestoDefault(table);
         });
     },
     deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => {
@@ -185,7 +170,26 @@ const requests = {
                 tables.filter(tab => tab.id === tabId)[0].dateMode = false;
                 tables.filter(tab => tab.id === tabId)[0].textMode = false;
                 break;
+            case DataType.Checkbox.valueOf().toString():
+                tables.filter(tab => tab.id === tabId)[0].selectMode = false;
+                tables.filter(tab => tab.id === tabId)[0].dateMode = false;
+                tables.filter(tab => tab.id === tabId)[0].textMode = false;
+                break;
         }
+    },
+    makeValuestoDefault: (table: AdditionalTable) => {
+        table.editMode = false;
+        table.columnValue = "";
+        table.columnId = "";
+        table.columnTypeValue = DataType.Text;
+        table.selectMode = false;
+        table.dateMode = false;
+        table.textMode = true;
+        table.selectOptions = [];
+        table.forbiddenSymbols = "";
+        table.multySelectMode = false;
+        table.dateFormat = "";
+        table.selectTypeValue = "0";
     },
 }
 
@@ -197,4 +201,5 @@ export const creatingStoreService = {
     deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(tables, tableId, columnId),
     addSelectField: (tables: AdditionalTable[], tabId: string) => requests.addSelectField(tables, tabId),
     switchSelectMode: (tables: AdditionalTable[], tabId: string, value: DataType) => requests.switchSelectMode(tables, tabId, value),
+    makeValuestoDefault: (table: AdditionalTable) => requests.makeValuestoDefault(table),
 }

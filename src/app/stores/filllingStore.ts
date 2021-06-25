@@ -59,7 +59,7 @@ export class FillingStore {
                     .forEach(cell => {
                         cell.value = cellType.valueOf().toString() === DataType.Text.valueOf().toString() ?
                             value = fillingStoreService.checkForbidSymbols(value, cell.forbiddenSymbols): value;
-                    })
+                    });
                 });
         }); 
     }
@@ -76,12 +76,23 @@ export class FillingStore {
             .filter(tabData => tabData.id === tableDataId)
                 .forEach(tabData => {
                     table.activeRow.cells.filter(cell => cell.id === cellId)
-                    .forEach(cell => {cell.value = value;})
+                    .forEach(cell => {cell.value = value;});
                 });
         }); 
     }
 
     titleValueOnChange = (value: string) => {
         this.titleValue = value;
+    }
+
+    checkboxValueChange = (value: boolean, cellId: string, tabId: string, tabDataId: string) => {
+        this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tabDataId)
+                .forEach(tabData => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                    .forEach(cell => {cell.value = value;});
+                });
+        }); 
     }
 }

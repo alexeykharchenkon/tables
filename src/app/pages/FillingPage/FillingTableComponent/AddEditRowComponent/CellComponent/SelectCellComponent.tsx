@@ -1,43 +1,20 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Select, TextField } from '@material-ui/core';
+import { Select } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 
-interface CellProps {
+interface SelectCellProps {
     cell: Cell;
-    cellValueChange: any;
     tableId: string;
     tabDataId: string;
     selectValueChange: any;
 }
 
-export const CellComponent = observer(({cell, cellValueChange, 
-    tableId, tabDataId, selectValueChange}: CellProps) => {
+export const SelectCellComponent = observer(({cell,
+    tableId, tabDataId, selectValueChange}: SelectCellProps) => {
     return (
         <>
-                   {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() &&
-                    <TextField 
-                        label = 'Enter Data'
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
-                    />
-                   }
-                   {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() &&
-                    <TextField 
-                        type = 'number'
-                        label = 'Enter Data'
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
-                    />
-                   }
-                   {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() &&
-                    <TextField
-                        type={cell.dateFormat}
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
-                  />
-                   }
                    {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
                         cell.multySelectMode &&<Select
                             native

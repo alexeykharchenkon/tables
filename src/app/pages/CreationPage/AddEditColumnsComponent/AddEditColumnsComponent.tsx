@@ -47,9 +47,9 @@ export const AddEditColumnsComponent = observer(({table, addColumn,
             }
              {table.selectMode &&
              <SelectModeComponent
-                table = {table} 
-                addSelectField = {addSelectField}
-                selectValueChange ={selectValueChange}
+                table={table} 
+                addSelectField={addSelectField}
+                selectValueChange={selectValueChange}
                 deleteSelectField={deleteSelectField}
                 selectModeValueChange={selectModeValueChange}
              />
@@ -57,13 +57,13 @@ export const AddEditColumnsComponent = observer(({table, addColumn,
              {table.textMode &&
              <TextModeComponent
                 table = {table} 
-                forbiddenValueChange ={forbiddenValueChange}
+                forbiddenValueChange={forbiddenValueChange}
              />
              }
              {table.dateMode &&
              <DateModeComponent
                 table = {table}
-                dateFormatValueChange = {dateFormatValueChange}
+                dateFormatValueChange={dateFormatValueChange}
              />
              }
         </>    
