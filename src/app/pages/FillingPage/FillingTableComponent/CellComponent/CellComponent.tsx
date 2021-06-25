@@ -17,7 +17,7 @@ export const CellComponent = ({cell}: CellProps) => {
            {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() && cell.value}
            {cell.type.valueOf().toString() === DataType.Checkbox.valueOf().toString() && 
             <Checkbox
-                checked={cell.value}
+                checked={Boolean(cell.value)}
             /> 
            }
         </>

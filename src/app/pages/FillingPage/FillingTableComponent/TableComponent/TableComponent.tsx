@@ -22,7 +22,7 @@ export const TableComponent = React.memo(({table, saveRow,
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
     selectValueChange, checkboxValueChange}: TableProps) => {
         return (
-        <Table size="small" aria-label="a dense table">
+        <Table size="small">
             <TableHeadComponent table={table}/>
             <TableBodyComponent
                 table={table}

@@ -38,7 +38,7 @@ const requests = {
                     selectOptions: table.selectOptions,
                     forbiddenSymbols: table.forbiddenSymbols,
                     multySelectMode: table.multySelectMode,
-                    dateFormat: table.dateFormat,
+                    dateFormat: table.dateFormat ?? "date",
                 });
 
                 table.tablesData.forEach(tabData => {
@@ -69,32 +69,25 @@ const requests = {
             switch(type.valueOf().toString()){
                 case DataType.Select.valueOf().toString():
                     table.selectMode = true;
-                    table.textMode = false;
-                    table.dateMode = false;
+                    table.textMode = table.dateMode = false;
                     table.selectTypeValue = selectType ? "1" : "0"; 
                     table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
                     break;
                 case DataType.Text.valueOf().toString():
                     table.textMode = true;
-                    table.selectMode = false;
-                    table.dateMode = false;
+                    table.selectMode = table.dateMode = false;
                     table.forbiddenSymbols = table.columns.filter(col => col.id === columnId)[0].forbiddenSymbols;
                     break;
                 case DataType.DatePicker.valueOf().toString():
                     table.dateMode = true;
-                    table.selectMode = false;
-                    table.textMode = false;
+                    table.selectMode = table.textMode = false;
                     table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
                     break;
                 case DataType.Number.valueOf().toString():
-                    table.selectMode = false;
-                    table.textMode = false;
-                    table.dateMode = false;
+                    table.selectMode = table.textMode =  table.dateMode = false;
                     break;
                 case DataType.Checkbox.valueOf().toString():
-                    table.selectMode = false;
-                    table.textMode = false;
-                    table.dateMode = false;
+                    table.selectMode = table.textMode =  table.dateMode = false;
                     break;
             }    
         });
@@ -151,29 +144,22 @@ const requests = {
     switchSelectMode: (tables: AdditionalTable[], tabId: string, value: DataType) => {
         switch(value.valueOf().toString()){
             case DataType.Text.valueOf().toString():
+                requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].textMode = true;
-                tables.filter(tab => tab.id === tabId)[0].dateMode = false;
-                tables.filter(tab => tab.id === tabId)[0].selectMode = false;
                 break;
             case DataType.DatePicker.valueOf().toString():
+                requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].dateMode = true;
-                tables.filter(tab => tab.id === tabId)[0].selectMode = false;
-                tables.filter(tab => tab.id === tabId)[0].textMode = false;
                 break;
             case DataType.Select.valueOf().toString():
+                requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].selectMode = true;
-                tables.filter(tab => tab.id === tabId)[0].dateMode = false;
-                tables.filter(tab => tab.id === tabId)[0].textMode = false;
                 break;
             case DataType.Number.valueOf().toString():
-                tables.filter(tab => tab.id === tabId)[0].selectMode = false;
-                tables.filter(tab => tab.id === tabId)[0].dateMode = false;
-                tables.filter(tab => tab.id === tabId)[0].textMode = false;
+                requests.makeModesFalse(tables, tabId);
                 break;
             case DataType.Checkbox.valueOf().toString():
-                tables.filter(tab => tab.id === tabId)[0].selectMode = false;
-                tables.filter(tab => tab.id === tabId)[0].dateMode = false;
-                tables.filter(tab => tab.id === tabId)[0].textMode = false;
+                requests.makeModesFalse(tables, tabId);
                 break;
         }
     },
@@ -191,6 +177,11 @@ const requests = {
         table.dateFormat = "";
         table.selectTypeValue = "0";
     },
+    makeModesFalse: (tables: AdditionalTable[], tabId: string) => {
+        tables.filter(tab => tab.id === tabId)[0].selectMode = false;
+        tables.filter(tab => tab.id === tabId)[0].dateMode = false;
+        tables.filter(tab => tab.id === tabId)[0].textMode = false;
+    },
 }
 
 export const creatingStoreService = {
@@ -202,4 +193,5 @@ export const creatingStoreService = {
     addSelectField: (tables: AdditionalTable[], tabId: string) => requests.addSelectField(tables, tabId),
     switchSelectMode: (tables: AdditionalTable[], tabId: string, value: DataType) => requests.switchSelectMode(tables, tabId, value),
     makeValuestoDefault: (table: AdditionalTable) => requests.makeValuestoDefault(table),
+    makeModesFalse: (tables: AdditionalTable[], tabId: string) => requests.makeModesFalse(tables, tabId),
 }

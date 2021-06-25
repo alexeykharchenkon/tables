@@ -7,12 +7,11 @@ import { DataType } from '@common/models/DataType';
 interface SelectCellProps {
     cell: Cell;
     tableId: string;
-    tabDataId: string;
     selectValueChange: any;
 }
 
 export const SelectCellComponent = observer(({cell,
-    tableId, tabDataId, selectValueChange}: SelectCellProps) => {
+    tableId, selectValueChange}: SelectCellProps) => {
     return (
         <>
                    {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
@@ -21,7 +20,7 @@ export const SelectCellComponent = observer(({cell,
                             multiple
                             style={{minWidth:'100px'}}
                             value={cell.value}
-                            onChange={e =>  selectValueChange(e, cell.id, tableId, tabDataId)}
+                            onChange={e =>  selectValueChange(e, cell.id, tableId)}
                         >
                             <option></option>
                             {cell.selectOptions.map((s, index) => (
@@ -37,7 +36,7 @@ export const SelectCellComponent = observer(({cell,
                             native
                             style={{minWidth:'100px'}}
                             value={cell?.value[0]}
-                            onChange={e => selectValueChange(e, cell.id, tableId, tabDataId)}
+                            onChange={e => selectValueChange(e, cell.id, tableId)}
                         >
                             <option></option>
                             {cell.selectOptions.map((s, index) => (

@@ -103,7 +103,11 @@ export const useStyles = makeStyles((theme) => ({
         marginTop: '5px',
         border: '1px solid #ededee',
         boredRadius: 5,
-        padding: '10px',
+        padding: '10px', 
+    },
+    fillingTableTable: {
+        display: 'flex',
+        flexDirection: 'column',
     },
     addRowFillingTable: {
         display: 'flex',

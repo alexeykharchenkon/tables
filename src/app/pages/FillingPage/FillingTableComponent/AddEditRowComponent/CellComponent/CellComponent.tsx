@@ -22,7 +22,7 @@ export const CellComponent = observer(({cell, cellValueChange,
                     <TextField 
                         label = 'Enter Data'
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
                     />
                    }
                    {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() &&
@@ -30,26 +30,25 @@ export const CellComponent = observer(({cell, cellValueChange,
                         type = 'number'
                         label = 'Enter Data'
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
                     />
                    }
                    {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() &&
                     <TextField
                         type={cell.dateFormat}
                         value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, tabDataId, cell.type)}
+                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
                   />
                    }
                     {cell.type.valueOf().toString() === DataType.Checkbox.valueOf().toString() &&
                      <Checkbox
                         checked={cell.value}
-                        onChange={e => checkboxValueChange(e.target.checked, cell.id, tableId, tabDataId)}
+                        onChange={e => checkboxValueChange(e.target.checked, cell.id, tableId)}
                     />
                    }
                   <SelectCellComponent 
                         cell= {cell}
                         tableId= {tableId}
-                        tabDataId={tabDataId}
                         selectValueChange={selectValueChange}
                   />
            </>

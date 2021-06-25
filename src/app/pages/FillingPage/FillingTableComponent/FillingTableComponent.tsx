@@ -33,7 +33,7 @@ export const FillingTableComponent = ({table, addRow, saveRow,
             >
                 <DeleteIcon />
             </IconButton>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper}  className={classes.fillingTableTable}>
                 <TableTitleComponent 
                     table={table}
                     tabData={tabData} 
