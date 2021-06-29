@@ -1,5 +1,4 @@
 import { AdditionalTable } from "@app/common/models/AdditionalTable";
-import { DataType } from "@common/models/DataType";
 import { TableModel } from "@common/models/TableModel"
 
 const requests = {
@@ -12,18 +11,18 @@ const requests = {
                 title: table.title,
                 columns: table.columns,
                 tablesData: table.tablesData,
-                columnTypeValue: DataType.Text,
+                columnTypeValue: "",
                 columnValue: "",
                 editMode: false,
                 columnId: "",
                 selectMode: false,
-                textMode: true,
+                textMode: false,
                 dateMode: false,
                 selectOptions: [],
                 selectTypeValue: "0",
                 forbiddenSymbols: "",
                 multySelectMode: false,
-                dateFormat: "date",
+                dateFormat: "MM/dd/yyyy",
                 selectValue: "",
                 fillingMode: false,
                 addEditRowMode: false,

@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Select } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
@@ -10,12 +9,12 @@ interface SelectCellProps {
     selectValueChange: any;
 }
 
-export const SelectCellComponent = observer(({cell,
+export const SelectCellComponent = ({cell,
     tableId, selectValueChange}: SelectCellProps) => {
     return (
         <>
-                   {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
-                        cell.multySelectMode &&<Select
+                   {cell.type === DataType[DataType.Select]&&
+                        cell.multySelectMode && <Select
                             native
                             multiple
                             style={{minWidth:'100px'}}
@@ -31,8 +30,8 @@ export const SelectCellComponent = observer(({cell,
                             ))}
                         </Select>
                    }
-                   {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() &&
-                        !cell.multySelectMode &&<Select
+                   {cell.type === DataType[DataType.Select] &&
+                        !cell.multySelectMode && <Select
                             native
                             style={{minWidth:'100px'}}
                             value={cell?.value[0]}
@@ -49,4 +48,4 @@ export const SelectCellComponent = observer(({cell,
                    }
            </>
       );
-});
+}

@@ -5,6 +5,7 @@ import { AddEditColumnsComponent } from '../AddEditColumnsComponent/AddEditColum
 import { TableBodyComponent } from './TableBodyComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AdditionalTable } from '@common/models/AdditionalTable';
+import { Column } from '@common/models/Column';
 
 
 interface TableProps {
@@ -22,12 +23,27 @@ interface TableProps {
     selectModeValueChange: any;
     forbiddenValueChange: any;
     dateFormatValueChange: any;
+    selectMode: boolean;
+    editMode: boolean;
+    textMode: boolean;
+    dateMode: boolean;
+    columnValue: string;
+    columnTypeValue: string;
+    columns: Column[];
+    dateFormat: string;
+    selectValue: string;
+    selectOptions: string[];
+    selectTypeValue: string;
+    forbiddenSymbols: string;
 }
 
 export const TableComponent = React.memo(({table, addColumn, columnTypeValueChange, 
     columnValueChange, deleteColumn, editColumn, saveEditedColumn, 
     deleteTable, addSelectField, selectValueChange, deleteSelectField,
-    selectModeValueChange, forbiddenValueChange, dateFormatValueChange} : TableProps) => {
+    selectModeValueChange, forbiddenValueChange, dateFormatValueChange, 
+    selectMode, editMode, textMode, dateMode,
+    columnValue, columnTypeValue, columns, dateFormat,
+    selectValue, selectOptions, selectTypeValue, forbiddenSymbols} : TableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.tableCo}>
@@ -50,11 +66,23 @@ export const TableComponent = React.memo(({table, addColumn, columnTypeValueChan
                 selectModeValueChange={selectModeValueChange}
                 forbiddenValueChange={forbiddenValueChange}
                 dateFormatValueChange={dateFormatValueChange}
+                selectMode={selectMode}
+                editMode={editMode}
+                textMode={textMode}
+                dateMode={dateMode}
+                columnValue={columnValue}
+                columnTypeValue={columnTypeValue}
+                dateFormat={dateFormat}
+                selectValue = {selectValue}
+                selectOptions = {selectOptions}
+                selectTypeValue ={selectTypeValue}
+                forbiddenSymbols={forbiddenSymbols}
             />
             <TableBodyComponent
                  table ={table}
                  deleteColumn={deleteColumn}
                  editColumn={editColumn}
+                 columns={columns}
             />
     </Container>
     );

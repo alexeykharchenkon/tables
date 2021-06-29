@@ -8,9 +8,7 @@ import { App } from './app/App';
 ReactDOM.render(
   <StoreContext.Provider value={rootStore}>
     <BrowserRouter>
-      <React.StrictMode>
         <App />
-      </React.StrictMode>
     </BrowserRouter>
   </StoreContext.Provider>,
    document.getElementById('root')

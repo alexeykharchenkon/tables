@@ -4,7 +4,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Row } from '@app/common/models/Row';
 import { TableModel } from '@app/common/models/TableModel';
-import { observer } from 'mobx-react-lite';
 import { TableData } from '@app/common/models/TableData';
 
 
@@ -16,7 +15,7 @@ interface EditDeleteProps {
     tabData: TableData;
 }
 
-export const EditDeleteComponent = observer(({table, row,
+export const EditDeleteComponent = ({table, row,
     editRow, deleteRow, tabData}: EditDeleteProps) => {
     return (
         <TableCell>
@@ -32,4 +31,4 @@ export const EditDeleteComponent = observer(({table, row,
             </IconButton>
         </TableCell>
       );
-});
+}

@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { DataType } from "@common/models/DataType";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { creatingStoreService } from "@services/CreatingStoreService";
@@ -33,7 +32,7 @@ export class ColumnStore {
         tableService.save(this.tableStore.tables);
     }
 
-    columnTypeValueChange = (value: DataType, tabId: string) => {
+    columnTypeValueChange = (value: string, tabId: string) => {
         this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnTypeValue = value;
         creatingStoreService.switchSelectMode(this.tableStore.tables, tabId, value);
     }
@@ -47,7 +46,7 @@ export class ColumnStore {
         tableService.save(this.tableStore.tables);
     }
 
-    editColumn = (tableId: string, columnId: string, value: string, type: DataType, selectType: boolean) => {
+    editColumn = (tableId: string, columnId: string, value: string, type: string, selectType: boolean) => {
         creatingStoreService.editColumn(this.tableStore.tables, tableId, columnId, value, type, selectType);
     }
 
@@ -70,8 +69,10 @@ export class ColumnStore {
      }
 
     deleteSelectField = (tabId: string, index: number) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0]
-        .selectOptions.splice(index,1);
+        this.tableStore.tables.filter(tab => tab.id === tabId)
+        .forEach(tab => {
+            tab.selectOptions = tab.selectOptions.filter((x, i) => i !== index);
+        });  
     }
 
     forbiddenValueChange = (value: string, tabId: string) => {

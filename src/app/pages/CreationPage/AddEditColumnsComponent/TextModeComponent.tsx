@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { TextField} from '@material-ui/core';
 import { useStyles } from "@common/styles/styles"
@@ -8,9 +7,11 @@ import { AdditionalTable } from '@common/models/AdditionalTable';
 interface TextModeProps {
     table: AdditionalTable;
     forbiddenValueChange: any;
+    forbiddenSymbols: string;
 }
 
-export const TextModeComponent = observer(({table, forbiddenValueChange} : TextModeProps) => {
+export const TextModeComponent = ({table, forbiddenValueChange,
+    forbiddenSymbols} : TextModeProps) => {
     const classes = useStyles();
 
     return (
@@ -22,10 +23,10 @@ export const TextModeComponent = observer(({table, forbiddenValueChange} : TextM
                     rows={1}
                     style={{width: '100%', marginBottom: '10px'}}
                     label="Enter Forbidden Symbols Separeted by Comma"
-                    value={table.forbiddenSymbols}
+                    value={forbiddenSymbols}
                     onChange={e => forbiddenValueChange(e.target.value, table.id)}
                 />
            </Container>
         </Container>
     );
-});
+}

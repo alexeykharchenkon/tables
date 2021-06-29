@@ -38,7 +38,18 @@ export const CreationPageComponent = observer(() => {
                                 selectModeValueChange={creatingStore.selectModeValueChange}
                                 forbiddenValueChange={creatingStore.forbiddenValueChange}
                                 dateFormatValueChange={creatingStore.dateFormatValueChange}
-                            />
+                                selectMode={table.selectMode}
+                                editMode={table.editMode}
+                                textMode={table.textMode}
+                                dateMode={table.dateMode}
+                                columnValue={table.columnValue}
+                                columnTypeValue={table.columnTypeValue}
+                                columns={table.columns}
+                                dateFormat={table.dateFormat}      
+                                selectValue = {table.selectValue}
+                                selectOptions = {table.selectOptions}
+                                selectTypeValue ={table.selectTypeValue}   
+                                forbiddenSymbols={table.forbiddenSymbols}                   />
                          </ListItem>
                     );
                  })}

@@ -3,7 +3,8 @@ import { IconButton, TableCell, TableRow} from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { CellComponent } from './CellComponent/CellComponent';
 import { AdditionalTable } from '@app/common/models/AdditionalTable';
-import { TableData } from '@app/common/models/TableData';
+import { TableData } from '@common/models/TableData';
+import { Cell } from '@app/common/models/Cell';
 
 interface AddEditRowProps {
     table: AdditionalTable;
@@ -12,21 +13,24 @@ interface AddEditRowProps {
     tabData: TableData;
     selectValueChange: any;
     checkboxValueChange: any;
+    cells: Cell[];
+    handleDateChange: any;
 }
 
-export const AddEditRowComponent =({table, saveRow, 
-    cellValueChange, tabData, selectValueChange, checkboxValueChange}: AddEditRowProps) => {
+export const AddEditRowComponent = ({table, saveRow, 
+    cellValueChange, tabData, selectValueChange, checkboxValueChange,
+    cells, handleDateChange}: AddEditRowProps) => {
     return (
         <TableRow>
-            {table.activeRow.cells.map(cell => (
+            {cells.map(cell => (
                <TableCell key={cell.id}>
                    <CellComponent
                         cell = {cell} 
                         cellValueChange = {cellValueChange}
                         tableId={table.id}
-                        tabDataId={tabData.id}
                         selectValueChange={selectValueChange}
                         checkboxValueChange={checkboxValueChange}
+                        handleDateChange={handleDateChange}
                    />
                </TableCell>
             ))}

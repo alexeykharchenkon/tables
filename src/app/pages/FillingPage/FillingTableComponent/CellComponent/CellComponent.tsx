@@ -11,11 +11,11 @@ interface CellProps {
 export const CellComponent = ({cell}: CellProps) => {
     return (
         <>
-           {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() && cell.value}
-           {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() && cell.value}
-           {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() && cell.value}
-           {cell.type.valueOf().toString() === DataType.Select.valueOf().toString() && cell.value}
-           {cell.type.valueOf().toString() === DataType.Checkbox.valueOf().toString() && 
+           {cell.type === DataType[DataType.Text] && cell.value}
+           {cell.type === DataType[DataType.Number] && cell.value}
+           {cell.type === DataType[DataType.DatePicker] && cell.value.toLocaleString()}
+           {cell.type === DataType[DataType.Select] && cell.value}
+           {cell.type === DataType[DataType.Checkbox] && 
             <Checkbox
                 checked={Boolean(cell.value)}
             /> 

@@ -1,31 +1,32 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Checkbox, TextField } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 import { SelectCellComponent } from './SelectCellComponent';
+import { DateComponent } from './DateComponent';
 
 interface CellProps {
     cell: Cell;
     cellValueChange: any;
     tableId: string;
-    tabDataId: string;
     selectValueChange: any;
     checkboxValueChange: any;
+    handleDateChange: any;
 }
 
-export const CellComponent = observer(({cell, cellValueChange, 
-    tableId, tabDataId, selectValueChange, checkboxValueChange}: CellProps) => {
-    return (
+export const CellComponent = ({cell, cellValueChange, 
+    tableId, selectValueChange, checkboxValueChange,
+        handleDateChange}: CellProps) => {    
+        return (
         <>
-                   {cell.type.valueOf().toString() === DataType.Text.valueOf().toString() &&
+                   {cell.type === DataType[DataType.Text] &&
                     <TextField 
                         label = 'Enter Data'
                         value={cell.value}
                         onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
                     />
                    }
-                   {cell.type.valueOf().toString() === DataType.Number.valueOf().toString() &&
+                   {cell.type === DataType[DataType.Number] &&
                     <TextField 
                         type = 'number'
                         label = 'Enter Data'
@@ -33,24 +34,22 @@ export const CellComponent = observer(({cell, cellValueChange,
                         onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
                     />
                    }
-                   {cell.type.valueOf().toString() === DataType.DatePicker.valueOf().toString() &&
-                    <TextField
-                        type={cell.dateFormat}
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
-                  />
-                   }
-                    {cell.type.valueOf().toString() === DataType.Checkbox.valueOf().toString() &&
+                    {cell.type === DataType[DataType.Checkbox] &&
                      <Checkbox
                         checked={cell.value}
                         onChange={e => checkboxValueChange(e.target.checked, cell.id, tableId)}
                     />
                    }
                   <SelectCellComponent 
-                        cell= {cell}
-                        tableId= {tableId}
-                        selectValueChange={selectValueChange}
+                    cell= {cell}
+                    tableId= {tableId}
+                    selectValueChange={selectValueChange}
+                  />
+                  <DateComponent 
+                     cell= {cell}
+                     tableId= {tableId}
+                     handleDateChange={handleDateChange}
                   />
            </>
       );
-});
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { useStyles } from "@common/styles/styles"
 import { AdditionalTable } from '@common/models/AdditionalTable';
@@ -8,9 +7,10 @@ import { FormControl, InputLabel, Select } from '@material-ui/core';
 interface DateModeProps {
     table: AdditionalTable;
     dateFormatValueChange: any;
+    dateFormat: string;
 }
 
-export const DateModeComponent = observer(({table, dateFormatValueChange}: DateModeProps) => {
+export const DateModeComponent = ({table, dateFormatValueChange, dateFormat}: DateModeProps) => {
     const classes = useStyles();
 
     return (
@@ -22,15 +22,14 @@ export const DateModeComponent = observer(({table, dateFormatValueChange}: DateM
                     <Select
                         native
                         style={{marginBottom:'10px'}}
-                        value={ table.dateFormat }
+                        value={ dateFormat }
                         onChange={e => dateFormatValueChange(e.target.value, table.id)}
                     >
-                        <option value="date">Date</option>
-                        <option value="datetime-local">Date and Time</option>
-                        <option value="time">Time</option>
+                        <option value="MM/dd/yyyy">MM/dd/yyyy</option>
+                        <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                     </Select> 
                 </FormControl>
            </Container>
         </Container>
     );
-});
+}

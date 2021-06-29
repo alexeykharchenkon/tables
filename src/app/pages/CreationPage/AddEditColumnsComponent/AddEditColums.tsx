@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { FormControl, InputLabel, Select, TextField, IconButton } from '@material-ui/core';
 import { useStyles } from "@common/styles/styles"
@@ -14,31 +13,34 @@ interface AddEditColumnsProps {
     columnTypeValueChange: any;
     columnValueChange: any;
     addMode: boolean;
+    columnValue: string;
+    columnTypeValue: string;
 }
 
-export const AddEditColumns  = observer(({table, addOrEditColumn, 
-    columnTypeValueChange, columnValueChange, addMode} : AddEditColumnsProps) => {
+export const AddEditColumns  = ({table, addOrEditColumn, 
+    columnTypeValueChange, columnValueChange, addMode, columnValue,
+    columnTypeValue} : AddEditColumnsProps) => {
     const classes = useStyles();
-
     return (
             <Container className={classes.tableCoUp}>
-                   <TextField 
-                        label="Enter Column Name"
-                        value={ table.columnValue }
-                        onChange={e => columnValueChange(e.target.value, table.id)}
-                    />
+                <TextField 
+                    label="Enter Column Name"
+                    value={ columnValue }
+                    onChange={e => columnValueChange(e.target.value, table.id)}
+                />
                 <FormControl className={classes.tableCoSelect}>
                     <InputLabel>Column Type</InputLabel>
                     <Select
                         native
-                        value={ table.columnTypeValue }
+                        value={ columnTypeValue }
                         onChange={e => columnTypeValueChange(e.target.value, table.id)}
                     >
-                        <option value={DataType.Text}>Text</option>
-                        <option value={DataType.Number}>Number</option>
-                        <option value={DataType.DatePicker}>DatePicker</option>
-                        <option value={DataType.Select}>Select</option>
-                        <option value={DataType.Checkbox}>Checkbox</option>
+                        <option></option>
+                        <option value={DataType[DataType.Text]}>Text</option>
+                        <option value={DataType[DataType.Number]}>Number</option>
+                        <option value={DataType[DataType.DatePicker]}>DatePicker</option>
+                        <option value={DataType[DataType.Select]}>Select</option>
+                        <option value={DataType[DataType.Checkbox]}>Checkbox</option>
                     </Select>
                 </FormControl>
                 {!addMode &&  
@@ -55,4 +57,4 @@ export const AddEditColumns  = observer(({table, addOrEditColumn,
                 </IconButton>}
             </Container>
     );
-});
+}

@@ -1,11 +1,12 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { TableCell, TableRow, TableBody } from '@material-ui/core';
 import { AddEditRowComponent } from '../AddEditRowComponent/AddEditRowComponent';
 import { EditDeleteComponent } from '../EditDeleteComponent/EditDeleteComponent';
 import { CellComponent } from '../CellComponent/CellComponent';
 import { AdditionalTable } from '@app/common/models/AdditionalTable';
 import { TableData } from '@app/common/models/TableData';
+import { Cell } from '@app/common/models/Cell';
+import { Row } from '@app/common/models/Row';
 
 
 interface TableBodyProps {
@@ -18,11 +19,14 @@ interface TableBodyProps {
     activeTableId: string;
     selectValueChange: any;
     checkboxValueChange: any;
+    cells: Cell[];
+    rows: Row[];
+    handleDateChange: any;
 }
 
-export const TableBodyComponent = observer(({table, saveRow,
+export const TableBodyComponent = ({table, saveRow,
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange, checkboxValueChange}: TableBodyProps) => {
+    selectValueChange, checkboxValueChange, cells, rows, handleDateChange}: TableBodyProps) => {
     return (
             <TableBody>
                 {table.addEditRowMode && activeTableId === tabData.id && 
@@ -33,8 +37,10 @@ export const TableBodyComponent = observer(({table, saveRow,
                     cellValueChange={cellValueChange}
                     selectValueChange={selectValueChange}
                     checkboxValueChange={checkboxValueChange}
+                    cells = {cells}
+                    handleDateChange ={handleDateChange}
                 />}  
-                {tabData.rows && tabData.rows.map(row => (
+                {rows && rows.map(row => (
                      <TableRow key={row.id}>
                          {row.cells.map(cell => (
                             <TableCell key={cell.id}>  
@@ -54,4 +60,4 @@ export const TableBodyComponent = observer(({table, saveRow,
                 ))}   
             </TableBody>
       );
-});
+}

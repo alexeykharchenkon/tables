@@ -1,5 +1,4 @@
 import { Column } from "./Column";
-import { DataType } from "./DataType";
 import { Row } from "./Row";
 import { TableData } from "./TableData";
 
@@ -8,7 +7,7 @@ export interface AdditionalTable {
     title: string;
     columns: Column[];
     tablesData: TableData[];
-    columnTypeValue: DataType;
+    columnTypeValue: string;
     columnValue: string;
     editMode: boolean;
     columnId: string;

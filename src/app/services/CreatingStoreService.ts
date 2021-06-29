@@ -9,18 +9,18 @@ const requests = {
             title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (tables.length + 1).toString(), 
             columns: [],
             tablesData: [], 
-            columnTypeValue: DataType.Text,
+            columnTypeValue: "",
             columnValue: "",
             editMode: false,
             columnId: "",
             selectMode: false,
-            textMode: true,
+            textMode: false,
             dateMode: false,
             selectOptions: [],
             selectTypeValue: "0",
             forbiddenSymbols: "",
             multySelectMode: false,
-            dateFormat: "date",
+            dateFormat: "MM/dd/yyyy",
             selectValue: "",
             fillingMode: false,
             addEditRowMode: false,
@@ -31,34 +31,36 @@ const requests = {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             if(table.columns.length < 10){
-                table.columns.push({
-                    id: Guid.create().toString(),
-                    label: Boolean(table.columnValue) ? table.columnValue : "Column " + (table.columns.length + 1).toString(),
-                    type: table.columnTypeValue,
-                    selectOptions: table.selectOptions,
-                    forbiddenSymbols: table.forbiddenSymbols,
-                    multySelectMode: table.multySelectMode,
-                    dateFormat: table.dateFormat ?? "date",
-                });
+                if(table.columnTypeValue !== ""){
+                    table.columns.push({
+                        id: Guid.create().toString(),
+                        label: Boolean(table.columnValue) ? table.columnValue : "Column " + (table.columns.length + 1).toString(),
+                        type: table.columnTypeValue,
+                        selectOptions: table.selectOptions,
+                        forbiddenSymbols: table.forbiddenSymbols,
+                        multySelectMode: table.multySelectMode,
+                        dateFormat: table.dateFormat ?? "MM/dd/yyyy",
+                    });
 
-                table.tablesData.forEach(tabData => {
-                    tabData.rows.forEach(row => {
-                        row.cells.push({
-                            id: Guid.create().toString(),
-                            value: "",
-                            type: table.columnTypeValue,
-                            selectOptions: table.selectOptions,
-                            forbiddenSymbols: table.forbiddenSymbols,
-                            multySelectMode: table.multySelectMode,
-                            dateFormat: table.dateFormat,
+                    table.tablesData.forEach(tabData => {
+                        tabData.rows.forEach(row => {
+                            row.cells.push({
+                                id: Guid.create().toString(),
+                                value: "",
+                                type: table.columnTypeValue,
+                                selectOptions: table.selectOptions,
+                                forbiddenSymbols: table.forbiddenSymbols,
+                                multySelectMode: table.multySelectMode,
+                                dateFormat: table.dateFormat ?? "MM/dd/yyyy",
+                            });
                         });
                     });
-                });
+                }
             }
             requests.makeValuestoDefault(table);
         });
     },
-    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType, selectType: boolean) => {
+    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) => {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.editMode = true;
@@ -66,27 +68,27 @@ const requests = {
             table.columnId = columnId;
             table.columnTypeValue = type;
     
-            switch(type.valueOf().toString()){
-                case DataType.Select.valueOf().toString():
+            switch(type){
+                case DataType[DataType.Select]:
                     table.selectMode = true;
                     table.textMode = table.dateMode = false;
                     table.selectTypeValue = selectType ? "1" : "0"; 
                     table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
                     break;
-                case DataType.Text.valueOf().toString():
+                case DataType[DataType.Text]:
                     table.textMode = true;
                     table.selectMode = table.dateMode = false;
                     table.forbiddenSymbols = table.columns.filter(col => col.id === columnId)[0].forbiddenSymbols;
                     break;
-                case DataType.DatePicker.valueOf().toString():
+                case DataType[DataType.DatePicker]:
                     table.dateMode = true;
                     table.selectMode = table.textMode = false;
                     table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
                     break;
-                case DataType.Number.valueOf().toString():
+                case DataType[DataType.Number]:
                     table.selectMode = table.textMode =  table.dateMode = false;
                     break;
-                case DataType.Checkbox.valueOf().toString():
+                case DataType[DataType.Checkbox]:
                     table.selectMode = table.textMode =  table.dateMode = false;
                     break;
             }    
@@ -135,30 +137,35 @@ const requests = {
     addSelectField: (tables: AdditionalTable[], tabId: string) => {
         tables.filter(tab => tab.id === tabId)
         .forEach(tab => {
-            tab.selectOptions.push(
-                Boolean(tab.selectValue) ? tab.selectValue : "Select " + (tab.selectOptions.length + 1).toString(),
-            );
-            tab.selectValue = "";
+            if(tab.selectValue !== "") {
+                tab.selectOptions.push(
+                   tab.selectValue,
+                );
+                tab.selectValue = "";
+            }
         });
     },
-    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: DataType) => {
-        switch(value.valueOf().toString()){
-            case DataType.Text.valueOf().toString():
+    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: string) => {
+        switch(value){
+            case DataType[DataType.Text]:
                 requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].textMode = true;
                 break;
-            case DataType.DatePicker.valueOf().toString():
+            case DataType[DataType.DatePicker]:
                 requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].dateMode = true;
                 break;
-            case DataType.Select.valueOf().toString():
+            case DataType[DataType.Select]:
                 requests.makeModesFalse(tables, tabId);
                 tables.filter(tab => tab.id === tabId)[0].selectMode = true;
                 break;
-            case DataType.Number.valueOf().toString():
+            case DataType[DataType.Number]:
                 requests.makeModesFalse(tables, tabId);
                 break;
-            case DataType.Checkbox.valueOf().toString():
+            case DataType[DataType.Checkbox]:
+                requests.makeModesFalse(tables, tabId);
+                break;
+            default:
                 requests.makeModesFalse(tables, tabId);
                 break;
         }
@@ -167,10 +174,10 @@ const requests = {
         table.editMode = false;
         table.columnValue = "";
         table.columnId = "";
-        table.columnTypeValue = DataType.Text;
+        table.columnTypeValue = "";
         table.selectMode = false;
         table.dateMode = false;
-        table.textMode = true;
+        table.textMode = false;
         table.selectOptions = [];
         table.forbiddenSymbols = "";
         table.multySelectMode = false;
@@ -187,11 +194,11 @@ const requests = {
 export const creatingStoreService = {
     createTable: (tables: AdditionalTable[], tableTitleValue: string) => requests.createTable(tables, tableTitleValue),
     addColumn: (tables: AdditionalTable[], tableId: string)=> requests.addColumn(tables, tableId),
-    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: DataType, selectType: boolean)=>requests.editColumn(tables, tableId, columnId, value, type, selectType),
+    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean)=>requests.editColumn(tables, tableId, columnId, value, type, selectType),
     saveEditedColumn: (tables: AdditionalTable[], tableId: string) => requests.saveEditedColumn(tables, tableId),
     deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(tables, tableId, columnId),
     addSelectField: (tables: AdditionalTable[], tabId: string) => requests.addSelectField(tables, tabId),
-    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: DataType) => requests.switchSelectMode(tables, tabId, value),
+    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: string) => requests.switchSelectMode(tables, tabId, value),
     makeValuestoDefault: (table: AdditionalTable) => requests.makeValuestoDefault(table),
     makeModesFalse: (tables: AdditionalTable[], tabId: string) => requests.makeModesFalse(tables, tabId),
 }

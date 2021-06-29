@@ -6,6 +6,8 @@ import { TableComponent } from './TableComponent/TableComponent';
 import { AdditionalTable } from '@app/common/models/AdditionalTable';
 import { TableData } from '@app/common/models/TableData';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Cell } from '@app/common/models/Cell';
+import { Row } from '@app/common/models/Row';
 
 
 interface FillingTableProps {
@@ -20,11 +22,15 @@ interface FillingTableProps {
     deleteTable: any;
     selectValueChange: any;
     checkboxValueChange: any;
+    cells: Cell[];
+    rows: Row[];
+    handleDateChange: any;
 }
 
 export const FillingTableComponent = ({table, addRow, saveRow, 
     cellValueChange, editRow, deleteRow, tabData, activeTableId, 
-    deleteTable, selectValueChange, checkboxValueChange}: FillingTableProps) => {
+    deleteTable, selectValueChange, checkboxValueChange, cells, rows,
+    handleDateChange}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
@@ -49,6 +55,9 @@ export const FillingTableComponent = ({table, addRow, saveRow,
                     activeTableId={activeTableId}
                     selectValueChange={selectValueChange}
                     checkboxValueChange={checkboxValueChange}
+                    cells={cells}
+                    rows={rows}
+                    handleDateChange={handleDateChange}
                 />
             </TableContainer>
         </Container>

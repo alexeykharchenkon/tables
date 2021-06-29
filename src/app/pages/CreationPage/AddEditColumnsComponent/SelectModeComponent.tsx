@@ -1,12 +1,10 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { ListItemText, TextField, IconButton, List, Select, FormControl, InputLabel } from '@material-ui/core';
+import {TextField, IconButton, List, Select, FormControl, InputLabel } from '@material-ui/core';
 import { useStyles } from "@common/styles/styles"
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { AdditionalTable } from '@common/models/AdditionalTable';
-import { ListItem } from '@material-ui/core';
+import { SelectModeItemComponent } from './SelectModeItemComponent';
 
 interface SelectModeProps {
     table: AdditionalTable;
@@ -14,10 +12,14 @@ interface SelectModeProps {
     selectValueChange: any;
     deleteSelectField: any;
     selectModeValueChange: any;
+    selectValue: string;
+    selectOptions: string[];
+    selectTypeValue: string;
 }
 
-export const SelectModeComponent = observer(({table, addSelectField, 
-    selectValueChange, deleteSelectField, selectModeValueChange} : SelectModeProps) => {
+export const SelectModeComponent = ({table, addSelectField, 
+    selectValueChange, deleteSelectField, selectModeValueChange,
+    selectValue, selectOptions, selectTypeValue} : SelectModeProps) => {
     const classes = useStyles();
 
     return (
@@ -27,7 +29,7 @@ export const SelectModeComponent = observer(({table, addSelectField,
                 <Container className={classes.addSelectLeftUp}>
                     <TextField 
                         label="Enter Select Option Name"
-                        value={ table.selectValue }
+                        value={ selectValue }
                         onChange={e => selectValueChange(e.target.value, table.id)}
                     />
                     <IconButton onClick={() => addSelectField(table.id)}>
@@ -36,13 +38,14 @@ export const SelectModeComponent = observer(({table, addSelectField,
                 </Container>
                 <Container>
                 <List>
-                    {table.selectOptions.map( (s, index) => (
-                            <ListItem key={index}>
-                                <ListItemText primary={s}/>
-                                <IconButton onClick={() => {deleteSelectField(table.id, index)}}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItem>
+                    {selectOptions.map((value, index) => (
+                            <SelectModeItemComponent 
+                                key={index}
+                                table={table}
+                                value={value}
+                                idx={index}
+                                deleteSelectField={deleteSelectField}
+                            />
                     ))}
                 </List>
                 </Container>
@@ -54,7 +57,7 @@ export const SelectModeComponent = observer(({table, addSelectField,
                     <Select
                         native
                         style={{minWidth:'150px'}}
-                        value={ table.selectTypeValue }
+                        value={ selectTypeValue }
                         onChange={e => selectModeValueChange(e.target.value, table.id)}
                     >
                             <option value="0">Single</option>
@@ -64,4 +67,4 @@ export const SelectModeComponent = observer(({table, addSelectField,
             </Container>
         </Container>
     );
-});
+}

@@ -61,12 +61,16 @@ const requests = {
             table.addEditRowMode = true;
             table.columns.forEach(column => {
                 var val;
-                switch(column.type.valueOf().toString()) {
-                    case DataType.Select.valueOf().toString():
+                switch(column.type) {
+                    case DataType[DataType.Select]:
                         val = [""];
                         break;
-                    case DataType.Checkbox.valueOf().toString():
+                    case DataType[DataType.Checkbox]:
                         val = false;
+                        break;
+                    case DataType[DataType.DatePicker]:
+                        val = new Date('2014-08-18');
+                        break;
                 } 
                 table.activeRow.cells.push({
                     id: Guid.create().toString(),

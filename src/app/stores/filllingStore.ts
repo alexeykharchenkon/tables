@@ -40,7 +40,7 @@ export class FillingStore {
         this.activeTableId = tableDataId;
     }
 
-    deleteRow = (tableId: string, tableDataId: string, rowId: string) => {
+    deleteRow = (tableId: string, tableDataId: string, rowId: string) => {      
         fillingStoreService.deleteRowById(this.tableStore.tables, tableId, tableDataId, rowId);
         tableService.save(this.tableStore.tables);
     }
@@ -50,13 +50,15 @@ export class FillingStore {
         tableService.save(this.tableStore.tables);
     }
 
-    cellValueChange = (value: string, cellId: string, tabId: string, cellType: DataType) => {        
+    cellValueChange = (value: string, cellId: string, tabId: string, cellType: string) => {        
         this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
             table.activeRow.cells.filter(cell => cell.id === cellId)
                 .forEach(cell => {
-                    cell.value = cellType.valueOf().toString() === DataType.Text.valueOf().toString() ?
+                    cell.value = cellType === DataType[DataType.Text] ?
                     value = fillingStoreService.checkForbidSymbols(value, cell.forbiddenSymbols): value;
                 });
+
+            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
         }); 
     }
 
@@ -82,5 +84,20 @@ export class FillingStore {
             table.activeRow.cells.filter(cell => cell.id === cellId)
                 .forEach(cell => {cell.value = value;});
         }); 
+    }
+    
+    handleDateChange = (value: Date, cellId: string, tabId: string) => {
+        this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
+            table.activeRow.cells.filter(cell => cell.id === cellId)
+                .forEach(cell => {
+                    
+                    cell.value = value;
+                
+                });
+            console.log(value);
+            
+            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
+        }); 
+
     }
 }

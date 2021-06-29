@@ -1,8 +1,6 @@
-import { DataType } from "./DataType";
-
 export interface Cell {
     id: string;
-    type: DataType;
+    type: string;
     value: any;
     selectOptions: string[];
     forbiddenSymbols: string;
