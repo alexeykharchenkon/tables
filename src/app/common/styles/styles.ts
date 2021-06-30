@@ -140,4 +140,13 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    addDate: {
+        background: '#efffff',
+        marginBottom: '10px',
+        border: '1px solid #ededee',
+        boredRadius: 5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+    },
   }));

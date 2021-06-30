@@ -18,6 +18,7 @@ const requests = {
                 selectMode: false,
                 textMode: false,
                 dateMode: false,
+                numberMode: false,
                 selectOptions: [],
                 selectTypeValue: "0",
                 forbiddenSymbols: "",
@@ -27,6 +28,11 @@ const requests = {
                 fillingMode: false,
                 addEditRowMode: false,
                 activeRow: {id: "", cells: []},
+                isRequired: false,
+                maxLength: 10000,
+                maxItemsSelected: 10000,
+                minValue: -10000,
+                maxValue: 10000,
             });
         });
 

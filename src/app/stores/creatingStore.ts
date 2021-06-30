@@ -18,10 +18,6 @@ export class ColumnStore {
         tableService.save(this.tableStore.tables);
     }
 
-    tableTitleValueOnChange = (value: string) => {
-        this.tableTitleValue = value;
-    }
-
     deleteTable = (tableId: string) => {
         this.tableStore.tables = this.tableStore.tables.filter(tab => tab.id !== tableId);
         tableService.save(this.tableStore.tables);
@@ -30,15 +26,6 @@ export class ColumnStore {
     addColumn = (tableId: string) => {
         creatingStoreService.addColumn(this.tableStore.tables, tableId);
         tableService.save(this.tableStore.tables);
-    }
-
-    columnTypeValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnTypeValue = value;
-        creatingStoreService.switchSelectMode(this.tableStore.tables, tabId, value);
-    }
-
-    columnValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnValue = value;
     }
 
     deleteColumn = (tableId: string, columnId: string) => {
@@ -59,15 +46,6 @@ export class ColumnStore {
         creatingStoreService.addSelectField(this.tableStore.tables, tabId);
     }
 
-    selectValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectValue = value;
-    }
-
-    selectModeValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectTypeValue = value;
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].multySelectMode = value === "1" ? true : false;
-     }
-
     deleteSelectField = (tabId: string, index: number) => {
         this.tableStore.tables.filter(tab => tab.id === tabId)
         .forEach(tab => {
@@ -75,11 +53,34 @@ export class ColumnStore {
         });  
     }
 
-    forbiddenValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].forbiddenSymbols = value;
-     }
-
-     dateFormatValueChange = (value: string, tabId: string) => {
-        this.tableStore.tables.filter(tab => tab.id === tabId)[0].dateFormat = value;
+     OnValueChange = (value: any, tabId: string, changeType: string) => {
+         switch(changeType){
+             case "ISREQUIREDCHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].isRequired = value.target.checked;
+                break;
+             case "FORRBIDDENCHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].forbiddenSymbols = value.target.value;
+                break;
+            case "DATEFORMATCHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].dateFormat = value.target.value;
+                break;
+            case "SELECTMODECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectTypeValue = value.target.value;
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].multySelectMode = value.target.value === "1" ? true : false;        
+                break;
+           case "SELECTVALUECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].selectValue = value.target.value;
+                break;
+            case "COLUMNVALUECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnValue = value.target.value;
+                break;
+            case "COLUMNTYPEVALUECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].columnTypeValue = value.target.value;
+                creatingStoreService.switchSelectMode(this.tableStore.tables, tabId, value.target.value);
+                break;
+            case "TITLECHANGE":
+                this.tableTitleValue = value.target.value;
+                break;
+         } 
      }
 }

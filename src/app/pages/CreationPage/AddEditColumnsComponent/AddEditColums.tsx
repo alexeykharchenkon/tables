@@ -10,30 +10,28 @@ import { AdditionalTable } from '@common/models/AdditionalTable';
 interface AddEditColumnsProps {
     table: AdditionalTable;
     addOrEditColumn: any;
-    columnTypeValueChange: any;
-    columnValueChange: any;
+    OnValueChange: any;
     addMode: boolean;
     columnValue: string;
     columnTypeValue: string;
 }
 
-export const AddEditColumns  = ({table, addOrEditColumn, 
-    columnTypeValueChange, columnValueChange, addMode, columnValue,
-    columnTypeValue} : AddEditColumnsProps) => {
+export const AddEditColumns  = ({table, addOrEditColumn, OnValueChange, 
+    addMode, columnValue, columnTypeValue} : AddEditColumnsProps) => {
     const classes = useStyles();
     return (
             <Container className={classes.tableCoUp}>
                 <TextField 
                     label="Enter Column Name"
                     value={ columnValue }
-                    onChange={e => columnValueChange(e.target.value, table.id)}
+                    onChange={e => OnValueChange(e, table.id, "COLUMNVALUECHANGE")}
                 />
                 <FormControl className={classes.tableCoSelect}>
                     <InputLabel>Column Type</InputLabel>
                     <Select
                         native
                         value={ columnTypeValue }
-                        onChange={e => columnTypeValueChange(e.target.value, table.id)}
+                        onChange={e => OnValueChange(e, table.id, "COLUMNTYPEVALUECHANGE")}
                     >
                         <option></option>
                         <option value={DataType[DataType.Text]}>Text</option>
@@ -43,18 +41,10 @@ export const AddEditColumns  = ({table, addOrEditColumn,
                         <option value={DataType[DataType.Checkbox]}>Checkbox</option>
                     </Select>
                 </FormControl>
-                {!addMode &&  
-                    <IconButton 
-                        onClick={() => addOrEditColumn(table.id)}
-                    >
-                        <SaveIcon />
-                    </IconButton>}
-                {addMode &&  
-                <IconButton 
-                    onClick={() => addOrEditColumn(table.id)}
-                >
-                    <AddCircleOutlineIcon />
-                </IconButton>}
+                <IconButton onClick={() => addOrEditColumn(table.id)}>
+                    {!addMode && <SaveIcon />}
+                    {addMode && <AddCircleOutlineIcon />}
+                </IconButton>
             </Container>
     );
 }

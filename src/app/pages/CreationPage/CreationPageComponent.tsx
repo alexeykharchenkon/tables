@@ -16,7 +16,7 @@ export const CreationPageComponent = observer(() => {
              <h2>Tables</h2>
             <CreateTableComponent
                 tableTitleValue ={creatingStore.tableTitleValue}
-                tableTitleValueOnChange={creatingStore.tableTitleValueOnChange}
+                OnValueChange={creatingStore.OnValueChange}
                 createTable={creatingStore.createTable}
             />
             <List>
@@ -26,22 +26,18 @@ export const CreationPageComponent = observer(() => {
                             <TableComponent 
                                 table = {table} 
                                 addColumn = {creatingStore.addColumn}
-                                columnTypeValueChange = {creatingStore.columnTypeValueChange}
-                                columnValueChange = {creatingStore.columnValueChange}
                                 deleteColumn = {creatingStore.deleteColumn}
                                 editColumn = {creatingStore.editColumn}
                                 saveEditedColumn = {creatingStore.saveEditedColumn}
                                 deleteTable = {creatingStore.deleteTable}
                                 addSelectField = {creatingStore.addSelectField}
-                                selectValueChange ={creatingStore.selectValueChange}
                                 deleteSelectField={creatingStore.deleteSelectField}
-                                selectModeValueChange={creatingStore.selectModeValueChange}
-                                forbiddenValueChange={creatingStore.forbiddenValueChange}
-                                dateFormatValueChange={creatingStore.dateFormatValueChange}
+                                OnValueChange ={creatingStore.OnValueChange}    
                                 selectMode={table.selectMode}
                                 editMode={table.editMode}
                                 textMode={table.textMode}
                                 dateMode={table.dateMode}
+                                numberMode={table.numberMode}
                                 columnValue={table.columnValue}
                                 columnTypeValue={table.columnTypeValue}
                                 columns={table.columns}
@@ -49,7 +45,13 @@ export const CreationPageComponent = observer(() => {
                                 selectValue = {table.selectValue}
                                 selectOptions = {table.selectOptions}
                                 selectTypeValue ={table.selectTypeValue}   
-                                forbiddenSymbols={table.forbiddenSymbols}                   />
+                                forbiddenSymbols={table.forbiddenSymbols}  
+                                isRequired ={table.isRequired}
+                                maxLength={table.maxLength}
+                                maxItemsSelected={table.maxItemsSelected}
+                                minValue={table.minValue}
+                                maxValue={table.maxValue}
+                             />
                          </ListItem>
                     );
                  })}

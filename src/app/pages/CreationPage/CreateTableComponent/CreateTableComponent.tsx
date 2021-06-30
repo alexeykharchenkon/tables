@@ -6,19 +6,19 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 interface CreateTableProps {
     tableTitleValue: string;
-    tableTitleValueOnChange: any;
+    OnValueChange: any;
     createTable: any;
 }
 
 export const CreateTableComponent = React.memo(({tableTitleValue, 
-    tableTitleValueOnChange, createTable} : CreateTableProps) => {
+    OnValueChange, createTable} : CreateTableProps) => {
     const classes = useStyles();
     return (
             <Container className={classes.creationCoUp}>
                 <TextField 
                     label="Enter Table Title" 
                     value={tableTitleValue}
-                    onChange={e => tableTitleValueOnChange(e.target.value)}
+                    onChange={e => OnValueChange(e, "", "TITLECHANGE")}
                 />
                 <IconButton 
                     onClick={() => createTable()}

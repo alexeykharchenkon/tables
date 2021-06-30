@@ -16,6 +16,7 @@ const requests = {
             selectMode: false,
             textMode: false,
             dateMode: false,
+            numberMode: false,
             selectOptions: [],
             selectTypeValue: "0",
             forbiddenSymbols: "",
@@ -25,6 +26,11 @@ const requests = {
             fillingMode: false,
             addEditRowMode: false,
             activeRow: {id: "", cells: []},
+            isRequired: false,
+            maxLength: 10000,
+            maxItemsSelected: 10000,
+            minValue: -10000,
+            maxValue: 10000,
         });
     },
     addColumn: (tables: AdditionalTable[], tableId: string) => {
@@ -40,6 +46,11 @@ const requests = {
                         forbiddenSymbols: table.forbiddenSymbols,
                         multySelectMode: table.multySelectMode,
                         dateFormat: table.dateFormat ?? "dd/MM/yyyy",
+                        isRequired: table.isRequired,
+                        maxLength: table.maxLength,
+                        maxItemsSelected: table.maxItemsSelected,
+                        minValue: table.minValue,
+                        maxValue: table.maxValue,
                     });
 
                     table.tablesData.forEach(tabData => {
@@ -65,6 +76,11 @@ const requests = {
                                 forbiddenSymbols: table.forbiddenSymbols,
                                 multySelectMode: table.multySelectMode,
                                 dateFormat: table.dateFormat ?? "dd/MM/yyyy",
+                                isRequired: table.isRequired,
+                                maxLength: table.maxLength,
+                                maxItemsSelected: table.maxItemsSelected,
+                                minValue: table.minValue,
+                                maxValue: table.maxValue,
                             });
                         });
                     });
@@ -84,25 +100,30 @@ const requests = {
             switch(type){
                 case DataType[DataType.Select]:
                     table.selectMode = true;
-                    table.textMode = table.dateMode = false;
+                    table.numberMode =table.textMode = table.dateMode = false;
                     table.selectTypeValue = selectType ? "1" : "0"; 
                     table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
+                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
                 case DataType[DataType.Text]:
                     table.textMode = true;
-                    table.selectMode = table.dateMode = false;
+                    table.numberMode = table.selectMode = table.dateMode = false;
                     table.forbiddenSymbols = table.columns.filter(col => col.id === columnId)[0].forbiddenSymbols;
+                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
                 case DataType[DataType.DatePicker]:
                     table.dateMode = true;
-                    table.selectMode = table.textMode = false;
+                    table.numberMode = table.selectMode = table.textMode = false;
                     table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
                     break;
                 case DataType[DataType.Number]:
-                    table.selectMode = table.textMode =  table.dateMode = false;
+                    table.numberMode = true;
+                    table.selectMode = table.textMode = table.dateMode = false;
+                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
                 case DataType[DataType.Checkbox]:
-                    table.selectMode = table.textMode =  table.dateMode = false;
+                    table.numberMode = table.selectMode = table.textMode =  table.dateMode = false;
+                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
             }    
         });
@@ -118,6 +139,7 @@ const requests = {
                  col.forbiddenSymbols = table.forbiddenSymbols;
                  col.multySelectMode = table.multySelectMode;
                  col.dateFormat = table.dateFormat;
+                 col.isRequired = table.isRequired;
                 });
 
             const idx = table.columns.findIndex(col => col.id === table.columnId);
@@ -128,6 +150,7 @@ const requests = {
                     row.cells[idx].forbiddenSymbols = table.forbiddenSymbols;
                     row.cells[idx].multySelectMode = table.multySelectMode;
                     row.cells[idx].dateFormat = table.dateFormat;
+                    row.cells[idx].isRequired = table.isRequired;
                 });
             });
 
@@ -174,6 +197,7 @@ const requests = {
                 break;
             case DataType[DataType.Number]:
                 requests.makeModesFalse(tables, tabId);
+                tables.filter(tab => tab.id === tabId)[0].numberMode = true;
                 break;
             case DataType[DataType.Checkbox]:
                 requests.makeModesFalse(tables, tabId);
@@ -191,16 +215,23 @@ const requests = {
         table.selectMode = false;
         table.dateMode = false;
         table.textMode = false;
+        table.numberMode = false;
         table.selectOptions = [];
         table.forbiddenSymbols = "";
         table.multySelectMode = false;
         table.dateFormat = "";
         table.selectTypeValue = "0";
+        table.isRequired = false;
+        table.maxLength = 10000;
+        table.maxItemsSelected = 10000;
+        table.minValue = -10000;
+        table.maxValue = 10000;
     },
     makeModesFalse: (tables: AdditionalTable[], tabId: string) => {
         tables.filter(tab => tab.id === tabId)[0].selectMode = false;
         tables.filter(tab => tab.id === tabId)[0].dateMode = false;
         tables.filter(tab => tab.id === tabId)[0].textMode = false;
+        tables.filter(tab => tab.id === tabId)[0].numberMode = false;
     },
 }
 

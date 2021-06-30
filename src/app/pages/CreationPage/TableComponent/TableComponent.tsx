@@ -11,22 +11,17 @@ import { Column } from '@common/models/Column';
 interface TableProps {
     table: AdditionalTable;
     addColumn: any;
-    columnTypeValueChange: any;
-    columnValueChange: any;
     deleteColumn: any;
     editColumn: any;
     saveEditedColumn: any;
     deleteTable: any;
     addSelectField: any;
-    selectValueChange: any;
     deleteSelectField: any;
-    selectModeValueChange: any;
-    forbiddenValueChange: any;
-    dateFormatValueChange: any;
     selectMode: boolean;
     editMode: boolean;
     textMode: boolean;
     dateMode: boolean;
+    numberMode: boolean;
     columnValue: string;
     columnTypeValue: string;
     columns: Column[];
@@ -35,15 +30,21 @@ interface TableProps {
     selectOptions: string[];
     selectTypeValue: string;
     forbiddenSymbols: string;
+    isRequired: boolean;
+    OnValueChange: any;
+    maxLength: number;
+    maxItemsSelected: number;
+    minValue: number;
+    maxValue: number;
 }
 
-export const TableComponent = React.memo(({table, addColumn, columnTypeValueChange, 
-    columnValueChange, deleteColumn, editColumn, saveEditedColumn, 
-    deleteTable, addSelectField, selectValueChange, deleteSelectField,
-    selectModeValueChange, forbiddenValueChange, dateFormatValueChange, 
-    selectMode, editMode, textMode, dateMode,
+export const TableComponent = React.memo(({table, addColumn, deleteColumn,
+    editColumn, saveEditedColumn, deleteTable, addSelectField, 
+    deleteSelectField, selectMode, editMode, textMode, dateMode,
     columnValue, columnTypeValue, columns, dateFormat,
-    selectValue, selectOptions, selectTypeValue, forbiddenSymbols} : TableProps) => {
+    selectValue, selectOptions, selectTypeValue, forbiddenSymbols,
+    isRequired,  OnValueChange, numberMode,
+    maxLength, maxItemsSelected, minValue, maxValue} : TableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.tableCo}>
@@ -57,19 +58,15 @@ export const TableComponent = React.memo(({table, addColumn, columnTypeValueChan
             <AddEditColumnsComponent 
                 table = {table} 
                 addColumn = {addColumn}
-                columnTypeValueChange = {columnTypeValueChange}
-                columnValueChange = {columnValueChange}
                 saveEditedColumn ={saveEditedColumn}
                 addSelectField = {addSelectField}
-                selectValueChange ={selectValueChange}
                 deleteSelectField={deleteSelectField}
-                selectModeValueChange={selectModeValueChange}
-                forbiddenValueChange={forbiddenValueChange}
-                dateFormatValueChange={dateFormatValueChange}
+                OnValueChange={OnValueChange}
                 selectMode={selectMode}
                 editMode={editMode}
                 textMode={textMode}
                 dateMode={dateMode}
+                numberMode={numberMode}
                 columnValue={columnValue}
                 columnTypeValue={columnTypeValue}
                 dateFormat={dateFormat}
@@ -77,6 +74,11 @@ export const TableComponent = React.memo(({table, addColumn, columnTypeValueChan
                 selectOptions = {selectOptions}
                 selectTypeValue ={selectTypeValue}
                 forbiddenSymbols={forbiddenSymbols}
+                isRequired ={isRequired}
+                maxLength={table.maxLength}
+                maxItemsSelected={table.maxItemsSelected}
+                minValue={table.minValue}
+                maxValue={table.maxValue}
             />
             <TableBodyComponent
                  table ={table}

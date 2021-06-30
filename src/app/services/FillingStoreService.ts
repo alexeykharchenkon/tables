@@ -80,6 +80,11 @@ const requests = {
                     forbiddenSymbols: column.forbiddenSymbols,
                     multySelectMode: column.multySelectMode,
                     dateFormat: column.dateFormat,
+                    isRequired: table.isRequired,
+                    maxLength: table.maxLength,
+                    maxItemsSelected: table.maxItemsSelected,
+                    minValue: table.minValue,
+                    maxValue: table.maxValue,
                 });
             });
         });

@@ -2,19 +2,21 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { useStyles } from "@common/styles/styles"
 import { AdditionalTable } from '@common/models/AdditionalTable';
-import { FormControl, InputLabel, Select } from '@material-ui/core';
+import { Checkbox, FormControlLabel, FormControl, InputLabel, Select } from '@material-ui/core';
 
 interface DateModeProps {
     table: AdditionalTable;
-    dateFormatValueChange: any;
     dateFormat: string;
+    isRequired: boolean;
+    OnValueChange: any;
 }
 
-export const DateModeComponent = ({table, dateFormatValueChange, dateFormat}: DateModeProps) => {
+export const DateModeComponent = ({table, dateFormat,
+    isRequired, OnValueChange}: DateModeProps) => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.addSelect}>
+        <Container className={classes.addDate}>
              <Container>
                 <h3>Choose Date Format</h3>
                 <FormControl className={classes.tableCoSelect}>
@@ -23,7 +25,7 @@ export const DateModeComponent = ({table, dateFormatValueChange, dateFormat}: Da
                         native
                         style={{marginBottom:'10px'}}
                         value={ dateFormat }
-                        onChange={e => dateFormatValueChange(e.target.value, table.id)}
+                        onChange={e => OnValueChange(e, table.id, "DATEFORMATCHANGE")}
                     >
                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                         <option value="MM/dd/yyyy">MM/dd/yyyy</option>
@@ -31,6 +33,17 @@ export const DateModeComponent = ({table, dateFormatValueChange, dateFormat}: Da
                         <option value="yyyy/dd/MM">yyyy/dd/MM</option>
                     </Select> 
                 </FormControl>
+            </Container>
+            <Container>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={isRequired}
+                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                    /> 
+                    }
+                    label="Is Required"
+                /> 
            </Container>
         </Container>
     );

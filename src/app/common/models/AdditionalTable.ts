@@ -14,6 +14,7 @@ export interface AdditionalTable {
     selectMode: boolean;
     textMode: boolean;
     dateMode: boolean;
+    numberMode: boolean;
     selectOptions: string[];
     selectTypeValue: string;
     forbiddenSymbols: string;
@@ -23,4 +24,9 @@ export interface AdditionalTable {
     fillingMode: boolean;
     addEditRowMode: boolean;
     activeRow: Row;
+    isRequired: boolean;
+    maxLength: number;
+    maxItemsSelected: number;
+    minValue: number;
+    maxValue: number;
 }

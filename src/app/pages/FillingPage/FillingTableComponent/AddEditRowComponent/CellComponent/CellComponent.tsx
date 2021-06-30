@@ -22,6 +22,7 @@ export const CellComponent = ({cell, cellValueChange,
                         label = 'Enter Data'
                         value={cell.value}
                         onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
+                        helperText={'Empty'}
                     />
                    }
                    {cell.type === DataType[DataType.Number] &&

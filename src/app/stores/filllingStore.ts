@@ -89,8 +89,8 @@ export class FillingStore {
                 .forEach(tabData => {
                     tabData.rows.filter(row => row.id === rowId)   
                     .forEach(row => {
-                        row.cells.filter(cel => cel.id === cellId).
-                            forEach(cel => {
+                        row.cells.filter(cel => cel.id === cellId)
+                            .forEach(cel => {
                                 cel.value = value;
                             });                           
                     });

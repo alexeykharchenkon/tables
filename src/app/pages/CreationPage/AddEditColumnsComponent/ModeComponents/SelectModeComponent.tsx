@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import {TextField, IconButton, List, Select, FormControl, InputLabel } from '@material-ui/core';
+import {TextField, FormControlLabel, IconButton, List, Select, FormControl, InputLabel, Checkbox } from '@material-ui/core';
 import { useStyles } from "@common/styles/styles"
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { AdditionalTable } from '@common/models/AdditionalTable';
@@ -9,17 +9,18 @@ import { SelectModeItemComponent } from './SelectModeItemComponent';
 interface SelectModeProps {
     table: AdditionalTable;
     addSelectField: any;
-    selectValueChange: any;
     deleteSelectField: any;
-    selectModeValueChange: any;
     selectValue: string;
     selectOptions: string[];
     selectTypeValue: string;
+    isRequired: boolean;
+    maxItemsSelected: number;
+    OnValueChange: any;
 }
 
 export const SelectModeComponent = ({table, addSelectField, 
-    selectValueChange, deleteSelectField, selectModeValueChange,
-    selectValue, selectOptions, selectTypeValue} : SelectModeProps) => {
+    deleteSelectField, selectValue, selectOptions, selectTypeValue, 
+    isRequired, OnValueChange, maxItemsSelected} : SelectModeProps) => {
     const classes = useStyles();
 
     return (
@@ -30,7 +31,7 @@ export const SelectModeComponent = ({table, addSelectField,
                     <TextField 
                         label="Enter Select Option Name"
                         value={ selectValue }
-                        onChange={e => selectValueChange(e.target.value, table.id)}
+                        onChange={e => OnValueChange(e, table.id, "SELECTVALUECHANGE")}
                     />
                     <IconButton onClick={() => addSelectField(table.id)}>
                         <AddCircleOutlineIcon />
@@ -58,12 +59,21 @@ export const SelectModeComponent = ({table, addSelectField,
                         native
                         style={{minWidth:'150px'}}
                         value={ selectTypeValue }
-                        onChange={e => selectModeValueChange(e.target.value, table.id)}
+                        onChange={e => OnValueChange(e, table.id, "SELECTMODECHANGE")}
                     >
                             <option value="0">Single</option>
                             <option value="1">Multy</option>
                     </Select> 
                 </FormControl>
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            checked={isRequired}
+                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                    /> 
+                    }
+                    label="Is Required"
+                /> 
             </Container>
         </Container>
     );

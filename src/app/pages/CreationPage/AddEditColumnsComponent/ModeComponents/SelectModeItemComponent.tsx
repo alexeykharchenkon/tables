@@ -12,14 +12,13 @@ interface SelectModeItemProps {
 }
 
 export const SelectModeItemComponent = ({table, value, idx,
-    deleteSelectField } : SelectModeItemProps) => {
+    deleteSelectField} : SelectModeItemProps) => {
 
     return (
         <ListItem>
-                <TextField 
-                    value={value}
-                />
-                               
+            <TextField 
+                value={value}
+            />         
             <IconButton onClick={() => deleteSelectField(table.id, idx)}>
                 <DeleteIcon />
             </IconButton>
