@@ -45,6 +45,8 @@ export const FillingPageComponent = observer(() => {
                                         cells={table.activeRow.cells}
                                         rows={tabData.rows}
                                         handleDateChange={fillingStore.handleDateChange}
+                                        formatDate= {fillingStore.formatDate}
+                                        formatSelect={fillingStore.formatSelect}
                                     />
                                 </ListItem>
                              ))}

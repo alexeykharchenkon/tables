@@ -21,11 +21,14 @@ interface TableProps {
     cells: Cell[];
     rows: Row[];
     handleDateChange: any;
+    formatDate: any;
+    formatSelect: any;
 }
 
 export const TableComponent = React.memo(({table, saveRow, 
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange, checkboxValueChange, cells, rows, handleDateChange}: TableProps) => {
+    selectValueChange, checkboxValueChange, cells, rows, handleDateChange,
+    formatDate, formatSelect}: TableProps) => {
         return (
         <Table size="small">
             <TableHeadComponent table={table}/>
@@ -38,10 +41,12 @@ export const TableComponent = React.memo(({table, saveRow,
                 tabData = {tabData}
                 activeTableId = {activeTableId}
                 selectValueChange ={selectValueChange}
-                checkboxValueChange= {checkboxValueChange}
+                checkboxValueChange={checkboxValueChange}
                 cells={cells}
                 rows={rows}
                 handleDateChange={handleDateChange}
+                formatDate={formatDate}
+                formatSelect={formatSelect}
             />
         </Table>
       );

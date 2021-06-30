@@ -10,13 +10,11 @@ interface CellProps {
     cellValueChange: any;
     tableId: string;
     selectValueChange: any;
-    checkboxValueChange: any;
     handleDateChange: any;
 }
 
 export const CellComponent = ({cell, cellValueChange, 
-    tableId, selectValueChange, checkboxValueChange,
-        handleDateChange}: CellProps) => {    
+    tableId, selectValueChange, handleDateChange}: CellProps) => {    
         return (
         <>
                    {cell.type === DataType[DataType.Text] &&
@@ -36,8 +34,7 @@ export const CellComponent = ({cell, cellValueChange,
                    }
                     {cell.type === DataType[DataType.Checkbox] &&
                      <Checkbox
-                        checked={cell.value}
-                        onChange={e => checkboxValueChange(e.target.checked, cell.id, tableId)}
+                        checked={true}
                     />
                    }
                   <SelectCellComponent 

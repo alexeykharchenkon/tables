@@ -22,11 +22,14 @@ interface TableBodyProps {
     cells: Cell[];
     rows: Row[];
     handleDateChange: any;
+    formatDate: any;
+    formatSelect: any;
 }
 
 export const TableBodyComponent = ({table, saveRow,
     cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange, checkboxValueChange, cells, rows, handleDateChange}: TableBodyProps) => {
+    selectValueChange, checkboxValueChange, cells, rows, handleDateChange,
+    formatDate, formatSelect}: TableBodyProps) => {
     return (
             <TableBody>
                 {table.addEditRowMode && activeTableId === tabData.id && 
@@ -36,7 +39,6 @@ export const TableBodyComponent = ({table, saveRow,
                     saveRow={saveRow} 
                     cellValueChange={cellValueChange}
                     selectValueChange={selectValueChange}
-                    checkboxValueChange={checkboxValueChange}
                     cells = {cells}
                     handleDateChange ={handleDateChange}
                 />}  
@@ -46,6 +48,12 @@ export const TableBodyComponent = ({table, saveRow,
                             <TableCell key={cell.id}>  
                                 <CellComponent 
                                     cell={cell}
+                                    formatDate={formatDate}
+                                    formatSelect={formatSelect}
+                                    checkboxValueChange ={checkboxValueChange}
+                                    tableId={table.id}
+                                    tableDataId = {tabData.id}
+                                    rowId ={row.id}
                                 />
                             </TableCell>
                          ))}

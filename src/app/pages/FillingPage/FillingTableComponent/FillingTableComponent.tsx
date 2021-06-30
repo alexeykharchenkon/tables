@@ -25,12 +25,14 @@ interface FillingTableProps {
     cells: Cell[];
     rows: Row[];
     handleDateChange: any;
+    formatDate: any;
+    formatSelect: any;
 }
 
 export const FillingTableComponent = ({table, addRow, saveRow, 
     cellValueChange, editRow, deleteRow, tabData, activeTableId, 
     deleteTable, selectValueChange, checkboxValueChange, cells, rows,
-    handleDateChange}: FillingTableProps) => {
+    handleDateChange, formatDate, formatSelect}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
@@ -58,6 +60,8 @@ export const FillingTableComponent = ({table, addRow, saveRow,
                     cells={cells}
                     rows={rows}
                     handleDateChange={handleDateChange}
+                    formatDate={formatDate}
+                    formatSelect={formatSelect}
                 />
             </TableContainer>
         </Container>

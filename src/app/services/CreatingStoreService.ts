@@ -20,7 +20,7 @@ const requests = {
             selectTypeValue: "0",
             forbiddenSymbols: "",
             multySelectMode: false,
-            dateFormat: "MM/dd/yyyy",
+            dateFormat: "dd/MM/yyyy",
             selectValue: "",
             fillingMode: false,
             addEditRowMode: false,
@@ -39,19 +39,32 @@ const requests = {
                         selectOptions: table.selectOptions,
                         forbiddenSymbols: table.forbiddenSymbols,
                         multySelectMode: table.multySelectMode,
-                        dateFormat: table.dateFormat ?? "MM/dd/yyyy",
+                        dateFormat: table.dateFormat ?? "dd/MM/yyyy",
                     });
 
                     table.tablesData.forEach(tabData => {
                         tabData.rows.forEach(row => {
+                            var val;
+                            switch(table.columnTypeValue) {
+                                case DataType[DataType.Select]:
+                                    val = [""];
+                                    break;
+                                case DataType[DataType.Checkbox]:
+                                    val = false;
+                                    break;
+                                case DataType[DataType.DatePicker]:
+                                    val = new Date();
+                                    break;
+                            } 
+
                             row.cells.push({
                                 id: Guid.create().toString(),
-                                value: "",
+                                value: val ?? "",
                                 type: table.columnTypeValue,
                                 selectOptions: table.selectOptions,
                                 forbiddenSymbols: table.forbiddenSymbols,
                                 multySelectMode: table.multySelectMode,
-                                dateFormat: table.dateFormat ?? "MM/dd/yyyy",
+                                dateFormat: table.dateFormat ?? "dd/MM/yyyy",
                             });
                         });
                     });

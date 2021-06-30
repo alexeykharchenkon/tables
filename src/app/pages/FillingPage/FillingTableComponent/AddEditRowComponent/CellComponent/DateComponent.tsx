@@ -4,8 +4,6 @@ import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';  
-import MomentUtils from "@date-io/moment";
-import moment from "moment";
 
 interface DateProps {
     cell: Cell;

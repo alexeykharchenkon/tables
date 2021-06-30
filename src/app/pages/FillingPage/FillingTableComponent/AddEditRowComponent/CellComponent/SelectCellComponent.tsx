@@ -21,7 +21,6 @@ export const SelectCellComponent = ({cell,
                             value={cell.value}
                             onChange={e =>  selectValueChange(e, cell.id, tableId)}
                         >
-                            <option></option>
                             {cell.selectOptions.map((s, index) => (
                                 <option 
                                     key={index}

@@ -12,13 +12,12 @@ interface AddEditRowProps {
     cellValueChange: any;
     tabData: TableData;
     selectValueChange: any;
-    checkboxValueChange: any;
     cells: Cell[];
     handleDateChange: any;
 }
 
 export const AddEditRowComponent = ({table, saveRow, 
-    cellValueChange, tabData, selectValueChange, checkboxValueChange,
+    cellValueChange, tabData, selectValueChange,
     cells, handleDateChange}: AddEditRowProps) => {
     return (
         <TableRow>
@@ -29,7 +28,6 @@ export const AddEditRowComponent = ({table, saveRow,
                         cellValueChange = {cellValueChange}
                         tableId={table.id}
                         selectValueChange={selectValueChange}
-                        checkboxValueChange={checkboxValueChange}
                         handleDateChange={handleDateChange}
                    />
                </TableCell>

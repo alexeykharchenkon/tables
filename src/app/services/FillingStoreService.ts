@@ -69,7 +69,7 @@ const requests = {
                         val = false;
                         break;
                     case DataType[DataType.DatePicker]:
-                        val = new Date('2014-08-18');
+                        val = new Date();
                         break;
                 } 
                 table.activeRow.cells.push({
@@ -98,6 +98,23 @@ const requests = {
             value = value.split(str).join('');
         return value;
     },
+    formatDate: (value: any, dateFormat: string) : string => {
+        const pad = (s: any): string => { return (s < 10) ? '0' + s : s; }
+        var d = new Date(value);
+
+        switch(dateFormat){
+            case "dd/MM/yyyy":
+                return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+            case "MM/dd/yyyy":
+                return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
+            case "yyyy/MM/dd":
+                return [d.getFullYear(), pad(d.getMonth()+1), pad(d.getDate())].join('/');
+            case "yyyy/dd/MM":
+                return [d.getFullYear(), pad(d.getDate()), pad(d.getMonth()+1)].join('/');
+        }
+
+        return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+    },
 }
 
 export const fillingStoreService = {
@@ -109,4 +126,5 @@ export const fillingStoreService = {
     addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
     addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),
     checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => requests.checkForbidSymbols(value, forbiddenSymbols),
+    formatDate: (value: any, dateFormat: string) : string => requests.formatDate(value, dateFormat),
 }

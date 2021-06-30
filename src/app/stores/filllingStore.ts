@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable} from "mobx";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { fillingStoreService } from "@services/FillingStoreService";
@@ -72,6 +72,8 @@ export class FillingStore {
         this.tableStore.tables.filter(t => t.id === tableId).forEach(table => {
             table.activeRow.cells.filter(cell => cell.id === cellId)
                 .forEach(cell => {cell.value = value;});
+
+            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
         }); 
     }
 
@@ -79,25 +81,39 @@ export class FillingStore {
         this.titleValue = value;
     }
 
-    checkboxValueChange = (value: boolean, cellId: string, tabId: string) => {
-        this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
-            table.activeRow.cells.filter(cell => cell.id === cellId)
-                .forEach(cell => {cell.value = value;});
+    checkboxValueChange = (value: boolean, cellId: string, tabId: string, tableDataId: string, rowId: string) => {
+        this.tableStore.tables.filter(table => table.id === tabId)
+        .forEach(table => {
+            table.tablesData
+            .filter(tabData => tabData.id === tableDataId)
+                .forEach(tabData => {
+                    tabData.rows.filter(row => row.id === rowId)   
+                    .forEach(row => {
+                        row.cells.filter(cel => cel.id === cellId).
+                            forEach(cel => {
+                                cel.value = value;
+                            });                           
+                    });
+                    tabData.rows = tabData.rows.filter(row => row.id !== "");
+            });
         }); 
+        tableService.save(this.tableStore.tables);
     }
     
     handleDateChange = (value: Date, cellId: string, tabId: string) => {
         this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
             table.activeRow.cells.filter(cell => cell.id === cellId)
-                .forEach(cell => {
-                    
-                    cell.value = value;
-                
-                });
-            console.log(value);
+                .forEach(cell => {cell.value = value;});
             
             table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
         }); 
+    }
 
+    formatDate = (value: any, dateFormat: string) : string => {
+       return fillingStoreService.formatDate(value, dateFormat);
+    }
+
+    formatSelect = (value: string[]): string => {
+        return value.toString();
     }
 }

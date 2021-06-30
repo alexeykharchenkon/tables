@@ -25,8 +25,10 @@ export const DateModeComponent = ({table, dateFormatValueChange, dateFormat}: Da
                         value={ dateFormat }
                         onChange={e => dateFormatValueChange(e.target.value, table.id)}
                     >
-                        <option value="MM/dd/yyyy">MM/dd/yyyy</option>
                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
+                        <option value="MM/dd/yyyy">MM/dd/yyyy</option>
+                        <option value="yyyy/MM/dd">yyyy/MM/dd</option>
+                        <option value="yyyy/dd/MM">yyyy/dd/MM</option>
                     </Select> 
                 </FormControl>
            </Container>
