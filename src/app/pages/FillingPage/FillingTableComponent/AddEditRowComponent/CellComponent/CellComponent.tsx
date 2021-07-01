@@ -1,53 +1,53 @@
 import React from 'react';
-import { Checkbox, TextField } from '@material-ui/core';
+import { Checkbox} from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 import { SelectCellComponent } from './SelectCellComponent';
 import { DateComponent } from './DateComponent';
+import { TextComponent } from './TextComponent';
+import { NumberComponent } from './NumberComponent';
 
 interface CellProps {
     cell: Cell;
-    cellValueChange: any;
+    onValueChange: any;
     tableId: string;
-    selectValueChange: any;
-    handleDateChange: any;
+    helperText: any;
 }
 
-export const CellComponent = ({cell, cellValueChange, 
-    tableId, selectValueChange, handleDateChange}: CellProps) => {    
+export const CellComponent = ({cell, onValueChange, tableId, helperText}: CellProps) => {    
         return (
-        <>
-                   {cell.type === DataType[DataType.Text] &&
-                    <TextField 
-                        label = 'Enter Data'
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
-                        helperText={'Empty'}
-                    />
-                   }
-                   {cell.type === DataType[DataType.Number] &&
-                    <TextField 
-                        type = 'number'
-                        label = 'Enter Data'
-                        value={cell.value}
-                        onChange={e => cellValueChange(e.target.value, cell.id, tableId, cell.type)}
-                    />
-                   }
-                    {cell.type === DataType[DataType.Checkbox] &&
+            <>
+                {cell.type === DataType[DataType.Text] &&
+                   <TextComponent
+                        cell= {cell}
+                        tableId= {tableId}
+                        helperText={helperText}
+                        onValueChange={onValueChange}
+                   />}
+                {cell.type === DataType[DataType.Number] &&
+                    <NumberComponent
+                        cell= {cell}
+                        tableId= {tableId}
+                        helperText={helperText}
+                        onValueChange={onValueChange}
+                    />}
+                {cell.type === DataType[DataType.Checkbox] &&
                      <Checkbox
                         checked={true}
-                    />
-                   }
-                  <SelectCellComponent 
+                    />}
+                <SelectCellComponent 
                     cell= {cell}
                     tableId= {tableId}
-                    selectValueChange={selectValueChange}
-                  />
-                  <DateComponent 
-                     cell= {cell}
-                     tableId= {tableId}
-                     handleDateChange={handleDateChange}
-                  />
+                    helperText={helperText}
+                    onValueChange={onValueChange}
+                />
+                {cell.type === DataType[DataType.DatePicker] &&
+                    <DateComponent 
+                        cell= {cell}
+                        tableId= {tableId}
+                        helperText={helperText}
+                        onValueChange={onValueChange}
+                />}
            </>
       );
 }

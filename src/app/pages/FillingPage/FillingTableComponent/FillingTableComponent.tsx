@@ -14,25 +14,24 @@ interface FillingTableProps {
     table: AdditionalTable;
     addRow: any;
     saveRow: any;
-    cellValueChange: any;
+    onValueChange: any;
     editRow: any;
     deleteRow: any;
     tabData: TableData;
     activeTableId: string;
     deleteTable: any;
-    selectValueChange: any;
-    checkboxValueChange: any;
     cells: Cell[];
     rows: Row[];
-    handleDateChange: any;
     formatDate: any;
     formatSelect: any;
+    helperText: any;
+    cancelAddRow: any;
 }
 
 export const FillingTableComponent = ({table, addRow, saveRow, 
-    cellValueChange, editRow, deleteRow, tabData, activeTableId, 
-    deleteTable, selectValueChange, checkboxValueChange, cells, rows,
-    handleDateChange, formatDate, formatSelect}: FillingTableProps) => {
+    onValueChange, editRow, deleteRow, tabData, activeTableId, 
+    deleteTable, cells, rows, formatDate, formatSelect,
+    helperText, cancelAddRow}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
@@ -51,17 +50,16 @@ export const FillingTableComponent = ({table, addRow, saveRow,
                     tabData={tabData}
                     table={table}
                     saveRow={saveRow}
-                    cellValueChange={cellValueChange}
+                    onValueChange={onValueChange}
                     editRow={editRow}
                     deleteRow={deleteRow}
                     activeTableId={activeTableId}
-                    selectValueChange={selectValueChange}
-                    checkboxValueChange={checkboxValueChange}
                     cells={cells}
                     rows={rows}
-                    handleDateChange={handleDateChange}
                     formatDate={formatDate}
                     formatSelect={formatSelect}
+                    helperText={helperText}
+                    cancelAddRow={cancelAddRow}
                 />
             </TableContainer>
         </Container>

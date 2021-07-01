@@ -1,34 +1,33 @@
 import React from 'react';
 import { IconButton, TableCell, TableRow} from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
 import { CellComponent } from './CellComponent/CellComponent';
-import { AdditionalTable } from '@app/common/models/AdditionalTable';
+import { AdditionalTable } from '@common/models/AdditionalTable';
 import { TableData } from '@common/models/TableData';
-import { Cell } from '@app/common/models/Cell';
+import { Cell } from '@common/models/Cell';
 
 interface AddEditRowProps {
     table: AdditionalTable;
     saveRow: any;
-    cellValueChange: any;
+    onValueChange: any;
     tabData: TableData;
-    selectValueChange: any;
     cells: Cell[];
-    handleDateChange: any;
+    helperText: any;
+    cancelAddRow: any;
 }
 
 export const AddEditRowComponent = ({table, saveRow, 
-    cellValueChange, tabData, selectValueChange,
-    cells, handleDateChange}: AddEditRowProps) => {
+    onValueChange, tabData, cells, helperText, cancelAddRow}: AddEditRowProps) => {
     return (
         <TableRow>
             {cells.map(cell => (
                <TableCell key={cell.id}>
                    <CellComponent
                         cell = {cell} 
-                        cellValueChange = {cellValueChange}
+                        onValueChange = {onValueChange}
                         tableId={table.id}
-                        selectValueChange={selectValueChange}
-                        handleDateChange={handleDateChange}
+                        helperText={helperText}
                    />
                </TableCell>
             ))}
@@ -38,6 +37,12 @@ export const AddEditRowComponent = ({table, saveRow,
                     onClick={() => saveRow(table.id, tabData.id)}
                 >
                     <SaveIcon />
+                </IconButton>
+                <IconButton 
+                    aria-label="cancel"
+                    onClick={() => cancelAddRow(table.id)}
+                >
+                    <CancelIcon />
                 </IconButton>
             </TableCell>
         </TableRow>

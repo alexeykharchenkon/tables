@@ -18,17 +18,26 @@ export const TextModeComponent = ({table, forbiddenSymbols,
 
     return (
         <Container className={classes.addSelect}>
-           <Container>
-                <h3>Forbidden Symbols</h3>
+            <Container>
+                <h4>Forbidden Symbols</h4>
+                    <TextField 
+                        multiline
+                        rows={1}
+                        style={{width: '100%', marginBottom: '10px'}}
+                        label="Enter Symbols Separeted by Comma"
+                        value={forbiddenSymbols}
+                        onChange={e => OnValueChange(e, table.id, "FORRBIDDENCHANGE")}
+                    />
+            </Container>
+            <Container>
+                <h4>Max Field Length</h4>
                 <TextField 
-                    multiline
-                    rows={1}
-                    style={{width: '100%', marginBottom: '10px'}}
-                    label="Enter Forbidden Symbols Separeted by Comma"
-                    value={forbiddenSymbols}
-                    onChange={e => OnValueChange(e, table.id, "FORRBIDDENCHANGE")}
+                        type="number"
+                        label="Enter Max Filed Length"
+                        value={maxLength}
+                        onChange={e => OnValueChange(e, table.id, "MAXLENGTHCHANGE")}
                 />
-                 <FormControlLabel
+                <FormControlLabel
                     control={
                         <Checkbox
                             checked={isRequired}
@@ -37,7 +46,7 @@ export const TextModeComponent = ({table, forbiddenSymbols,
                     }
                     label="Is Required"
                 /> 
-           </Container>
         </Container>
+    </Container>
     );
 }

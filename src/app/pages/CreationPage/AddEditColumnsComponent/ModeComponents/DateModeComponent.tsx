@@ -18,7 +18,7 @@ export const DateModeComponent = ({table, dateFormat,
     return (
         <Container className={classes.addDate}>
              <Container>
-                <h3>Choose Date Format</h3>
+                <h4>Choose Date Format</h4>
                 <FormControl className={classes.tableCoSelect}>
                     <InputLabel>Date Format</InputLabel> 
                     <Select

@@ -45,14 +45,13 @@ const requests = {
                         selectOptions: table.selectOptions,
                         forbiddenSymbols: table.forbiddenSymbols,
                         multySelectMode: table.multySelectMode,
-                        dateFormat: table.dateFormat ?? "dd/MM/yyyy",
+                        dateFormat: Boolean(table.dateFormat) ?  table.dateFormat : "dd/MM/yyyy",
                         isRequired: table.isRequired,
                         maxLength: table.maxLength,
                         maxItemsSelected: table.maxItemsSelected,
                         minValue: table.minValue,
                         maxValue: table.maxValue,
                     });
-
                     table.tablesData.forEach(tabData => {
                         tabData.rows.forEach(row => {
                             var val;
@@ -75,12 +74,13 @@ const requests = {
                                 selectOptions: table.selectOptions,
                                 forbiddenSymbols: table.forbiddenSymbols,
                                 multySelectMode: table.multySelectMode,
-                                dateFormat: table.dateFormat ?? "dd/MM/yyyy",
+                                dateFormat: Boolean(table.dateFormat) ?  table.dateFormat : "dd/MM/yyyy",
                                 isRequired: table.isRequired,
                                 maxLength: table.maxLength,
                                 maxItemsSelected: table.maxItemsSelected,
                                 minValue: table.minValue,
                                 maxValue: table.maxValue,
+                                error: "",
                             });
                         });
                     });
@@ -104,26 +104,30 @@ const requests = {
                     table.selectTypeValue = selectType ? "1" : "0"; 
                     table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
                     table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
+                    table.maxItemsSelected = table.columns.filter(col => col.id === columnId)[0].maxItemsSelected;
                     break;
                 case DataType[DataType.Text]:
                     table.textMode = true;
                     table.numberMode = table.selectMode = table.dateMode = false;
                     table.forbiddenSymbols = table.columns.filter(col => col.id === columnId)[0].forbiddenSymbols;
                     table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
+                    table.maxLength = table.columns.filter(col => col.id === columnId)[0].maxLength;
                     break;
                 case DataType[DataType.DatePicker]:
                     table.dateMode = true;
                     table.numberMode = table.selectMode = table.textMode = false;
                     table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
+                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
                 case DataType[DataType.Number]:
                     table.numberMode = true;
                     table.selectMode = table.textMode = table.dateMode = false;
                     table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
+                    table.maxValue = table.columns.filter(col => col.id === columnId)[0].maxValue;
+                    table.minValue = table.columns.filter(col => col.id === columnId)[0].minValue;
                     break;
                 case DataType[DataType.Checkbox]:
                     table.numberMode = table.selectMode = table.textMode =  table.dateMode = false;
-                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
                     break;
             }    
         });
@@ -140,6 +144,10 @@ const requests = {
                  col.multySelectMode = table.multySelectMode;
                  col.dateFormat = table.dateFormat;
                  col.isRequired = table.isRequired;
+                 col.maxLength = table.maxLength;
+                 col.maxItemsSelected = table.maxItemsSelected;
+                 col.minValue = table.minValue;
+                 col.maxValue = table.maxValue;
                 });
 
             const idx = table.columns.findIndex(col => col.id === table.columnId);
@@ -151,6 +159,11 @@ const requests = {
                     row.cells[idx].multySelectMode = table.multySelectMode;
                     row.cells[idx].dateFormat = table.dateFormat;
                     row.cells[idx].isRequired = table.isRequired;
+                    row.cells[idx].maxLength = table.maxLength;
+                    row.cells[idx].maxItemsSelected = table.maxItemsSelected;
+                    row.cells[idx].minValue = table.minValue;
+                    row.cells[idx].maxValue = table.maxValue;
+                    row.cells[idx].error = "";
                 });
             });
 

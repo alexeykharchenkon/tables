@@ -3,6 +3,8 @@ import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { fillingStoreService } from "@services/FillingStoreService";
 import { DataType } from "@common/models/DataType";
+import { Cell } from "@common/models/Cell";
+import { formatService } from "@services/FormatService";
 
 export class FillingStore {
     tableStore: TableStore;
@@ -50,70 +52,71 @@ export class FillingStore {
         tableService.save(this.tableStore.tables);
     }
 
-    cellValueChange = (value: string, cellId: string, tabId: string, cellType: string) => {        
-        this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
-            table.activeRow.cells.filter(cell => cell.id === cellId)
-                .forEach(cell => {
-                    cell.value = cellType === DataType[DataType.Text] ?
-                    value = fillingStoreService.checkForbidSymbols(value, cell.forbiddenSymbols): value;
-                });
+   cancelAddRow = (tableId: string) => {
+        fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
+   }
 
-            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
-        }); 
-    }
-
-    selectValueChange = (event: any, cellId: string, tableId: string) => {
-        const { options } = event.target as HTMLSelectElement;
-        const value: string[] = [];
-        for (let i = 0, l = options.length; i < l; i += 1) 
-          if (options[i].selected) 
-            value.push(options[i].value);              
-
-        this.tableStore.tables.filter(t => t.id === tableId).forEach(table => {
-            table.activeRow.cells.filter(cell => cell.id === cellId)
-                .forEach(cell => {cell.value = value;});
-
-            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
-        }); 
-    }
-
-    titleValueOnChange = (value: string) => {
-        this.titleValue = value;
-    }
-
-    checkboxValueChange = (value: boolean, cellId: string, tabId: string, tableDataId: string, rowId: string) => {
-        this.tableStore.tables.filter(table => table.id === tabId)
-        .forEach(table => {
-            table.tablesData
-            .filter(tabData => tabData.id === tableDataId)
-                .forEach(tabData => {
-                    tabData.rows.filter(row => row.id === rowId)   
-                    .forEach(row => {
-                        row.cells.filter(cel => cel.id === cellId)
-                            .forEach(cel => {
-                                cel.value = value;
-                            });                           
+    onValueChange = (value: any, tabId: string, tableDataId: string, 
+        rowId: string, cellId: string, cellType: string, changeType: string) => {
+        switch(changeType){
+            case "DATECHANGE":
+                this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                        .forEach(cell => {cell.value = value;});
+                    table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
+                }); 
+               break;
+            case "CHECKBOXCHANGE":
+                this.tableStore.tables.filter(table => table.id === tabId)
+                .forEach(table => {
+                    table.tablesData
+                    .filter(tabData => tabData.id === tableDataId)
+                        .forEach(tabData => {
+                            tabData.rows.filter(row => row.id === rowId)   
+                            .forEach(row => {
+                                row.cells.filter(cel => cel.id === cellId)
+                                    .forEach(cel => {cel.value = value;});
+                            });
+                        tabData.rows = tabData.rows.filter(row => row.id !== "");
                     });
-                    tabData.rows = tabData.rows.filter(row => row.id !== "");
-            });
-        }); 
-        tableService.save(this.tableStore.tables);
-    }
-    
-    handleDateChange = (value: Date, cellId: string, tabId: string) => {
-        this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
-            table.activeRow.cells.filter(cell => cell.id === cellId)
-                .forEach(cell => {cell.value = value;});
-            
-            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
-        }); 
+                }); 
+
+                tableService.save(this.tableStore.tables);
+               break;
+           case "TITLECHANGE":
+               this.titleValue = value.target.value;
+               break;
+           case "SELECTCHANGE":
+                const { options } = value.target as HTMLSelectElement;
+                const val: string[] = [];
+                for (let i = 0, l = options.length; i < l; i += 1) 
+                    if (options[i].selected) val.push(options[i].value);    
+
+                this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                        .forEach(cell => {cell.value = val;});
+                    table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); }); 
+               break;
+            case "CELLCHANGE":
+                this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
+                    table.activeRow.cells.filter(cell => cell.id === cellId)
+                        .forEach(cell => {
+                            cell.value = cellType === DataType[DataType.Text] ?
+                            formatService.checkForbidSymbols(value.target.value, cell.forbiddenSymbols): value.target.value;
+                        });
+                    table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");}); 
+               break;
+        } 
     }
 
     formatDate = (value: any, dateFormat: string) : string => {
-       return fillingStoreService.formatDate(value, dateFormat);
+       return formatService.formatDate(value, dateFormat);
     }
 
     formatSelect = (value: string[]): string => {
         return value.toString();
+    }
+    helperText = (cell: Cell): string => {
+        return formatService.formatHelperText(cell);
     }
 }

@@ -11,4 +11,5 @@ export interface Cell {
     maxItemsSelected: number;
     minValue: number;
     maxValue: number;
+    error: string;
 }

@@ -1,28 +1,32 @@
 import React from 'react';
 import 'date-fns';
 import { Cell } from '@common/models/Cell';
-import { DataType } from '@common/models/DataType';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';  
+import { Typography } from '@material-ui/core';
 
 interface DateProps {
     cell: Cell;
     tableId: string;
-    handleDateChange: any;
+    onValueChange: any;
+    helperText: any;
 }
 
-export const DateComponent = ({cell, tableId, handleDateChange}: DateProps) => {    
+export const DateComponent = ({cell, tableId, onValueChange,
+    helperText}: DateProps) => {    
         return (
-        <>
-            {cell.type === DataType[DataType.DatePicker] &&
+            <>
+                <Typography style={{color: 'red'}}>
+                        {cell.error}
+                </Typography>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                         format={cell.dateFormat}
                         value={cell.value}
-                        onChange={ e => handleDateChange(e, cell.id, tableId, cell.type)}
+                        helperText={helperText(cell)}
+                        onChange={ e => onValueChange(e, tableId, "", "", cell.id, cell.type,"DATECHANGE")}
                     />
                 </MuiPickersUtilsProvider>
-            }
-         </>
+            </>
       );
 }

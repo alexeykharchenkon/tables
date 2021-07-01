@@ -131,7 +131,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     addSelectLeft: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'start',
         flexDirection: 'column',
     },
     addSelectLeftUp: {
@@ -148,5 +148,12 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'column',
+    },
+    addNumber: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: '10px',
     },
   }));

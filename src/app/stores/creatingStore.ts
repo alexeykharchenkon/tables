@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { tableService } from "@services/TableService";
 import { TableStore } from "./tableStore";
 import { creatingStoreService } from "@services/CreatingStoreService";
+import { fillingStoreService } from "@services/FillingStoreService";
 
 export class ColumnStore {
     tableStore: TableStore;  
@@ -24,11 +25,13 @@ export class ColumnStore {
     }
 
     addColumn = (tableId: string) => {
+        fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
         creatingStoreService.addColumn(this.tableStore.tables, tableId);
         tableService.save(this.tableStore.tables);
     }
 
     deleteColumn = (tableId: string, columnId: string) => {
+        fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
         creatingStoreService.deleteColumn(this.tableStore.tables, tableId, columnId);
         tableService.save(this.tableStore.tables);
     }
@@ -38,6 +41,7 @@ export class ColumnStore {
     }
 
     saveEditedColumn = (tableId: string) => {
+        fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
         creatingStoreService.saveEditedColumn(this.tableStore.tables, tableId);
         tableService.save(this.tableStore.tables);
     }
@@ -80,6 +84,18 @@ export class ColumnStore {
                 break;
             case "TITLECHANGE":
                 this.tableTitleValue = value.target.value;
+                break;
+            case "MAXLENGTHCHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].maxLength = value.target.value;
+                break;
+            case "MAXVALUECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].maxValue = value.target.value;
+                break;
+            case "MINVALUECHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].minValue = value.target.value;
+                break;
+            case "MAXITEMSELECTEDCHANGE":
+                this.tableStore.tables.filter(tab => tab.id === tabId)[0].maxItemsSelected = value.target.value;
                 break;
          } 
      }

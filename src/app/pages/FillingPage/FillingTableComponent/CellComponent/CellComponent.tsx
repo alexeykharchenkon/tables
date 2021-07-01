@@ -8,14 +8,14 @@ interface CellProps {
     cell: Cell;
     formatDate: any;
     formatSelect: any;
-    checkboxValueChange: any;
+    onValueChange: any;
     tableId: string;
     tableDataId: string;
     rowId: string;
 }
 
 export const CellComponent = ({cell, formatDate, formatSelect,
-    checkboxValueChange, tableId, tableDataId, rowId}: CellProps) => {
+    onValueChange, tableId, tableDataId, rowId}: CellProps) => {
     return (
         <>
            {cell.type === DataType[DataType.Text] && cell.value}
@@ -26,8 +26,8 @@ export const CellComponent = ({cell, formatDate, formatSelect,
                 formatSelect(cell.value)}
            {cell.type === DataType[DataType.Checkbox] && 
             <Checkbox
-                checked={cell.value}
-                onChange={e => checkboxValueChange(e.target.checked, cell.id, tableId, tableDataId, rowId)}
+                checked={Boolean(cell.value)}
+                onChange={e => onValueChange(e.target.checked, tableId, tableDataId, rowId, cell.id, "", "CHECKBOXCHANGE")}
             /> 
            }
         </>

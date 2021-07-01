@@ -9,11 +9,11 @@ interface FillingTableHeadProps {
     table: AdditionalTable;
     addTable: any;
     titleValue: string;
-    titleValueOnChange: any;
+    onValueChange: any;
 }
 
 
-export const FillingTableHeadComponent = ({table, addTable, titleValue, titleValueOnChange}: FillingTableHeadProps) => {
+export const FillingTableHeadComponent = ({table, addTable, titleValue, onValueChange}: FillingTableHeadProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingHeadComponent}>
@@ -22,7 +22,7 @@ export const FillingTableHeadComponent = ({table, addTable, titleValue, titleVal
                 <TextField 
                     label = 'Enter Table Title'
                     value={titleValue}
-                    onChange={e => titleValueOnChange(e.target.value)}
+                    onChange={e => onValueChange(e, "", "", "", "", "", "TITLECHANGE")}
                 />
                 <IconButton onClick={() => addTable(table.id)}>
                     <AddCircleOutlineIcon />

@@ -26,7 +26,7 @@ export const FillingPageComponent = observer(() => {
                                 table={table}
                                 addTable={fillingStore.addTable}
                                 titleValue={fillingStore.titleValue}
-                                titleValueOnChange={fillingStore.titleValueOnChange}
+                                onValueChange={fillingStore.onValueChange}
                             />
                             {table.tablesData.map(tabData => (           
                                 <ListItem key={tabData.id}>
@@ -35,18 +35,17 @@ export const FillingPageComponent = observer(() => {
                                         tabData = {tabData}
                                         addRow = {fillingStore.addRow}
                                         saveRow = {fillingStore.saveRow}
-                                        cellValueChange={fillingStore.cellValueChange}
+                                        onValueChange={fillingStore.onValueChange}
                                         editRow={fillingStore.editRow}
                                         deleteRow={fillingStore.deleteRow}
                                         activeTableId={fillingStore.activeTableId}
                                         deleteTable={fillingStore.deleteTable}
-                                        selectValueChange={fillingStore.selectValueChange}
-                                        checkboxValueChange={fillingStore.checkboxValueChange}
                                         cells={table.activeRow.cells}
                                         rows={tabData.rows}
-                                        handleDateChange={fillingStore.handleDateChange}
                                         formatDate= {fillingStore.formatDate}
                                         formatSelect={fillingStore.formatSelect}
+                                        helperText={fillingStore.helperText}
+                                        cancelAddRow={fillingStore.cancelAddRow}
                                     />
                                 </ListItem>
                              ))}

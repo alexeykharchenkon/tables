@@ -1,7 +1,8 @@
-import { AdditionalTable } from "@app/common/models/AdditionalTable";
+import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { TableData } from "@common/models/TableData";
 import { Guid } from "guid-typescript";
+import { validateService } from "./ValidateService";
 
 const requests = {
     deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => {
@@ -36,21 +37,24 @@ const requests = {
     saveRow:(tables: AdditionalTable[], tableId: string, tableDataId: string) => {
         tables.filter(table => table.id === tableId)
         .forEach(table => {
-            table.tablesData
-            .filter(tabData => tabData.id === tableDataId)
-                .forEach(tabData => {
-                    if(!requests.getRowById(tabData, table.activeRow.id)){
-                        tabData.rows.push({
-                            id: table.activeRow.id, 
-                            cells: table.activeRow.cells,});
-                    }else{
-                        tabData.rows.filter(row => row.id === table.activeRow.id)
-                        .forEach(row => {row.cells = table.activeRow.cells;});
-                    }    
-            })
-           
-            table.activeRow = {id: "", cells: []};
-            table.addEditRowMode = false;
+            if(validateService.validate(table.activeRow)) {
+                table.tablesData
+                .filter(tabData => tabData.id === tableDataId)
+                    .forEach(tabData => {
+                        if(!requests.getRowById(tabData, table.activeRow.id)){
+                            tabData.rows.push({
+                                id: table.activeRow.id, 
+                                cells: table.activeRow.cells,});
+                        }else{
+                            tabData.rows.filter(row => row.id === table.activeRow.id)
+                            .forEach(row => {row.cells = table.activeRow.cells;});
+                        }    
+                });
+            
+                table.activeRow = {id: "", cells: []};
+                table.addEditRowMode = false;
+            }
+            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
         });
     },
     addRow:(tables: AdditionalTable[], tableId: string) => {
@@ -72,6 +76,7 @@ const requests = {
                         val = new Date();
                         break;
                 } 
+
                 table.activeRow.cells.push({
                     id: Guid.create().toString(),
                     type: column.type,
@@ -80,11 +85,12 @@ const requests = {
                     forbiddenSymbols: column.forbiddenSymbols,
                     multySelectMode: column.multySelectMode,
                     dateFormat: column.dateFormat,
-                    isRequired: table.isRequired,
-                    maxLength: table.maxLength,
-                    maxItemsSelected: table.maxItemsSelected,
-                    minValue: table.minValue,
-                    maxValue: table.maxValue,
+                    isRequired: column.isRequired,
+                    maxLength: column.maxLength,
+                    maxItemsSelected: column.maxItemsSelected,
+                    minValue: column.minValue,
+                    maxValue: column.maxValue,
+                    error: "",
                 });
             });
         });
@@ -97,28 +103,13 @@ const requests = {
             rows:[], 
         });
     },
-    checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => {
-        var forbidSymbArray = forbiddenSymbols.split(',');
-        for(var str of forbidSymbArray) 
-            value = value.split(str).join('');
-        return value;
-    },
-    formatDate: (value: any, dateFormat: string) : string => {
-        const pad = (s: any): string => { return (s < 10) ? '0' + s : s; }
-        var d = new Date(value);
-
-        switch(dateFormat){
-            case "dd/MM/yyyy":
-                return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
-            case "MM/dd/yyyy":
-                return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
-            case "yyyy/MM/dd":
-                return [d.getFullYear(), pad(d.getMonth()+1), pad(d.getDate())].join('/');
-            case "yyyy/dd/MM":
-                return [d.getFullYear(), pad(d.getDate()), pad(d.getMonth()+1)].join('/');
-        }
-
-        return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+    cancelAddRow:(tables: AdditionalTable[], tableId: string) => {
+        tables.filter(table => table.id === tableId)
+        .forEach(table => {            
+            table.activeRow = {id: "", cells: []};
+            table.addEditRowMode = false;
+            table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
+        });
     },
 }
 
@@ -130,6 +121,5 @@ export const fillingStoreService = {
     saveRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.saveRow(tables, tableId, tableDataId),
     addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
     addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),
-    checkForbidSymbols:(value: string, forbiddenSymbols: string) : string => requests.checkForbidSymbols(value, forbiddenSymbols),
-    formatDate: (value: any, dateFormat: string) : string => requests.formatDate(value, dateFormat),
+    cancelAddRow:(tables: AdditionalTable[], tableId: string) =>requests.cancelAddRow(tables, tableId),
 }

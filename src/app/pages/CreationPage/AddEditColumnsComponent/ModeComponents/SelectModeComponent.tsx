@@ -26,7 +26,7 @@ export const SelectModeComponent = ({table, addSelectField,
     return (
         <Container className={classes.addSelect}>
             <Container className={classes.addSelectLeft}>
-                <h3>Add Select Options</h3>
+                <h4>Add Select Options</h4>
                 <Container className={classes.addSelectLeftUp}>
                     <TextField 
                         label="Enter Select Option Name"
@@ -52,7 +52,7 @@ export const SelectModeComponent = ({table, addSelectField,
                 </Container>
             </Container>
             <Container>
-                <h3>Choose Select Mode</h3>
+                <h4>Choose Select Mode</h4>
                 <FormControl className={classes.tableCoSelect}>
                     <InputLabel>Select Mode</InputLabel> 
                     <Select
@@ -65,6 +65,13 @@ export const SelectModeComponent = ({table, addSelectField,
                             <option value="1">Multy</option>
                     </Select> 
                 </FormControl>
+                <h4>Max Item Selected</h4>
+                <TextField 
+                        type="number"
+                        label="Enter Max Item Selected"
+                        value={maxItemsSelected}
+                        onChange={e => OnValueChange(e, table.id, "MAXITEMSELECTEDCHANGE")}
+                />
                 <FormControlLabel
                     control={
                         <Checkbox

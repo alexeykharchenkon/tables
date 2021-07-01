@@ -12,24 +12,23 @@ import { Row } from '@app/common/models/Row';
 interface TableBodyProps {
     table: AdditionalTable;
     saveRow: any;
-    cellValueChange: any;
+    onValueChange: any;
     editRow: any;
     deleteRow: any;
     tabData: TableData;
     activeTableId: string;
-    selectValueChange: any;
-    checkboxValueChange: any;
     cells: Cell[];
     rows: Row[];
-    handleDateChange: any;
     formatDate: any;
     formatSelect: any;
+    helperText: any;
+    cancelAddRow: any;
 }
 
 export const TableBodyComponent = ({table, saveRow,
-    cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange, checkboxValueChange, cells, rows, handleDateChange,
-    formatDate, formatSelect}: TableBodyProps) => {
+    onValueChange, editRow, deleteRow, tabData, activeTableId,
+   cells, rows, formatDate, formatSelect, helperText,
+   cancelAddRow}: TableBodyProps) => {
     return (
             <TableBody>
                 {table.addEditRowMode && activeTableId === tabData.id && 
@@ -37,10 +36,10 @@ export const TableBodyComponent = ({table, saveRow,
                     table={table} 
                     tabData={tabData}
                     saveRow={saveRow} 
-                    cellValueChange={cellValueChange}
-                    selectValueChange={selectValueChange}
+                    onValueChange={onValueChange}
                     cells = {cells}
-                    handleDateChange ={handleDateChange}
+                    helperText={helperText}
+                    cancelAddRow={cancelAddRow}
                 />}  
                 {rows && rows.map(row => (
                      <TableRow key={row.id}>
@@ -50,7 +49,7 @@ export const TableBodyComponent = ({table, saveRow,
                                     cell={cell}
                                     formatDate={formatDate}
                                     formatSelect={formatSelect}
-                                    checkboxValueChange ={checkboxValueChange}
+                                    onValueChange={onValueChange}
                                     tableId={table.id}
                                     tableDataId = {tabData.id}
                                     rowId ={row.id}

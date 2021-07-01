@@ -11,42 +11,40 @@ import { Row } from '@app/common/models/Row';
 interface TableProps {
     table: AdditionalTable;
     saveRow: any;
-    cellValueChange: any;
+    onValueChange: any;
     editRow: any;
     deleteRow: any;
     tabData: TableData;
     activeTableId: string;
-    selectValueChange: any;
-    checkboxValueChange: any;
     cells: Cell[];
     rows: Row[];
-    handleDateChange: any;
     formatDate: any;
     formatSelect: any;
+    helperText: any;
+    cancelAddRow: any;
 }
 
 export const TableComponent = React.memo(({table, saveRow, 
-    cellValueChange, editRow, deleteRow, tabData, activeTableId,
-    selectValueChange, checkboxValueChange, cells, rows, handleDateChange,
-    formatDate, formatSelect}: TableProps) => {
+    onValueChange, editRow, deleteRow, tabData, activeTableId,
+    cells, rows, formatDate, formatSelect, helperText,
+    cancelAddRow}: TableProps) => {
         return (
         <Table size="small">
             <TableHeadComponent table={table}/>
             <TableBodyComponent
                 table={table}
                 saveRow={saveRow}
-                cellValueChange={cellValueChange}
+                onValueChange={onValueChange}
                 editRow={editRow}
                 deleteRow={deleteRow}
                 tabData = {tabData}
                 activeTableId = {activeTableId}
-                selectValueChange ={selectValueChange}
-                checkboxValueChange={checkboxValueChange}
                 cells={cells}
                 rows={rows}
-                handleDateChange={handleDateChange}
                 formatDate={formatDate}
                 formatSelect={formatSelect}
+                helperText={helperText}
+                cancelAddRow={cancelAddRow}
             />
         </Table>
       );
