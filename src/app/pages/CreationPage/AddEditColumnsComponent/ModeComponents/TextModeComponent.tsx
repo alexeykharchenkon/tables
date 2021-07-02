@@ -8,7 +8,7 @@ interface TextModeProps {
     table: AdditionalTable;
     forbiddenSymbols: string;
     isRequired: boolean;
-    maxLength: number;
+    maxLength: string;
     OnValueChange: any;
 }
 

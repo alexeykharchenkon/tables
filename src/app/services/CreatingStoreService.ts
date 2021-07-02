@@ -2,8 +2,8 @@ import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { Guid } from "guid-typescript";
 
-const requests = {
-    createTable: (tables: AdditionalTable[], tableTitleValue: string) => {
+export class creatingStoreService {
+    static createTable(tables: AdditionalTable[], tableTitleValue: string) {
         tables.unshift({
             id: Guid.create().toString(), 
             title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (tables.length + 1).toString(), 
@@ -27,13 +27,13 @@ const requests = {
             addEditRowMode: false,
             activeRow: {id: "", cells: []},
             isRequired: false,
-            maxLength: 10000,
-            maxItemsSelected: 10000,
-            minValue: -10000,
-            maxValue: 10000,
+            maxLength: "",
+            maxItemsSelected:"",
+            minValue: "",
+            maxValue: "",
         });
-    },
-    addColumn: (tables: AdditionalTable[], tableId: string) => {
+    }
+    static addColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             if(table.columns.length < 10){
@@ -86,10 +86,10 @@ const requests = {
                     });
                 }
             }
-            requests.makeValuestoDefault(table);
+            creatingStoreService.makeValuestoDefault(table);
         });
-    },
-    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) => {
+    }
+    static editColumn (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.editMode = true;
@@ -102,37 +102,38 @@ const requests = {
                     table.selectMode = true;
                     table.numberMode =table.textMode = table.dateMode = false;
                     table.selectTypeValue = selectType ? "1" : "0"; 
-                    table.selectOptions = table.columns.filter(col => col.id === columnId)[0].selectOptions;
-                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
-                    table.maxItemsSelected = table.columns.filter(col => col.id === columnId)[0].maxItemsSelected;
+                    table.selectOptions = table.columns.find(col => col.id === columnId)?.selectOptions as string[];
+                    table.isRequired = table.columns.find(col => col.id === columnId)?.isRequired as boolean;
+                    table.maxItemsSelected = table.columns.find(col => col.id === columnId)?.maxItemsSelected as string;
+                    table.multySelectMode =  table.columns.find(col => col.id === columnId)?.multySelectMode as boolean;
                     break;
                 case DataType[DataType.Text]:
                     table.textMode = true;
                     table.numberMode = table.selectMode = table.dateMode = false;
-                    table.forbiddenSymbols = table.columns.filter(col => col.id === columnId)[0].forbiddenSymbols;
-                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
-                    table.maxLength = table.columns.filter(col => col.id === columnId)[0].maxLength;
+                    table.forbiddenSymbols = table.columns.find(col => col.id === columnId)?.forbiddenSymbols as string;
+                    table.isRequired = table.columns.find(col => col.id === columnId)?.isRequired as boolean;
+                    table.maxLength = table.columns.find(col => col.id === columnId)?.maxLength as string;
                     break;
                 case DataType[DataType.DatePicker]:
                     table.dateMode = true;
                     table.numberMode = table.selectMode = table.textMode = false;
-                    table.dateFormat = table.columns.filter(col => col.id === columnId)[0].dateFormat;
-                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
+                    table.dateFormat = table.columns.find(col => col.id === columnId)?.dateFormat as string;
+                    table.isRequired = table.columns.find(col => col.id === columnId)?.isRequired as boolean;
                     break;
                 case DataType[DataType.Number]:
                     table.numberMode = true;
                     table.selectMode = table.textMode = table.dateMode = false;
-                    table.isRequired = table.columns.filter(col => col.id === columnId)[0].isRequired;
-                    table.maxValue = table.columns.filter(col => col.id === columnId)[0].maxValue;
-                    table.minValue = table.columns.filter(col => col.id === columnId)[0].minValue;
+                    table.isRequired = table.columns.find(col => col.id === columnId)?.isRequired as boolean;
+                    table.maxValue = table.columns.find(col => col.id === columnId)?.maxValue as string;
+                    table.minValue = table.columns.find(col => col.id === columnId)?.minValue as string;
                     break;
                 case DataType[DataType.Checkbox]:
                     table.numberMode = table.selectMode = table.textMode =  table.dateMode = false;
                     break;
             }    
         });
-    },
-    saveEditedColumn: (tables: AdditionalTable[], tableId: string) => {
+    }
+    static saveEditedColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             table.columns.filter(col => col.id === table.columnId)
@@ -167,10 +168,10 @@ const requests = {
                 });
             });
 
-            requests.makeValuestoDefault(table);
+            creatingStoreService.makeValuestoDefault(table);
         });
-    },
-    deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => {
+    }
+    static deleteColumn (tables: AdditionalTable[], tableId: string, columnId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.columns = table.columns.filter(col => col.id !== columnId);
@@ -182,8 +183,8 @@ const requests = {
                 });
             });
         });
-    },
-    addSelectField: (tables: AdditionalTable[], tabId: string) => {
+    }
+    static addSelectField(tables: AdditionalTable[], tabId: string) {
         tables.filter(tab => tab.id === tabId)
         .forEach(tab => {
             if(tab.selectValue !== "") {
@@ -193,34 +194,34 @@ const requests = {
                 tab.selectValue = "";
             }
         });
-    },
-    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: string) => {
+    }
+    static switchSelectMode (tables: AdditionalTable[], tabId: string, value: string) {
         switch(value){
             case DataType[DataType.Text]:
-                requests.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId)[0].textMode = true;
+                creatingStoreService.makeModesFalse(tables, tabId);
+                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.textMode = true;});
                 break;
             case DataType[DataType.DatePicker]:
-                requests.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId)[0].dateMode = true;
+                creatingStoreService.makeModesFalse(tables, tabId);
+                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.dateMode = true;});
                 break;
             case DataType[DataType.Select]:
-                requests.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId)[0].selectMode = true;
+                creatingStoreService.makeModesFalse(tables, tabId);
+                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.selectMode = true;});
                 break;
             case DataType[DataType.Number]:
-                requests.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId)[0].numberMode = true;
+                creatingStoreService.makeModesFalse(tables, tabId);
+                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.numberMode = true;});
                 break;
             case DataType[DataType.Checkbox]:
-                requests.makeModesFalse(tables, tabId);
+                creatingStoreService.makeModesFalse(tables, tabId);
                 break;
             default:
-                requests.makeModesFalse(tables, tabId);
+                creatingStoreService.makeModesFalse(tables, tabId);
                 break;
         }
-    },
-    makeValuestoDefault: (table: AdditionalTable) => {
+    }
+    static makeValuestoDefault (table: AdditionalTable) {
         table.editMode = false;
         table.columnValue = "";
         table.columnId = "";
@@ -235,27 +236,18 @@ const requests = {
         table.dateFormat = "";
         table.selectTypeValue = "0";
         table.isRequired = false;
-        table.maxLength = 10000;
-        table.maxItemsSelected = 10000;
-        table.minValue = -10000;
-        table.maxValue = 10000;
-    },
-    makeModesFalse: (tables: AdditionalTable[], tabId: string) => {
-        tables.filter(tab => tab.id === tabId)[0].selectMode = false;
-        tables.filter(tab => tab.id === tabId)[0].dateMode = false;
-        tables.filter(tab => tab.id === tabId)[0].textMode = false;
-        tables.filter(tab => tab.id === tabId)[0].numberMode = false;
-    },
-}
-
-export const creatingStoreService = {
-    createTable: (tables: AdditionalTable[], tableTitleValue: string) => requests.createTable(tables, tableTitleValue),
-    addColumn: (tables: AdditionalTable[], tableId: string)=> requests.addColumn(tables, tableId),
-    editColumn: (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean)=>requests.editColumn(tables, tableId, columnId, value, type, selectType),
-    saveEditedColumn: (tables: AdditionalTable[], tableId: string) => requests.saveEditedColumn(tables, tableId),
-    deleteColumn: (tables: AdditionalTable[], tableId: string, columnId: string) => requests.deleteColumn(tables, tableId, columnId),
-    addSelectField: (tables: AdditionalTable[], tabId: string) => requests.addSelectField(tables, tabId),
-    switchSelectMode: (tables: AdditionalTable[], tabId: string, value: string) => requests.switchSelectMode(tables, tabId, value),
-    makeValuestoDefault: (table: AdditionalTable) => requests.makeValuestoDefault(table),
-    makeModesFalse: (tables: AdditionalTable[], tabId: string) => requests.makeModesFalse(tables, tabId),
+        table.maxLength = "";
+        table.maxItemsSelected = "";
+        table.minValue = "";
+        table.maxValue = "";
+    }
+    static makeModesFalse (tables: AdditionalTable[], tabId: string) {
+        tables.filter(tab => tab.id === tabId)
+        .forEach(tab => { 
+            tab.selectMode = false;
+            tab.dateMode = false;
+            tab.textMode = false;
+            tab.numberMode = false;
+        })
+    }
 }

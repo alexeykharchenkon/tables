@@ -4,8 +4,8 @@ import { TableData } from "@common/models/TableData";
 import { Guid } from "guid-typescript";
 import { validateService } from "./ValidateService";
 
-const requests = {
-    deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => {
+export class fillingStoreService {
+    static deleteRowById(tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) {
            tables.filter(table => table.id === tableId)
             .forEach(table => { 
                 table.tablesData
@@ -14,34 +14,35 @@ const requests = {
                         tabData.rows = tabData.rows.filter(row => row.id !== id);
                     });
             });
-    },
-    editRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => {
+    }
+    static editRow(tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string)  {
         tables.filter(t => t.id === tableId).forEach(table => {
             table.tablesData
             .filter(tabData => tabData.id === tableDataId)
                 .forEach(tabData => {
-                    table.activeRow = requests.getRowById(tabData, id);
+                    table.activeRow = fillingStoreService.getRowById(tabData, id);
                     table.addEditRowMode = true;
                 });
+            validateService.resetValidationErrors(table.activeRow);
         }); 
-    },
-    deleteTableById: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => {
+    }
+    static deleteTableById(tables:  AdditionalTable[], tableId: string, tableDataId: string) {
         tables.filter(table => table.id === tableId)
          .forEach(table => { 
              table.tablesData = table.tablesData.filter(t => t.id !== tableDataId);
          });
-    },
-    getRowById: (tablesData: TableData, id: string) : any => {
+    }
+    static getRowById(tablesData: TableData, id: string) : any {
         return tablesData.rows.find(row => row.id === id);
-    },
-    saveRow:(tables: AdditionalTable[], tableId: string, tableDataId: string) => {
+    }
+    static saveRow(tables: AdditionalTable[], tableId: string, tableDataId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table => {
             if(validateService.validate(table.activeRow)) {
                 table.tablesData
                 .filter(tabData => tabData.id === tableDataId)
                     .forEach(tabData => {
-                        if(!requests.getRowById(tabData, table.activeRow.id)){
+                        if(!fillingStoreService.getRowById(tabData, table.activeRow.id)){
                             tabData.rows.push({
                                 id: table.activeRow.id, 
                                 cells: table.activeRow.cells,});
@@ -56,8 +57,8 @@ const requests = {
             }
             table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
         });
-    },
-    addRow:(tables: AdditionalTable[], tableId: string) => {
+    }
+    static addRow(tables: AdditionalTable[], tableId: string){
         tables.filter(table => table.id === tableId)
         .forEach(table => {
             table.activeRow.id = Guid.create().toString();
@@ -94,32 +95,21 @@ const requests = {
                 });
             });
         });
-    },
-    addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => {
+    }
+    static addTable(tables: AdditionalTable[], tableId: string, titleValue: string){
         tables.filter(tab => tab.id === tableId)[0].tablesData
         .unshift({
             id: Guid.create().toString(),
             title: Boolean(titleValue) ? titleValue : "Table " + (tables.filter(tab => tab.id === tableId)[0].tablesData.length + 1).toString(),
             rows:[], 
         });
-    },
-    cancelAddRow:(tables: AdditionalTable[], tableId: string) => {
+    }
+    static cancelAddRow(tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table => {            
             table.activeRow = {id: "", cells: []};
             table.addEditRowMode = false;
             table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
         });
-    },
-}
-
-export const fillingStoreService = {
-    deleteRowById: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.deleteRowById(tables, tableId, tableDataId, id),
-    editRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string, id: string) => requests.editRow(tables, tableId, tableDataId, id),
-    deleteTableById: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.deleteTableById(tables, tableId, tableDataId),
-    getRowById: (tablesData: TableData, id: string) => requests.getRowById(tablesData, id),
-    saveRow: (tables:  AdditionalTable[], tableId: string, tableDataId: string) => requests.saveRow(tables, tableId, tableDataId),
-    addRow:(tables: AdditionalTable[], tableId: string) => requests.addRow(tables, tableId),
-    addTable:(tables: AdditionalTable[], tableId: string, titleValue: string) => requests.addTable(tables, tableId, titleValue),
-    cancelAddRow:(tables: AdditionalTable[], tableId: string) =>requests.cancelAddRow(tables, tableId),
+    }
 }

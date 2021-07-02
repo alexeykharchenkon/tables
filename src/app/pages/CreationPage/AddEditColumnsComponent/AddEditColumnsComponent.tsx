@@ -27,10 +27,10 @@ interface AddEditColumnsProps {
     selectTypeValue: string;
     forbiddenSymbols: string;
     isRequired: boolean;
-    maxLength: number;
-    maxItemsSelected: number;
-    minValue: number;
-    maxValue: number;
+    maxLength: string;
+    maxItemsSelected: string;
+    minValue: string;
+    maxValue: string;
 }
 
 export const AddEditColumnsComponent = ({table, addColumn, 

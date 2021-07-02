@@ -2,19 +2,20 @@ import { Row } from "@common/models/Row";
 import { DataType } from "@common/models/DataType";
 
 
-const requests = {
-    validate: (row: Row) : boolean => {
+export class validateService  {
+    static validate (row: Row) : boolean {
         var isValid = true;
         row.cells.forEach(cell => {
+            cell.error = "";
             switch(cell.type){
                 case DataType[DataType.Select]:
                     if(cell.isRequired && cell.value[0]==="") {
                         isValid = false;
                         cell.error = "Required";
                     }
-                    if(cell.maxItemsSelected < cell.value.length){
+                    if(cell.maxItemsSelected !== "" && cell.multySelectMode && +cell.maxItemsSelected < cell.value.length){
                         isValid = false;
-                        cell.error = cell.error + "Max Items to Select " + cell.maxItemsSelected.toString();
+                        cell.error = cell.error + "Max Items to Select " + cell.maxItemsSelected;
                     }
                     break;
                 case DataType[DataType.Text]:
@@ -22,9 +23,9 @@ const requests = {
                          isValid = false;
                          cell.error = "Required";
                      }
-                     if(cell.maxLength < cell.value.length) {
+                     if(cell.maxLength !== "" && +cell.maxLength < cell.value.length) {
                          isValid = false;
-                         cell.error = cell.error + "Max Length is " + cell.maxLength.toString();
+                         cell.error = cell.error + "Max Length is " + cell.maxLength;
                      }
                    break;
                 case DataType[DataType.DatePicker]:
@@ -38,21 +39,20 @@ const requests = {
                        cell.error = "Required";
                        isValid = false;
                    }
-                   if(!(+cell.value < cell.maxValue)) {
+                   if(cell.value !== "" && cell.maxValue !== "" && +cell.maxValue < +cell.value) {
                        isValid = false;
-                       cell.error = cell.error + "Max Value is " + cell.maxValue.toString();
+                       cell.error = cell.error + "Max Value is " + cell.maxValue;
                    }
-                   if(!(+cell.value > cell.minValue)) {
+                   if(cell.value !== "" && cell.minValue !== "" && +cell.minValue > +cell.value) {
                        isValid = false;
-                       cell.error = cell.error + "Max Value is " + cell.maxValue.toString();
+                       cell.error = cell.error + "Min Value is " + cell.minValue;
                     }
                    break;
             }    
         });
         return isValid;
-    },
-}
-
-export const validateService = {
-    validate: (row: Row) : boolean => requests.validate(row),
+    }
+    static resetValidationErrors(row: Row) {
+        row.cells.forEach(cell => { cell.error = "";});
+    }
 }

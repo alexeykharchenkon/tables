@@ -7,8 +7,8 @@ import { AdditionalTable } from '@common/models/AdditionalTable';
 interface NumberModeProps {
     table: AdditionalTable;
     isRequired: boolean;
-    minValue: number;
-    maxValue: number;
+    minValue: string;
+    maxValue: string;
     OnValueChange: any;
 }
 

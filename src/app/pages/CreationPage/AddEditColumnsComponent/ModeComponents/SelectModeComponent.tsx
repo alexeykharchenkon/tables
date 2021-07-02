@@ -14,7 +14,7 @@ interface SelectModeProps {
     selectOptions: string[];
     selectTypeValue: string;
     isRequired: boolean;
-    maxItemsSelected: number;
+    maxItemsSelected: string;
     OnValueChange: any;
 }
 

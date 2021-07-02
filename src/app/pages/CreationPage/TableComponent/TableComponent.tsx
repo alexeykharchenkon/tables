@@ -32,10 +32,10 @@ interface TableProps {
     forbiddenSymbols: string;
     isRequired: boolean;
     OnValueChange: any;
-    maxLength: number;
-    maxItemsSelected: number;
-    minValue: number;
-    maxValue: number;
+    maxLength: string;
+    maxItemsSelected: string;
+    minValue: string;
+    maxValue: string;
 }
 
 export const TableComponent = React.memo(({table, addColumn, deleteColumn,

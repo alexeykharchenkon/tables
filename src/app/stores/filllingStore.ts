@@ -44,6 +44,7 @@ export class FillingStore {
 
     deleteRow = (tableId: string, tableDataId: string, rowId: string) => {      
         fillingStoreService.deleteRowById(this.tableStore.tables, tableId, tableDataId, rowId);
+        fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
         tableService.save(this.tableStore.tables);
     }
 

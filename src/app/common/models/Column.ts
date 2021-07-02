@@ -8,8 +8,8 @@ export interface Column {
     multySelectMode: boolean;
     dateFormat: string;
     isRequired: boolean;
-    maxLength: number;
-    maxItemsSelected: number;
-    minValue: number;
-    maxValue: number;
+    maxLength: string;
+    maxItemsSelected: string;
+    minValue: string;
+    maxValue: string;
 }

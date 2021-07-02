@@ -1,8 +1,8 @@
-import { AdditionalTable } from "@app/common/models/AdditionalTable";
+import { AdditionalTable } from "@common/models/AdditionalTable";
 import { TableModel } from "@common/models/TableModel"
 
-const requests = {
-    load: () : any => {
+export class tableService  {
+    static load () : any  {
         const tables: TableModel [] = JSON.parse(localStorage.getItem("tables") || "[]")
         const additionalTables: AdditionalTable[] = [];
         tables.forEach(table => {
@@ -29,16 +29,16 @@ const requests = {
                 addEditRowMode: false,
                 activeRow: {id: "", cells: []},
                 isRequired: false,
-                maxLength: 10000,
-                maxItemsSelected: 10000,
-                minValue: -10000,
-                maxValue: 10000,
+                maxLength: "",
+                maxItemsSelected: "",
+                minValue: "",
+                maxValue: "",
             });
         });
 
         return additionalTables;
-    },
-    save: (additionalTables: AdditionalTable[]) => {
+    }
+    static save (additionalTables: AdditionalTable[]) {
         const tablesToSave: TableModel [] = [];
 
         additionalTables.forEach(table => {
@@ -51,10 +51,5 @@ const requests = {
         });
 
         localStorage.setItem("tables", JSON.stringify(tablesToSave));
-    },
-}
-
-export const tableService = {
-    load: () : any => requests.load(),
-    save: (additionalTables: AdditionalTable[]) => requests.save(additionalTables),
+    }
 }
