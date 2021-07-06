@@ -1,10 +1,11 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import {TextField, FormControlLabel, IconButton, List, Select, FormControl, InputLabel, Checkbox } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { AdditionalTable } from '@common/models/AdditionalTable';
 import { SelectModeItemComponent } from './SelectModeItemComponent';
+import { Types } from '@common/models/Types';
 
 interface SelectModeProps {
     table: AdditionalTable;
@@ -31,7 +32,7 @@ export const SelectModeComponent = ({table, addSelectField,
                     <TextField 
                         label="Enter Select Option Name"
                         value={ selectValue }
-                        onChange={e => OnValueChange(e, table.id, "SELECTVALUECHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.SELECTVALUECHANGE])}
                     />
                     <IconButton onClick={() => addSelectField(table.id)}>
                         <AddCircleOutlineIcon />
@@ -59,7 +60,7 @@ export const SelectModeComponent = ({table, addSelectField,
                         native
                         style={{minWidth:'150px'}}
                         value={ selectTypeValue }
-                        onChange={e => OnValueChange(e, table.id, "SELECTMODECHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.SELECTMODECHANGE])}
                     >
                             <option value="0">Single</option>
                             <option value="1">Multy</option>
@@ -70,13 +71,13 @@ export const SelectModeComponent = ({table, addSelectField,
                         type="number"
                         label="Enter Max Item Selected"
                         value={maxItemsSelected}
-                        onChange={e => OnValueChange(e, table.id, "MAXITEMSELECTEDCHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.MAXITEMSELECTEDCHANGE])}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
                             checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

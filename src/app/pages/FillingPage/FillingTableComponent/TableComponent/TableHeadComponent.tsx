@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableCell, TableRow, TableHead} from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/FillingPage/common/styles/styles";
 import { TableModel } from '@common/models/TableModel';
 
 

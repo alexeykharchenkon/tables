@@ -2,6 +2,7 @@ import React from 'react';
 import { FormControl, FormHelperText, Select, Typography } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
+import { Types } from '@common/models/Types';
 
 interface SelectCellProps {
     cell: Cell;
@@ -25,7 +26,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                 multiple
                                 style={{minWidth:'100px'}}
                                 value={cell.value}
-                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", "SELECTCHANGE")}
+                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
                             >
                                 {cell.selectOptions.map((s, index) => (
                                     <option 
@@ -48,7 +49,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                 style={{minWidth:'100px'}}
                                 value={cell?.value[0]}
                                 label={"Hello"}
-                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", "SELECTCHANGE")}
+                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
                             >
                                 <option></option>
                                 {cell.selectOptions.map((s, index) => (

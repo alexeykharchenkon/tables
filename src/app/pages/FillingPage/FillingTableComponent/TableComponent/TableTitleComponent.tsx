@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Container, Typography} from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/FillingPage/common/styles/styles";
 import { TableModel } from '@common/models/TableModel';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { TableData } from '@app/common/models/TableData';

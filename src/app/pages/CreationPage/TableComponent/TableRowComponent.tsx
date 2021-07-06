@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, TableCell, TableRow } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles"
 import { TableModel } from "@common/models/TableModel";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';

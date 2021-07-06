@@ -1,8 +1,9 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import { AdditionalTable } from '@common/models/AdditionalTable';
+import { Types } from '@common/models/Types';
 
 interface NumberModeProps {
     table: AdditionalTable;
@@ -24,7 +25,7 @@ export const NumberModeComponent = ({table, isRequired, OnValueChange,
                     type="number"
                     label="Enter Min Value"
                     value={minValue}
-                    onChange={e => OnValueChange(e, table.id, "MINVALUECHANGE")}
+                    onChange={e => OnValueChange(e, table.id, Types[Types.MINVALUECHANGE])}
                 />
             </Container>
             <Container>
@@ -33,7 +34,7 @@ export const NumberModeComponent = ({table, isRequired, OnValueChange,
                     type="number"
                     label="Enter Max Value"
                     value={maxValue}
-                    onChange={e => OnValueChange(e, table.id, "MAXVALUECHANGE")}
+                    onChange={e => OnValueChange(e, table.id, Types[Types.MAXVALUECHANGE])}
                 />
             </Container>
             <Container>
@@ -41,7 +42,7 @@ export const NumberModeComponent = ({table, isRequired, OnValueChange,
                     control={
                         <Checkbox
                             checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

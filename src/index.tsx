@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
-import { rootStore, StoreContext } from '@stores/rootStore';
+import { rootStore, StoreContext } from '@common/stores/rootStore';
 import { App } from './app/App';
 
 ReactDOM.render(

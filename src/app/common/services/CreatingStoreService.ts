@@ -2,8 +2,8 @@ import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { Guid } from "guid-typescript";
 
-export class creatingStoreService {
-    static createTable(tables: AdditionalTable[], tableTitleValue: string) {
+class CreatingStoreService {
+    createTable(tables: AdditionalTable[], tableTitleValue: string) {
         tables.unshift({
             id: Guid.create().toString(), 
             title: Boolean(tableTitleValue) ? tableTitleValue : "Table " + (tables.length + 1).toString(), 
@@ -33,7 +33,7 @@ export class creatingStoreService {
             maxValue: "",
         });
     }
-    static addColumn (tables: AdditionalTable[], tableId: string) {
+    addColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             if(table.columns.length < 10){
@@ -89,7 +89,7 @@ export class creatingStoreService {
             creatingStoreService.makeValuestoDefault(table);
         });
     }
-    static editColumn (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) {
+    editColumn (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.editMode = true;
@@ -133,7 +133,7 @@ export class creatingStoreService {
             }    
         });
     }
-    static saveEditedColumn (tables: AdditionalTable[], tableId: string) {
+    saveEditedColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             table.columns.filter(col => col.id === table.columnId)
@@ -171,7 +171,7 @@ export class creatingStoreService {
             creatingStoreService.makeValuestoDefault(table);
         });
     }
-    static deleteColumn (tables: AdditionalTable[], tableId: string, columnId: string) {
+    deleteColumn (tables: AdditionalTable[], tableId: string, columnId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.columns = table.columns.filter(col => col.id !== columnId);
@@ -184,7 +184,7 @@ export class creatingStoreService {
             });
         });
     }
-    static addSelectField(tables: AdditionalTable[], tabId: string) {
+    addSelectField(tables: AdditionalTable[], tabId: string) {
         tables.filter(tab => tab.id === tabId)
         .forEach(tab => {
             if(tab.selectValue !== "") {
@@ -195,7 +195,7 @@ export class creatingStoreService {
             }
         });
     }
-    static switchSelectMode (tables: AdditionalTable[], tabId: string, value: string) {
+    switchSelectMode (tables: AdditionalTable[], tabId: string, value: string) {
         switch(value){
             case DataType[DataType.Text]:
                 creatingStoreService.makeModesFalse(tables, tabId);
@@ -221,7 +221,7 @@ export class creatingStoreService {
                 break;
         }
     }
-    static makeValuestoDefault (table: AdditionalTable) {
+    makeValuestoDefault (table: AdditionalTable) {
         table.editMode = false;
         table.columnValue = "";
         table.columnId = "";
@@ -241,7 +241,7 @@ export class creatingStoreService {
         table.minValue = "";
         table.maxValue = "";
     }
-    static makeModesFalse (tables: AdditionalTable[], tabId: string) {
+    makeModesFalse (tables: AdditionalTable[], tabId: string) {
         tables.filter(tab => tab.id === tabId)
         .forEach(tab => { 
             tab.selectMode = false;
@@ -251,3 +251,5 @@ export class creatingStoreService {
         })
     }
 }
+
+export const creatingStoreService = new CreatingStoreService();

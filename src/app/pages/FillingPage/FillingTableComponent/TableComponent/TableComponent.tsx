@@ -2,10 +2,10 @@ import React from 'react';
 import { Table} from '@material-ui/core';
 import { TableBodyComponent } from './TableBodyComponent';
 import { TableHeadComponent } from './TableHeadComponent';
-import { AdditionalTable } from '@app/common/models/AdditionalTable';
-import { TableData } from '@app/common/models/TableData';
-import { Cell } from '@app/common/models/Cell';
-import { Row } from '@app/common/models/Row';
+import { AdditionalTable } from '@common/models/AdditionalTable';
+import { TableData } from '@common/models/TableData';
+import { Cell } from '@common/models/Cell';
+import { Row } from '@common/models/Row';
 
 
 interface TableProps {

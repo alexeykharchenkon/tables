@@ -2,8 +2,8 @@ import { Row } from "@common/models/Row";
 import { DataType } from "@common/models/DataType";
 
 
-export class validateService  {
-    static validate (row: Row) : boolean {
+class ValidateService  {
+    validate (row: Row) : boolean {
         var isValid = true;
         row.cells.forEach(cell => {
             cell.error = "";
@@ -52,7 +52,9 @@ export class validateService  {
         });
         return isValid;
     }
-    static resetValidationErrors(row: Row) {
+    resetValidationErrors(row: Row) {
         row.cells.forEach(cell => { cell.error = "";});
     }
 }
+
+export const validateService = new ValidateService();

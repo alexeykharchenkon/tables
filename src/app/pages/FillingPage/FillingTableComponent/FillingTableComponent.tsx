@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container, TableContainer, Paper, IconButton } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles";
+import { useStyles } from "@pages/FillingPage/common/styles/styles"
 import { TableTitleComponent } from './TableComponent/TableTitleComponent';
 import { TableComponent } from './TableComponent/TableComponent';
-import { AdditionalTable } from '@app/common/models/AdditionalTable';
-import { TableData } from '@app/common/models/TableData';
+import { AdditionalTable } from '@common/models/AdditionalTable';
+import { TableData } from '@common/models/TableData';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Cell } from '@app/common/models/Cell';
-import { Row } from '@app/common/models/Row';
+import { Cell } from '@common/models/Cell';
+import { Row } from '@common/models/Row';
 
 
 interface FillingTableProps {

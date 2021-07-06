@@ -1,10 +1,11 @@
 import { makeAutoObservable} from "mobx";
-import { tableService } from "@services/TableService";
+import { tableService } from "@common/services/TableService";
 import { TableStore } from "./tableStore";
-import { fillingStoreService } from "@services/FillingStoreService";
+import { fillingStoreService } from "@common/services/FillingStoreService";
 import { DataType } from "@common/models/DataType";
 import { Cell } from "@common/models/Cell";
-import { formatService } from "@services/FormatService";
+import { formatService } from "@common/services/FormatService";
+import { Types } from "@common/models/Types";
 
 export class FillingStore {
     tableStore: TableStore;
@@ -60,14 +61,14 @@ export class FillingStore {
     onValueChange = (value: any, tabId: string, tableDataId: string, 
         rowId: string, cellId: string, cellType: string, changeType: string) => {
         switch(changeType){
-            case "DATECHANGE":
+            case Types[Types.DATECHANGE]:
                 this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
                     table.activeRow.cells.filter(cell => cell.id === cellId)
                         .forEach(cell => {cell.value = value;});
                     table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== "");
                 }); 
                break;
-            case "CHECKBOXCHANGE":
+            case Types[Types.CHECKBOXCHANGE]:
                 this.tableStore.tables.filter(table => table.id === tabId)
                 .forEach(table => {
                     table.tablesData
@@ -84,10 +85,10 @@ export class FillingStore {
 
                 tableService.save(this.tableStore.tables);
                break;
-           case "TITLECHANGE":
+           case Types[Types.TITLECHANGE]:
                this.titleValue = value.target.value;
                break;
-           case "SELECTCHANGE":
+           case Types[Types.SELECTCHANGE]:
                 const { options } = value.target as HTMLSelectElement;
                 const val: string[] = [];
                 for (let i = 0, l = options.length; i < l; i += 1) 
@@ -98,7 +99,7 @@ export class FillingStore {
                         .forEach(cell => {cell.value = val;});
                     table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); }); 
                break;
-            case "CELLCHANGE":
+            case Types[Types.CELLCHANGE]:
                 this.tableStore.tables.filter(t => t.id === tabId).forEach(table => {
                     table.activeRow.cells.filter(cell => cell.id === cellId)
                         .forEach(cell => {

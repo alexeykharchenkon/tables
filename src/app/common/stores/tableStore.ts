@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import { tableService } from "@services/TableService";
-import { AdditionalTable } from "@app/common/models/AdditionalTable";
+import { tableService } from "@common/services/TableService";
+import { AdditionalTable } from "@common/models/AdditionalTable";
 
 export class TableStore {
     tables: AdditionalTable[] = [];

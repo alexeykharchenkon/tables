@@ -1,14 +1,14 @@
 import { DataType } from "@common/models/DataType";
 import { Cell } from "@app/common/models/Cell";
 
-export class formatService {
-    static checkForbidSymbols(value: string, forbiddenSymbols: string) : string {
+class FormatService {
+    checkForbidSymbols(value: string, forbiddenSymbols: string) : string {
         var forbidSymbArray = forbiddenSymbols.split(',');
         for(var str of forbidSymbArray) 
             value = value.split(str).join('');
         return value;
     }
-    static formatDate (value: any, dateFormat: string) : string {
+    formatDate (value: any, dateFormat: string) : string {
         const pad = (s: any): string => { return (s < 10) ? '0' + s : s; }
         var d = new Date(value);
 
@@ -24,7 +24,7 @@ export class formatService {
         }
         return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
     }
-    static formatHelperText (cell: Cell): string {
+    formatHelperText (cell: Cell): string {
         var value = "";
         switch(cell.type){
             case DataType[DataType.Text]:
@@ -47,3 +47,5 @@ export class formatService {
         return value;
     }
 }
+
+export const formatService = new FormatService();

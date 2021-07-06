@@ -1,8 +1,9 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { Checkbox, FormControlLabel, TextField} from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import { AdditionalTable } from '@common/models/AdditionalTable';
+import { Types } from '@common/models/Types';
 
 interface TextModeProps {
     table: AdditionalTable;
@@ -26,7 +27,7 @@ export const TextModeComponent = ({table, forbiddenSymbols,
                         style={{width: '100%', marginBottom: '10px'}}
                         label="Enter Symbols Separeted by Comma"
                         value={forbiddenSymbols}
-                        onChange={e => OnValueChange(e, table.id, "FORRBIDDENCHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.FORRBIDDENCHANGE])}
                     />
             </Container>
             <Container>
@@ -35,13 +36,13 @@ export const TextModeComponent = ({table, forbiddenSymbols,
                         type="number"
                         label="Enter Max Filed Length"
                         value={maxLength}
-                        onChange={e => OnValueChange(e, table.id, "MAXLENGTHCHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.MAXLENGTHCHANGE])}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
                             checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

@@ -4,6 +4,7 @@ import { Cell } from '@common/models/Cell';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';  
 import { Typography } from '@material-ui/core';
+import { Types } from '@common/models/Types';
 
 interface DateProps {
     cell: Cell;
@@ -24,7 +25,7 @@ export const DateComponent = ({cell, tableId, onValueChange,
                         format={cell.dateFormat}
                         value={cell.value}
                         helperText={helperText(cell)}
-                        onChange={ e => onValueChange(e, tableId, "", "", cell.id, cell.type,"DATECHANGE")}
+                        onChange={ e => onValueChange(e, tableId, "", "", cell.id, cell.type,Types[Types.DATECHANGE])}
                     />
                 </MuiPickersUtilsProvider>
             </>

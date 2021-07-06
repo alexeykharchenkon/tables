@@ -3,10 +3,10 @@ import { TableCell, TableRow, TableBody } from '@material-ui/core';
 import { AddEditRowComponent } from '../AddEditRowComponent/AddEditRowComponent';
 import { EditDeleteComponent } from '../EditDeleteComponent/EditDeleteComponent';
 import { CellComponent } from '../CellComponent/CellComponent';
-import { AdditionalTable } from '@app/common/models/AdditionalTable';
+import { AdditionalTable } from '@common/models/AdditionalTable';
 import { TableData } from '@app/common/models/TableData';
-import { Cell } from '@app/common/models/Cell';
-import { Row } from '@app/common/models/Row';
+import { Cell } from '@common/models/Cell';
+import { Row } from '@common/models/Row';
 
 
 interface TableBodyProps {

@@ -1,8 +1,9 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
-import { TableModel } from "@common/models/TableModel"
+import { TableModel } from "@common/models/TableModel";
+import { dbService } from "@common/services/DBService";
 
-export class tableService  {
-    static load () : any  {
+class TableService  {
+    load () : any  {
         const tables: TableModel [] = JSON.parse(localStorage.getItem("tables") || "[]")
         const additionalTables: AdditionalTable[] = [];
         tables.forEach(table => {
@@ -38,7 +39,7 @@ export class tableService  {
 
         return additionalTables;
     }
-    static save (additionalTables: AdditionalTable[]) {
+    save (additionalTables: AdditionalTable[]) {
         const tablesToSave: TableModel [] = [];
 
         additionalTables.forEach(table => {
@@ -53,3 +54,5 @@ export class tableService  {
         localStorage.setItem("tables", JSON.stringify(tablesToSave));
     }
 }
+
+export const tableService = new TableService();

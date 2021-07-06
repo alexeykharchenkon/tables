@@ -5,6 +5,7 @@ import { AdditionalTable } from '@common/models/AdditionalTable';
 import { TextModeComponent } from './ModeComponents/TextModeComponent';
 import { DateModeComponent } from './ModeComponents/DateModeComponent';
 import { NumberModeComponent } from './ModeComponents/NumberModeComponent';
+import { Column } from '@common/models/Column';
 
 
 interface AddEditColumnsProps {
@@ -19,8 +20,6 @@ interface AddEditColumnsProps {
     textMode: boolean;
     dateMode: boolean;
     numberMode: boolean;
-    columnValue: string;
-    columnTypeValue: string;
     dateFormat: string;
     selectValue: string;
     selectOptions: string[];
@@ -31,24 +30,24 @@ interface AddEditColumnsProps {
     maxItemsSelected: string;
     minValue: string;
     maxValue: string;
+    activeColumn: Column;
 }
 
 export const AddEditColumnsComponent = ({table, addColumn, 
     saveEditedColumn, addSelectField, deleteSelectField, 
-    selectMode, editMode, textMode, dateMode, columnValue, 
-    columnTypeValue, dateFormat, selectValue, selectOptions, 
+    selectMode, editMode, textMode, dateMode,
+    dateFormat, selectValue, selectOptions, 
     selectTypeValue, forbiddenSymbols, isRequired, 
     OnValueChange, numberMode, maxLength, maxItemsSelected, minValue, 
-    maxValue} : AddEditColumnsProps) => {      
+    maxValue, activeColumn} : AddEditColumnsProps) => {      
         return (
         <>
             <AddEditColumns
                 table = {table} 
                 addOrEditColumn = {editMode ? saveEditedColumn : addColumn}
                 OnValueChange ={OnValueChange}
-                addMode = { editMode ? false : true}
-                columnValue={columnValue}
-                columnTypeValue={columnTypeValue}
+                addMode = { editMode }
+                activeColumn={activeColumn}
             />
             {textMode &&
              <TextModeComponent

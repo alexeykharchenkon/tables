@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles"
 import { TableModel } from "@common/models/TableModel";
 import { TableRowComponent } from './TableRowComponent';
 import { Column } from '@common/models/Column';
@@ -15,7 +15,7 @@ interface TableBodyProps {
 
 export const TableBodyComponent = ({table, deleteColumn, editColumn, columns} : TableBodyProps) => {
     const classes = useStyles();
-
+    
     return (
             <TableContainer component={Paper}>
                 <Typography variant="h6" id="tableTitle">

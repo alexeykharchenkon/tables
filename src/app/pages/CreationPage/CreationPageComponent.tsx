@@ -2,8 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
 import { List, ListItem} from '@material-ui/core';
-import { useStyles } from "@common/styles/styles"
-import { useStore } from '@stores/rootStore';
+import { useStyles } from "@pages/CreationPage/common/styles/styles";
+import { useStore } from '@common/stores/rootStore';
 import { TableComponent } from './TableComponent/TableComponent'
 import { CreateTableComponent } from './CreateTableComponent/CreateTableComponent';
 
@@ -32,15 +32,14 @@ export const CreationPageComponent = observer(() => {
                                 deleteTable = {creatingStore.deleteTable}
                                 addSelectField = {creatingStore.addSelectField}
                                 deleteSelectField={creatingStore.deleteSelectField}
-                                OnValueChange ={creatingStore.OnValueChange}    
+                                OnValueChange ={creatingStore.OnValueChange} 
+                                activeColumn={creatingStore.activeColumn}
+                                columns={creatingStore.columns}   
                                 selectMode={table.selectMode}
                                 editMode={table.editMode}
                                 textMode={table.textMode}
                                 dateMode={table.dateMode}
                                 numberMode={table.numberMode}
-                                columnValue={table.columnValue}
-                                columnTypeValue={table.columnTypeValue}
-                                columns={table.columns}
                                 dateFormat={table.dateFormat}      
                                 selectValue = {table.selectValue}
                                 selectOptions = {table.selectOptions}
@@ -51,6 +50,7 @@ export const CreationPageComponent = observer(() => {
                                 maxItemsSelected={table.maxItemsSelected}
                                 minValue={table.minValue}
                                 maxValue={table.maxValue}
+                                
                              />
                          </ListItem>
                     );

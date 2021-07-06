@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/FillingPage/common/styles/styles"
 import { TableModel } from '@common/models/TableModel';
 import { TableContainer, Typography, TableCell, TableRow, TableHead, Table, TableBody, Paper } from '@material-ui/core';
 import { TableRowComponent } from './TableRowComponent';

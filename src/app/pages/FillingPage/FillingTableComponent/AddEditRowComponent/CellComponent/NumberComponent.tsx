@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField, Typography } from '@material-ui/core';
 import { Cell } from '@common/models/Cell';
+import { Types } from '@common/models/Types';
 
 
 interface NumberProps {
@@ -22,7 +23,7 @@ export const NumberComponent = ({cell, onValueChange, tableId,
                     label = 'Enter Data'
                     value={cell.value}
                     helperText={helperText(cell)}
-                    onChange={e => onValueChange(e, tableId, "", "", cell.id, cell.type, "CELLCHANGE")}
+                    onChange={e => onValueChange(e, tableId, "", "", cell.id, cell.type, Types[Types.CELLCHANGE])}
                 />
             </>
       );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { useStyles } from "@common/styles/styles";
-import { useStore } from '@stores/rootStore';
+import { useStyles } from "@pages/FillingPage/common/styles/styles"
+import { useStore } from '@common/stores/rootStore';
 import { ChooseTableComponent } from './ChooseTableComponent/ChooseTableComponent';
 import { FillingTableComponent } from './FillingTableComponent/FillingTableComponent';
 import { List, ListItem } from '@material-ui/core';

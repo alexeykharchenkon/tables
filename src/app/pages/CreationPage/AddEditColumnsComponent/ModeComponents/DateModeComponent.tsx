@@ -1,8 +1,9 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import { useStyles } from "@common/styles/styles"
+import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import { AdditionalTable } from '@common/models/AdditionalTable';
 import { Checkbox, FormControlLabel, FormControl, InputLabel, Select } from '@material-ui/core';
+import { Types } from '@common/models/Types';
 
 interface DateModeProps {
     table: AdditionalTable;
@@ -25,7 +26,7 @@ export const DateModeComponent = ({table, dateFormat,
                         native
                         style={{marginBottom:'10px'}}
                         value={ dateFormat }
-                        onChange={e => OnValueChange(e, table.id, "DATEFORMATCHANGE")}
+                        onChange={e => OnValueChange(e, table.id, Types[Types.DATEFORMATCHANGE])}
                     >
                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                         <option value="MM/dd/yyyy">MM/dd/yyyy</option>
@@ -39,7 +40,7 @@ export const DateModeComponent = ({table, dateFormat,
                     control={
                         <Checkbox
                             checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, "ISREQUIREDCHANGE")}
+                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

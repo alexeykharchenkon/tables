@@ -2,6 +2,7 @@ import React from 'react';
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 import { Checkbox} from '@material-ui/core';
+import { Types } from '@common/models/Types';
 
 
 interface CellProps {
@@ -27,7 +28,7 @@ export const CellComponent = ({cell, formatDate, formatSelect,
            {cell.type === DataType[DataType.Checkbox] && 
             <Checkbox
                 checked={Boolean(cell.value)}
-                onChange={e => onValueChange(e.target.checked, tableId, tableDataId, rowId, cell.id, "", "CHECKBOXCHANGE")}
+                onChange={e => onValueChange(e.target.checked, tableId, tableDataId, rowId, cell.id, "", Types[Types.CHECKBOXCHANGE])}
             /> 
            }
         </>

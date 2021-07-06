@@ -1,20 +1,28 @@
 import { createContext, useContext } from "react";
-import { ColumnStore } from "./creatingStore";
+import { CreatingStore } from "./creatingStore";
 import { FillingStore } from "./filllingStore";
 import { TableStore } from "./tableStore";
+import { initDB } from 'react-indexed-db';
+import { DBConfig } from '@common/config/DBConfig';
+
+
+initDB(DBConfig);
 
 interface RootStore {
     tableStore: TableStore;
-    creatingStore: ColumnStore;
+    creatingStore: CreatingStore;
     fillingStore: FillingStore;
 }
 
 const tableStore = new TableStore();
 tableStore.loadTables();
 
+const creatingStore = new CreatingStore(tableStore);
+creatingStore.loadSchemas();
+
 export const rootStore: RootStore = {
     tableStore,
-    creatingStore: new ColumnStore(tableStore),
+    creatingStore,
     fillingStore : new FillingStore(tableStore),
 }
 
