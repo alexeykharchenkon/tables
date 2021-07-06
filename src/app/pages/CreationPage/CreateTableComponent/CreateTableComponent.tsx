@@ -19,7 +19,7 @@ export const CreateTableComponent = React.memo(({tableTitleValue,
                 <TextField 
                     label="Enter Table Title" 
                     value={tableTitleValue}
-                    onChange={e => OnValueChange(e, "", Types[Types.TITLECHANGE])}
+                    onChange={e => OnValueChange(e, Types[Types.TITLECHANGE])}
                 />
                 <IconButton 
                     onClick={() => createTable()}

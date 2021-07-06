@@ -2,19 +2,15 @@ import React from 'react';
 import Container from '@material-ui/core/Container';
 import { Checkbox, FormControlLabel, TextField} from '@material-ui/core';
 import { useStyles } from "@pages/CreationPage/common/styles/styles";
-import { AdditionalTable } from '@common/models/AdditionalTable';
 import { Types } from '@common/models/Types';
+import { Column } from '@common/models/Column';
 
 interface TextModeProps {
-    table: AdditionalTable;
-    forbiddenSymbols: string;
-    isRequired: boolean;
-    maxLength: string;
     OnValueChange: any;
+    activeColumn: Column;
 }
 
-export const TextModeComponent = ({table, forbiddenSymbols, 
-    isRequired, OnValueChange, maxLength} : TextModeProps) => {
+export const TextModeComponent = ({activeColumn, OnValueChange} : TextModeProps) => {
     const classes = useStyles();
 
     return (
@@ -25,9 +21,10 @@ export const TextModeComponent = ({table, forbiddenSymbols,
                         multiline
                         rows={1}
                         style={{width: '100%', marginBottom: '10px'}}
+                        name="forbiddenSymbols"
                         label="Enter Symbols Separeted by Comma"
-                        value={forbiddenSymbols}
-                        onChange={e => OnValueChange(e, table.id, Types[Types.FORRBIDDENCHANGE])}
+                        value={activeColumn.forbiddenSymbols}
+                        onChange={e => OnValueChange(e, Types[Types.FORRBIDDENCHANGE])}
                     />
             </Container>
             <Container>
@@ -35,14 +32,16 @@ export const TextModeComponent = ({table, forbiddenSymbols,
                 <TextField 
                         type="number"
                         label="Enter Max Filed Length"
-                        value={maxLength}
-                        onChange={e => OnValueChange(e, table.id, Types[Types.MAXLENGTHCHANGE])}
+                        name="maxLength"
+                        value={activeColumn.maxLength}
+                        onChange={e => OnValueChange(e, Types[Types.MAXLENGTHCHANGE])}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
+                            name="isRequired"
+                            checked={activeColumn.isRequired}
+                            onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

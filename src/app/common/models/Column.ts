@@ -4,7 +4,7 @@ export interface Column {
     label: string;
     selectOptions: string[];
     forbiddenSymbols: string;
-    multySelectMode: boolean;
+    multySelectMode: string;
     dateFormat: string;
     isRequired: boolean;
     maxLength: string;

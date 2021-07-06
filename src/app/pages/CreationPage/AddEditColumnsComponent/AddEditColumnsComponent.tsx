@@ -1,87 +1,56 @@
 import React from 'react';
 import { AddEditColumns } from './AddEditColums';
 import { SelectModeComponent } from './ModeComponents/SelectModeComponent';
-import { AdditionalTable } from '@common/models/AdditionalTable';
 import { TextModeComponent } from './ModeComponents/TextModeComponent';
 import { DateModeComponent } from './ModeComponents/DateModeComponent';
 import { NumberModeComponent } from './ModeComponents/NumberModeComponent';
 import { Column } from '@common/models/Column';
+import { Modes } from '@common/models/Modes';
 
 
 interface AddEditColumnsProps {
-    table: AdditionalTable;
     addColumn: any;
     saveEditedColumn: any;
     addSelectField: any;
     deleteSelectField: any;
     OnValueChange: any;
-    selectMode: boolean;
-    editMode: boolean;
-    textMode: boolean;
-    dateMode: boolean;
-    numberMode: boolean;
-    dateFormat: string;
+    modes: Modes;
     selectValue: string;
-    selectOptions: string[];
-    selectTypeValue: string;
-    forbiddenSymbols: string;
-    isRequired: boolean;
-    maxLength: string;
-    maxItemsSelected: string;
-    minValue: string;
-    maxValue: string;
     activeColumn: Column;
 }
 
-export const AddEditColumnsComponent = ({table, addColumn, 
+export const AddEditColumnsComponent = ({addColumn, 
     saveEditedColumn, addSelectField, deleteSelectField, 
-    selectMode, editMode, textMode, dateMode,
-    dateFormat, selectValue, selectOptions, 
-    selectTypeValue, forbiddenSymbols, isRequired, 
-    OnValueChange, numberMode, maxLength, maxItemsSelected, minValue, 
-    maxValue, activeColumn} : AddEditColumnsProps) => {      
+    modes, selectValue, OnValueChange, activeColumn} : AddEditColumnsProps) => {      
         return (
         <>
             <AddEditColumns
-                table = {table} 
-                addOrEditColumn = {editMode ? saveEditedColumn : addColumn}
+                addOrEditColumn = {modes.editMode ? saveEditedColumn : addColumn}
                 OnValueChange ={OnValueChange}
-                addMode = { editMode }
+                addMode = { !modes.editMode }
                 activeColumn={activeColumn}
             />
-            {textMode &&
+            {modes.textMode &&
              <TextModeComponent
-                table = {table} 
-                forbiddenSymbols={forbiddenSymbols}
-                isRequired ={isRequired}
-                maxLength={maxLength}
+                activeColumn={activeColumn}
                 OnValueChange ={OnValueChange}
              />}
-             {selectMode &&
+             {modes.selectMode &&
              <SelectModeComponent
-                table={table} 
                 addSelectField={addSelectField}
                 deleteSelectField={deleteSelectField}
                 selectValue = {selectValue}
-                selectOptions = {selectOptions}
-                selectTypeValue ={selectTypeValue}
-                isRequired={isRequired}
-                maxItemsSelected={maxItemsSelected}
                 OnValueChange ={OnValueChange}
+                activeColumn={activeColumn}
              />}
-             {dateMode &&
+             {modes.dateMode &&
              <DateModeComponent
-                table = {table}
-                dateFormat={dateFormat}
-                isRequired ={isRequired}
+                activeColumn={activeColumn}
                 OnValueChange ={OnValueChange}
              />}
-            {numberMode &&
+            {modes.numberMode &&
              <NumberModeComponent
-                table = {table}
-                isRequired ={isRequired}
-                minValue={minValue}
-                maxValue={maxValue}
+                activeColumn={activeColumn}
                 OnValueChange ={OnValueChange}
              />}
         </>    

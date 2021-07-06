@@ -1,19 +1,16 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 import { useStyles } from "@pages/CreationPage/common/styles/styles";
-import { AdditionalTable } from '@common/models/AdditionalTable';
 import { Checkbox, FormControlLabel, FormControl, InputLabel, Select } from '@material-ui/core';
 import { Types } from '@common/models/Types';
+import { Column } from '@common/models/Column';
 
 interface DateModeProps {
-    table: AdditionalTable;
-    dateFormat: string;
-    isRequired: boolean;
+    activeColumn: Column;
     OnValueChange: any;
 }
 
-export const DateModeComponent = ({table, dateFormat,
-    isRequired, OnValueChange}: DateModeProps) => {
+export const DateModeComponent = ({activeColumn, OnValueChange}: DateModeProps) => {
     const classes = useStyles();
 
     return (
@@ -24,9 +21,10 @@ export const DateModeComponent = ({table, dateFormat,
                     <InputLabel>Date Format</InputLabel> 
                     <Select
                         native
+                        name="dateFormat"
                         style={{marginBottom:'10px'}}
-                        value={ dateFormat }
-                        onChange={e => OnValueChange(e, table.id, Types[Types.DATEFORMATCHANGE])}
+                        value={ activeColumn.dateFormat }
+                        onChange={e => OnValueChange(e, Types[Types.DATEFORMATCHANGE])}
                     >
                         <option value="dd/MM/yyyy">dd/MM/yyyy</option>
                         <option value="MM/dd/yyyy">MM/dd/yyyy</option>
@@ -39,8 +37,9 @@ export const DateModeComponent = ({table, dateFormat,
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
+                            name="isRequired"
+                            checked={activeColumn.isRequired}
+                            onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

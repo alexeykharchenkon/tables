@@ -33,12 +33,9 @@ export const TableBodyComponent = ({table, deleteColumn, editColumn, columns} : 
                         {columns.map((col) => (
                             <TableRowComponent
                                 key={col.id}
-                                table = {table}
                                 deleteColumn = {deleteColumn}
                                 editColumn = {editColumn}
                                 col = {col}
-                                label ={col.label}
-                                type={col.type}
                             />
                         ))}
                     </TableBody>

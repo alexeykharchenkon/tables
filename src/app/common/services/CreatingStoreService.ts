@@ -1,6 +1,7 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
 import { DataType } from "@common/models/DataType";
 import { Guid } from "guid-typescript";
+import { Modes } from "@common/models/Modes";
 
 class CreatingStoreService {
     createTable(tables: AdditionalTable[], tableTitleValue: string) {
@@ -33,7 +34,7 @@ class CreatingStoreService {
             maxValue: "",
         });
     }
-    addColumn (tables: AdditionalTable[], tableId: string) {
+   /* addColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             if(table.columns.length < 10){
@@ -88,8 +89,8 @@ class CreatingStoreService {
             }
             creatingStoreService.makeValuestoDefault(table);
         });
-    }
-    editColumn (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) {
+    }*/
+  /*  editColumn (tables: AdditionalTable[], tableId: string, columnId: string, value: string, type: string, selectType: boolean) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
             table.editMode = true;
@@ -132,8 +133,8 @@ class CreatingStoreService {
                     break;
             }    
         });
-    }
-    saveEditedColumn (tables: AdditionalTable[], tableId: string) {
+    }*/
+   /* saveEditedColumn (tables: AdditionalTable[], tableId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table=> { 
             table.columns.filter(col => col.id === table.columnId)
@@ -170,7 +171,7 @@ class CreatingStoreService {
 
             creatingStoreService.makeValuestoDefault(table);
         });
-    }
+    }*/
     deleteColumn (tables: AdditionalTable[], tableId: string, columnId: string) {
         tables.filter(table => table.id === tableId)
         .forEach(table => { 
@@ -195,31 +196,37 @@ class CreatingStoreService {
             }
         });
     }
-    switchSelectMode (tables: AdditionalTable[], tabId: string, value: string) {
+    switchSelectMode (modes: Modes, value: string) {
         switch(value){
             case DataType[DataType.Text]:
-                creatingStoreService.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.textMode = true;});
+                creatingStoreService.makeModesFalse(modes);
+                modes.textMode = true;
                 break;
             case DataType[DataType.DatePicker]:
-                creatingStoreService.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.dateMode = true;});
+                creatingStoreService.makeModesFalse(modes);
+                modes.dateMode = true;
                 break;
             case DataType[DataType.Select]:
-                creatingStoreService.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.selectMode = true;});
+                creatingStoreService.makeModesFalse(modes);
+                modes.selectMode = true;
                 break;
             case DataType[DataType.Number]:
-                creatingStoreService.makeModesFalse(tables, tabId);
-                tables.filter(tab => tab.id === tabId).forEach(tab => {tab.numberMode = true;});
+                creatingStoreService.makeModesFalse(modes);
+                modes.numberMode = true;
                 break;
             case DataType[DataType.Checkbox]:
-                creatingStoreService.makeModesFalse(tables, tabId);
+                creatingStoreService.makeModesFalse(modes);
                 break;
             default:
-                creatingStoreService.makeModesFalse(tables, tabId);
+                creatingStoreService.makeModesFalse(modes);
                 break;
         }
+    }
+    makeModesFalse (modes: Modes) {
+        modes.selectMode = false;
+        modes.dateMode = false;
+        modes.textMode = false;
+        modes.numberMode = false;
     }
     makeValuestoDefault (table: AdditionalTable) {
         table.editMode = false;
@@ -240,15 +247,6 @@ class CreatingStoreService {
         table.maxItemsSelected = "";
         table.minValue = "";
         table.maxValue = "";
-    }
-    makeModesFalse (tables: AdditionalTable[], tabId: string) {
-        tables.filter(tab => tab.id === tabId)
-        .forEach(tab => { 
-            tab.selectMode = false;
-            tab.dateMode = false;
-            tab.textMode = false;
-            tab.numberMode = false;
-        })
     }
 }
 

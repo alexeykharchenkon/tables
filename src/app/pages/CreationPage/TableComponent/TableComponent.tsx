@@ -6,6 +6,7 @@ import { TableBodyComponent } from './TableBodyComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AdditionalTable } from '@common/models/AdditionalTable';
 import { Column } from '@common/models/Column';
+import { Modes } from '@common/models/Modes';
 
 
 interface TableProps {
@@ -17,32 +18,16 @@ interface TableProps {
     deleteTable: any;
     addSelectField: any;
     deleteSelectField: any;
-    selectMode: boolean;
-    editMode: boolean;
-    textMode: boolean;
-    dateMode: boolean;
-    numberMode: boolean;
+    modes: Modes;
     columns: Column[];
-    dateFormat: string;
     selectValue: string;
-    selectOptions: string[];
-    selectTypeValue: string;
-    forbiddenSymbols: string;
-    isRequired: boolean;
     OnValueChange: any;
-    maxLength: string;
-    maxItemsSelected: string;
-    minValue: string;
-    maxValue: string;
     activeColumn: Column;
 }
 
 export const TableComponent = React.memo(({table, addColumn, deleteColumn,
     editColumn, saveEditedColumn, deleteTable, addSelectField, 
-    deleteSelectField, selectMode, editMode, textMode, dateMode,
-    columns, dateFormat,
-    selectValue, selectOptions, selectTypeValue, forbiddenSymbols,
-    isRequired,  OnValueChange, numberMode, activeColumn} : TableProps) => {
+    deleteSelectField, modes, columns, selectValue, OnValueChange, activeColumn} : TableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.tableCo}>
@@ -54,27 +39,13 @@ export const TableComponent = React.memo(({table, addColumn, deleteColumn,
                 </IconButton>
             </Container>
             <AddEditColumnsComponent 
-                table = {table} 
                 addColumn = {addColumn}
                 saveEditedColumn ={saveEditedColumn}
                 addSelectField = {addSelectField}
                 deleteSelectField={deleteSelectField}
                 OnValueChange={OnValueChange}
-                selectMode={selectMode}
-                editMode={editMode}
-                textMode={textMode}
-                dateMode={dateMode}
-                numberMode={numberMode}
-                dateFormat={dateFormat}
+                modes={modes}
                 selectValue = {selectValue}
-                selectOptions = {selectOptions}
-                selectTypeValue ={selectTypeValue}
-                forbiddenSymbols={forbiddenSymbols}
-                isRequired ={isRequired}
-                maxLength={table.maxLength}
-                maxItemsSelected={table.maxItemsSelected}
-                minValue={table.minValue}
-                maxValue={table.maxValue}
                 activeColumn={activeColumn}
             />
             <TableBodyComponent

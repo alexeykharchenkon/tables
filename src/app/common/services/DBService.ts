@@ -30,7 +30,7 @@ export const dbService = {
                 type: column.type,
                 selectOptions: column.selectOptions.join('/'),
                 forbiddenSymbols: column.forbiddenSymbols,
-                multySelectMode: String(column.multySelectMode),
+                multySelectMode: column.multySelectMode,
                 dateFormat: column.dateFormat,
                 isRequired: String(column.isRequired),
                 maxLength: column.maxLength,

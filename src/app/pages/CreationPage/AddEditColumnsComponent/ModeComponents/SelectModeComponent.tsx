@@ -3,25 +3,21 @@ import Container from '@material-ui/core/Container';
 import {TextField, FormControlLabel, IconButton, List, Select, FormControl, InputLabel, Checkbox } from '@material-ui/core';
 import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { AdditionalTable } from '@common/models/AdditionalTable';
 import { SelectModeItemComponent } from './SelectModeItemComponent';
 import { Types } from '@common/models/Types';
+import { Column } from '@common/models/Column';
+import { SelectType } from '@common/models/SelectType';
 
 interface SelectModeProps {
-    table: AdditionalTable;
     addSelectField: any;
     deleteSelectField: any;
     selectValue: string;
-    selectOptions: string[];
-    selectTypeValue: string;
-    isRequired: boolean;
-    maxItemsSelected: string;
     OnValueChange: any;
+    activeColumn: Column;
 }
 
-export const SelectModeComponent = ({table, addSelectField, 
-    deleteSelectField, selectValue, selectOptions, selectTypeValue, 
-    isRequired, OnValueChange, maxItemsSelected} : SelectModeProps) => {
+export const SelectModeComponent = ({addSelectField, 
+    deleteSelectField, selectValue, activeColumn, OnValueChange} : SelectModeProps) => {
     const classes = useStyles();
 
     return (
@@ -32,18 +28,17 @@ export const SelectModeComponent = ({table, addSelectField,
                     <TextField 
                         label="Enter Select Option Name"
                         value={ selectValue }
-                        onChange={e => OnValueChange(e, table.id, Types[Types.SELECTVALUECHANGE])}
+                        onChange={e => OnValueChange(e, Types[Types.SELECTVALUECHANGE])}
                     />
-                    <IconButton onClick={() => addSelectField(table.id)}>
+                    <IconButton onClick={() => addSelectField()}>
                         <AddCircleOutlineIcon />
                     </IconButton>
                 </Container>
                 <Container>
                 <List>
-                    {selectOptions.map((value, index) => (
+                    {activeColumn.selectOptions.map((value, index) => (
                             <SelectModeItemComponent 
                                 key={index}
-                                table={table}
                                 value={value}
                                 idx={index}
                                 deleteSelectField={deleteSelectField}
@@ -58,26 +53,29 @@ export const SelectModeComponent = ({table, addSelectField,
                     <InputLabel>Select Mode</InputLabel> 
                     <Select
                         native
+                        name="multySelectMode"
                         style={{minWidth:'150px'}}
-                        value={ selectTypeValue }
-                        onChange={e => OnValueChange(e, table.id, Types[Types.SELECTMODECHANGE])}
+                        value={ activeColumn.multySelectMode }
+                        onChange={e => OnValueChange(e,Types[Types.SELECTMODECHANGE])}
                     >
-                            <option value="0">Single</option>
-                            <option value="1">Multy</option>
+                        <option value={SelectType[SelectType.Single]}>Single</option>
+                        <option value={SelectType[SelectType.Multy]}>Multy</option>
                     </Select> 
                 </FormControl>
                 <h4>Max Item Selected</h4>
                 <TextField 
+                        name="maxItemsSelected"
                         type="number"
                         label="Enter Max Item Selected"
-                        value={maxItemsSelected}
-                        onChange={e => OnValueChange(e, table.id, Types[Types.MAXITEMSELECTEDCHANGE])}
+                        value={activeColumn.maxItemsSelected}
+                        onChange={e => OnValueChange(e, Types[Types.MAXITEMSELECTEDCHANGE])}
                 />
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={isRequired}
-                            onChange={e => OnValueChange(e, table.id, Types[Types.ISREQUIREDCHANGE])}
+                            name="isRequired"
+                            checked={activeColumn.isRequired}
+                            onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
                     label="Is Required"

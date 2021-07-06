@@ -35,22 +35,8 @@ export const CreationPageComponent = observer(() => {
                                 OnValueChange ={creatingStore.OnValueChange} 
                                 activeColumn={creatingStore.activeColumn}
                                 columns={creatingStore.columns}   
-                                selectMode={table.selectMode}
-                                editMode={table.editMode}
-                                textMode={table.textMode}
-                                dateMode={table.dateMode}
-                                numberMode={table.numberMode}
-                                dateFormat={table.dateFormat}      
-                                selectValue = {table.selectValue}
-                                selectOptions = {table.selectOptions}
-                                selectTypeValue ={table.selectTypeValue}   
-                                forbiddenSymbols={table.forbiddenSymbols}  
-                                isRequired ={table.isRequired}
-                                maxLength={table.maxLength}
-                                maxItemsSelected={table.maxItemsSelected}
-                                minValue={table.minValue}
-                                maxValue={table.maxValue}
-                                
+                                modes={creatingStore.modes} 
+                                selectValue = {creatingStore.selectValue}
                              />
                          </ListItem>
                     );
