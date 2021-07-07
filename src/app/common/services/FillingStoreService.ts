@@ -67,7 +67,7 @@ class FillingStoreService {
         });
     }
     addRow(tables: AdditionalTable[], tableId: string){
-        tables.filter(table => table.id === tableId)
+     /*   tables.filter(table => table.id === tableId)
         .forEach(table => {
             table.activeRow.id = Guid.create().toString();
             table.activeRow.cells = [];
@@ -102,7 +102,7 @@ class FillingStoreService {
                     error: "",
                 });
             });
-        });
+        });*/
     }
     addTable(tables: AdditionalTable[], tableId: string, titleValue: string){
         tables.filter(tab => tab.id === tableId)[0].tablesData

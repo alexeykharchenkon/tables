@@ -27,7 +27,7 @@ export const TableRowComponent = ({deleteColumn, editColumn, col} : TableRowProp
                      <DeleteIcon />
                 </IconButton>
                 <IconButton 
-                    onClick={() => editColumn(col.id, col.label, col.type, col.multySelectMode)}
+                    onClick={() => editColumn(col.id)}
                 >
                     <EditIcon />
                 </IconButton>

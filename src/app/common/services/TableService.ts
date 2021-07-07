@@ -1,6 +1,5 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
 import { TableModel } from "@common/models/TableModel";
-import { dbService } from "@common/services/DBService";
 
 class TableService  {
     load () : any  {

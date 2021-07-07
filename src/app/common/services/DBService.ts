@@ -21,23 +21,32 @@ export const dbService = {
         const { deleteRecord } = useIndexedDB('columns');
         deleteRecord(id).then(event => {});
     },
-    AddColumn: (schemaId: string, column: Column) => {
+    AddColumn: (column: Column) => {
         const { add } = useIndexedDB('columns');
-            add({ 
-                id: column.id,
-                schemaId: schemaId,
-                label: column.label,
-                type: column.type,
-                selectOptions: column.selectOptions.join('/'),
-                forbiddenSymbols: column.forbiddenSymbols,
-                multySelectMode: column.multySelectMode,
-                dateFormat: column.dateFormat,
-                isRequired: String(column.isRequired),
-                maxLength: column.maxLength,
-                maxItemsSelected: column.maxItemsSelected,
-                minValue: column.minValue,
-                maxValue: column.maxValue,
-            }).then();
+            add({...column}).then();
+    },
+    UpdateColumn: (column: Column) => {
+        const { update } = useIndexedDB('columns');
+            update({...column}).then();
+    },
+    GetColumnById: (column: Column, id: string) => {
+        const { getByIndex } = useIndexedDB('columns');
+
+        getByIndex('id', id).then(data => {
+            column.id = data.id;
+            column.schemaId = data.schemaId;
+            column.label= data.label;
+            column.type = data.type;
+            column.selectOptions = data.selectOptions;
+            column.forbiddenSymbols = data.forbiddenSymbols;
+            column.multySelectMode = data.multySelectMode;
+            column.dateFormat = data.dateFormat;
+            column.isRequired = data.isRequired;
+            column.maxLength = data.maxLength;
+            column.maxItemsSelected = data.maxItemsSelected;
+            column.minValue = data.minValue;
+            column.maxValue = data.maxValue;
+        });      
     },
     GetCellsByRowId : (id: string) : Cell[] => {
         const cellsArray: Cell[] = [];
@@ -78,7 +87,7 @@ export const dbService = {
                 tableId: tableId,
                 type: cel.type,
                 value: cel.value,
-                selectOptions: cel.selectOptions.join('/'),
+                selectOptions: cel.selectOptions,
                 forbiddenSymbols: cel.forbiddenSymbols,
                 multySelectMode: cel.multySelectMode,
                 dateFormat: cel.dateFormat,
@@ -105,7 +114,7 @@ export const dbService = {
                 tableId: tableId,
                 type: cel.type,
                 value: cel.value,
-                selectOptions: cel.selectOptions.join('/'),
+                selectOptions: cel.selectOptions,
                 forbiddenSymbols: cel.forbiddenSymbols,
                 multySelectMode: cel.multySelectMode,
                 dateFormat: cel.dateFormat,

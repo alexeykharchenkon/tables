@@ -4,13 +4,13 @@ import { useStyles } from "@pages/CreationPage/common/styles/styles"
 import { AddEditColumnsComponent } from '../AddEditColumnsComponent/AddEditColumnsComponent';
 import { TableBodyComponent } from './TableBodyComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { AdditionalTable } from '@common/models/AdditionalTable';
 import { Column } from '@common/models/Column';
 import { Modes } from '@common/models/Modes';
+import { TableSchema } from '@common/models/TableSchema';
 
 
 interface TableProps {
-    table: AdditionalTable;
+    table: TableSchema;
     addColumn: any;
     deleteColumn: any;
     editColumn: any;

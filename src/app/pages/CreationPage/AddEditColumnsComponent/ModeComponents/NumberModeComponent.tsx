@@ -40,7 +40,7 @@ export const NumberModeComponent = ({OnValueChange, activeColumn} : NumberModePr
                     control={
                         <Checkbox
                             name="isRequired"
-                            checked={activeColumn.isRequired}
+                            checked={activeColumn.isRequired==="true"? true: false}
                             onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }

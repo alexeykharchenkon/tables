@@ -1,19 +1,20 @@
 import React from 'react';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import { useStyles } from "@pages/CreationPage/common/styles/styles"
-import { TableModel } from "@common/models/TableModel";
 import { TableRowComponent } from './TableRowComponent';
 import { Column } from '@common/models/Column';
+import { TableSchema } from '@common/models/TableSchema';
+import { observer } from 'mobx-react-lite';
 
 
 interface TableBodyProps {
-    table: TableModel;
+    table: TableSchema;
     deleteColumn: any;
     editColumn: any;
     columns: Column[];
 }
 
-export const TableBodyComponent = ({table, deleteColumn, editColumn, columns} : TableBodyProps) => {
+export const TableBodyComponent = observer(({table, deleteColumn, editColumn, columns} : TableBodyProps) => {
     const classes = useStyles();
     
     return (
@@ -30,7 +31,8 @@ export const TableBodyComponent = ({table, deleteColumn, editColumn, columns} : 
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {columns.map((col) => (
+                        {columns.map(col => (
+                            col.schemaId === table.id && 
                             <TableRowComponent
                                 key={col.id}
                                 deleteColumn = {deleteColumn}
@@ -42,4 +44,4 @@ export const TableBodyComponent = ({table, deleteColumn, editColumn, columns} : 
                 </Table>
         </TableContainer>
     );
-}
+});

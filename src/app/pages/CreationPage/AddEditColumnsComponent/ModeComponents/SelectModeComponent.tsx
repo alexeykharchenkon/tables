@@ -36,7 +36,7 @@ export const SelectModeComponent = ({addSelectField,
                 </Container>
                 <Container>
                 <List>
-                    {activeColumn.selectOptions.map((value, index) => (
+                    {activeColumn.selectOptions.split('/').map((value, index) => (
                             <SelectModeItemComponent 
                                 key={index}
                                 value={value}
@@ -74,7 +74,7 @@ export const SelectModeComponent = ({addSelectField,
                     control={
                         <Checkbox
                             name="isRequired"
-                            checked={activeColumn.isRequired}
+                            checked={activeColumn.isRequired==="true"? true: false}
                             onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }

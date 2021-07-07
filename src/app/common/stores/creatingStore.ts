@@ -22,18 +22,17 @@ export class CreatingStore {
         numberMode: false,
     }
     
-    tableSchemas: TableSchema[] = [];
-    columns: Column[] = [];
     activeTableSchema: TableSchema = {id: "", title: ""}
     activeColumn: Column = {
         id: "",
+        schemaId: "",
         type: "",
         label: "",
-        selectOptions: [],
+        selectOptions: "",
         forbiddenSymbols: "",
         multySelectMode: "Single",
         dateFormat: "",
-        isRequired: false,
+        isRequired: "false",
         maxLength: "",
         maxItemsSelected: "",
         minValue: "",
@@ -42,18 +41,14 @@ export class CreatingStore {
 
     constructor(tableStore: TableStore){
         makeAutoObservable(this);
-        this.tableStore = tableStore;
-    }
-
-    loadSchemas = () => { 
-        dbService.LoadSchemas(this.tableSchemas);
-        dbService.LoadColumns(this.columns);
+        this.tableStore = tableStore;  
+        this.tableStore.loadData();
     }
 
     createTable = () => {
        this.activeTableSchema.id = Guid.create().toString();
        this.activeTableSchema.title = this.tableTitleValue;
-       this.tableSchemas.push(this.activeTableSchema);
+       this.tableStore.tableSchemas.push(this.activeTableSchema);
        dbService.CreateTableSchema(this.activeTableSchema);
     }
 
@@ -63,57 +58,51 @@ export class CreatingStore {
     }
 
     addColumn = () => {
+        console.log(this.activeTableSchema.id)
         this.activeColumn.id = Guid.create().toString();
-        dbService.AddColumn(this.activeTableSchema.id, this.activeColumn);
-        this.columns.push(this.activeColumn);
-        this.activeColumn = {
-            id: Guid.create().toString(),
-            type: "",
-            label: "",
-            selectOptions: [],
-            forbiddenSymbols: "",
-            multySelectMode: "Single",
-            dateFormat: "",
-            isRequired: false,
-            maxLength: "",
-            maxItemsSelected: "",
-            minValue: "",
-            maxValue: "",
-        };
-
+        this.activeColumn.schemaId = this.activeTableSchema.id;
+        dbService.AddColumn(this.activeColumn);
+        this.tableStore.columns.push(this.activeColumn);
         creatingStoreService.makeModesFalse(this.modes);
+        this.setActiveColumnToDefault();
     }
 
-    deleteColumn = (columnId: string) => {
-        dbService.DeleteColumnById(columnId);
-        this.columns = this.columns.filter(col => col.id !== columnId);
+    deleteColumn = (id: string) => {
+        dbService.DeleteColumnById(id);
+        this.tableStore.columns = this.tableStore.columns.filter(col => col.id !== id);
     }
 
-    editColumn = (tableId: string, columnId: string, value: string, type: string, selectType: boolean) => {
-      //  creatingStoreService.editColumn(this.tableStore.tables, tableId, columnId, value, type, selectType);
+    editColumn = (id: string) => {
+        this.modes.editMode = true;
+        this.activeColumn = this.tableStore.columns?.find(col => col.id === id) as Column;
+        creatingStoreService.switchSelectMode(this.modes, this.activeColumn.type);
     }
 
-    saveEditedColumn = (tableId: string) => {
-     //   fillingStoreService.cancelAddRow(this.tableStore.tables, tableId);
-     //   creatingStoreService.saveEditedColumn(this.tableStore.tables, tableId);
-     //   tableService.save(this.tableStore.tables);
+    saveEditedColumn = () => {
+        this.modes.editMode = false;
+        dbService.UpdateColumn(this.activeColumn);
+        creatingStoreService.updateColumns(this.tableStore.columns, this.activeColumn);
+        creatingStoreService.makeModesFalse(this.modes);
+        this.setActiveColumnToDefault();
     }
 
     addSelectField = () => {
-        this.activeColumn.selectOptions.push(this.selectValue);
+        this.activeColumn.selectOptions += "/" + this.selectValue;
         this.selectValue = "";
         this.activeColumn = {...this.activeColumn};
     }
 
     deleteSelectField = (index: number) => {
-         this.activeColumn.selectOptions.splice(index,1);
+         let selOpt = this.activeColumn.selectOptions.split('/');
+         selOpt.splice(index,1);
+         this.activeColumn.selectOptions = selOpt.join('/');
          this.activeColumn = {...this.activeColumn};
     }
 
      OnValueChange = (value: any, changeType: string) => {
          switch(changeType){
              case Types[Types.ISREQUIREDCHANGE]:
-                this.activeColumn = {...this.activeColumn, [value.target.name] : value.target.checked}
+                this.activeColumn = {...this.activeColumn, [value.target.name] : value.target.checked ? "true" : "false" }
                 break;
            case Types[Types.SELECTVALUECHANGE]:
                 this.selectValue = value.target.value;
@@ -130,4 +119,22 @@ export class CreatingStore {
                 break;
          } 
      }
+
+     setActiveColumnToDefault = () => {
+        this.activeColumn = {
+            id: Guid.create().toString(),
+            schemaId: "",
+            type: "",
+            label: "",
+            selectOptions: "",
+            forbiddenSymbols: "",
+            multySelectMode: "Single",
+            dateFormat: "",
+            isRequired: "false",
+            maxLength: "",
+            maxItemsSelected: "",
+            minValue: "",
+            maxValue: "",
+        };
+    }
 }

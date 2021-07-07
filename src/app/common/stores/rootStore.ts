@@ -16,14 +16,15 @@ interface RootStore {
 
 const tableStore = new TableStore();
 tableStore.loadTables();
+//tableStore.loadData();
 
 const creatingStore = new CreatingStore(tableStore);
-creatingStore.loadSchemas();
+const fillingStore = new FillingStore(tableStore);
 
 export const rootStore: RootStore = {
     tableStore,
     creatingStore,
-    fillingStore : new FillingStore(tableStore),
+    fillingStore,
 }
 
 export const StoreContext = createContext(rootStore);

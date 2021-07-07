@@ -20,10 +20,11 @@ export const CreationPageComponent = observer(() => {
                 createTable={creatingStore.createTable}
             />
             <List>
-                {tableStore.tables.map(table => {
+                {tableStore.tableSchemas.map(table => {
                     return (
                         <ListItem key={table.id}>
                             <TableComponent 
+                                columns={tableStore.columns}  
                                 table = {table} 
                                 addColumn = {creatingStore.addColumn}
                                 deleteColumn = {creatingStore.deleteColumn}
@@ -33,8 +34,7 @@ export const CreationPageComponent = observer(() => {
                                 addSelectField = {creatingStore.addSelectField}
                                 deleteSelectField={creatingStore.deleteSelectField}
                                 OnValueChange ={creatingStore.OnValueChange} 
-                                activeColumn={creatingStore.activeColumn}
-                                columns={creatingStore.columns}   
+                                activeColumn={creatingStore.activeColumn} 
                                 modes={creatingStore.modes} 
                                 selectValue = {creatingStore.selectValue}
                              />

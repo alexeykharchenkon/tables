@@ -28,7 +28,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                 value={cell.value}
                                 onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
                             >
-                                {cell.selectOptions.map((s, index) => (
+                                {cell.selectOptions.split('/').map((s, index) => (
                                     <option 
                                         key={index}
                                         value={s}
@@ -52,7 +52,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                 onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
                             >
                                 <option></option>
-                                {cell.selectOptions.map((s, index) => (
+                                {cell.selectOptions.split('/').map((s, index) => (
                                     <option 
                                         key={index}
                                         value={s}

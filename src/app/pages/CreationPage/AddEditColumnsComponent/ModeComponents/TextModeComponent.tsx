@@ -40,7 +40,7 @@ export const TextModeComponent = ({activeColumn, OnValueChange} : TextModeProps)
                     control={
                         <Checkbox
                             name="isRequired"
-                            checked={activeColumn.isRequired}
+                            checked={activeColumn.isRequired==="true"? true: false}
                             onChange={e => OnValueChange(e, Types[Types.ISREQUIREDCHANGE])}
                     /> 
                     }
