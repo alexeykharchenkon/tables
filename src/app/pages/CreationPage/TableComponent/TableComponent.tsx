@@ -33,7 +33,7 @@ export const TableComponent = React.memo(({table, addColumn, deleteColumn,
         <Container className={classes.tableCo}>
             <Container>
             <IconButton 
-                    onClick={() => deleteTable(table.id)}
+                    onClick={() => deleteTable()}
             >
                     <DeleteIcon />
                 </IconButton>

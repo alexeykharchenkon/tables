@@ -7,28 +7,24 @@ import { Types } from '@common/models/Types';
 
 interface CellProps {
     cell: Cell;
-    formatDate: any;
-    formatSelect: any;
+    formatCell: any;
     onValueChange: any;
     tableId: string;
-    tableDataId: string;
     rowId: string;
 }
 
-export const CellComponent = ({cell, formatDate, formatSelect,
-    onValueChange, tableId, tableDataId, rowId}: CellProps) => {
+export const CellComponent = ({cell, formatCell,
+    onValueChange, tableId, rowId}: CellProps) => {
     return (
         <>
            {cell.type === DataType[DataType.Text] && cell.value}
            {cell.type === DataType[DataType.Number] && cell.value}
-           {cell.type === DataType[DataType.DatePicker] && 
-                formatDate(cell.value, cell.dateFormat)}
-           {cell.type === DataType[DataType.Select] && 
-                formatSelect(cell.value)}
+           {cell.type === DataType[DataType.DatePicker] && formatCell(cell, Types[Types.FORMATDATE])}
+           {cell.type === DataType[DataType.Select] && formatCell(cell, Types[Types.FORMATSELECT])}
            {cell.type === DataType[DataType.Checkbox] && 
             <Checkbox
                 checked={Boolean(cell.value)}
-                onChange={e => onValueChange(e.target.checked, tableId, tableDataId, rowId, cell.id, "", Types[Types.CHECKBOXCHANGE])}
+                onChange={e => onValueChange(e.target.checked, tableId, "", rowId, cell.id, "", Types[Types.CHECKBOXCHANGE])}
             /> 
            }
         </>

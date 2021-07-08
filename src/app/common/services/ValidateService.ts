@@ -5,7 +5,7 @@ import { DataType } from "@common/models/DataType";
 class ValidateService  {
     validate (row: Row) : boolean {
         var isValid = true;
-        row.cells.forEach(cell => {
+      /*  row.cells.forEach(cell => {
             cell.error = "";
             switch(cell.type){
                 case DataType[DataType.Select]:
@@ -49,11 +49,11 @@ class ValidateService  {
                     }
                    break;
             }    
-        });
+        });*/
         return isValid;
     }
     resetValidationErrors(row: Row) {
-        row.cells.forEach(cell => { cell.error = "";});
+      //  row.cells.forEach(cell => { cell.error = "";});
     }
 }
 

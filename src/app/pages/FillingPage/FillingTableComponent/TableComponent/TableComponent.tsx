@@ -1,50 +1,46 @@
 import React from 'react';
-import { Table} from '@material-ui/core';
+import { Table, TableCell, TableRow, TableHead} from '@material-ui/core';
 import { TableBodyComponent } from './TableBodyComponent';
-import { TableHeadComponent } from './TableHeadComponent';
-import { AdditionalTable } from '@common/models/AdditionalTable';
-import { TableData } from '@common/models/TableData';
 import { Cell } from '@common/models/Cell';
 import { Row } from '@common/models/Row';
+import { Column } from '@common/models/Column';
+import { DataTable } from '@common/models/DataTable';
+import { useStyles } from "@pages/FillingPage/common/styles/styles";
 
 
 interface TableProps {
-    table: AdditionalTable;
-    saveRow: any;
+    table: DataTable;
+    crudRow: any;
     onValueChange: any;
-    editRow: any;
-    deleteRow: any;
-    tabData: TableData;
-    activeTableId: string;
     cells: Cell[];
     rows: Row[];
-    formatDate: any;
-    formatSelect: any;
-    helperText: any;
-    cancelAddRow: any;
+    columns: Column[];
+    formatCell: any;
+    addEditRowMode: boolean;
 }
 
-export const TableComponent = React.memo(({table, saveRow, 
-    onValueChange, editRow, deleteRow, tabData, activeTableId,
-    cells, rows, formatDate, formatSelect, helperText,
-    cancelAddRow}: TableProps) => {
+export const TableComponent = React.memo(({table, crudRow, onValueChange, 
+    cells, rows, columns, formatCell, addEditRowMode}: TableProps) => {
+        const classes = useStyles();
         return (
         <Table size="small">
-            <TableHeadComponent table={table}/>
+            <TableHead className={classes.fillingTableCoHead}>
+                <TableRow> 
+                    {columns.map(col => (
+                        col.schemaId === table.schemaId &&
+                        <TableCell key={col.id}>{col.label}</TableCell>
+                    ))}
+                    <TableCell>Actions</TableCell>
+                </TableRow>
+            </TableHead>
             <TableBodyComponent
                 table={table}
-                saveRow={saveRow}
+                crudRow={crudRow}
                 onValueChange={onValueChange}
-                editRow={editRow}
-                deleteRow={deleteRow}
-                tabData = {tabData}
-                activeTableId = {activeTableId}
                 cells={cells}
                 rows={rows}
-                formatDate={formatDate}
-                formatSelect={formatSelect}
-                helperText={helperText}
-                cancelAddRow={cancelAddRow}
+                formatCell={formatCell}
+                addEditRowMode={addEditRowMode}
             />
         </Table>
       );

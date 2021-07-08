@@ -1,9 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import { tableService } from "@common/services/TableService";
 import { TableStore } from "@common/stores/tableStore";
 import { creatingStoreService } from "@common/services/CreatingStoreService";
 import { Types } from "@common/models/Types";
-import { TableSchema } from "@common/models/TableSchema";
 import { Column } from "@common/models/Column";
 import { dbService } from "@common/services/DBService";
 import { Guid } from "guid-typescript";
@@ -13,6 +11,7 @@ export class CreatingStore {
     tableStore: TableStore;  
     tableTitleValue: string = "";
     selectValue: string = "";
+    activeTableId: string = "";
 
     modes: Modes = {
         selectMode: false,
@@ -22,11 +21,10 @@ export class CreatingStore {
         numberMode: false,
     }
     
-    activeTableSchema: TableSchema = {id: "", title: ""}
     activeColumn: Column = {
         id: "",
         schemaId: "",
-        type: "",
+        type: "Text",
         label: "",
         selectOptions: "",
         forbiddenSymbols: "",
@@ -41,26 +39,29 @@ export class CreatingStore {
 
     constructor(tableStore: TableStore){
         makeAutoObservable(this);
-        this.tableStore = tableStore;  
-        this.tableStore.loadData();
+        this.tableStore = tableStore;
+    }
+
+    chooseTable = (id: string) => {
+        this.activeTableId = id;
     }
 
     createTable = () => {
-       this.activeTableSchema.id = Guid.create().toString();
-       this.activeTableSchema.title = this.tableTitleValue;
-       this.tableStore.tableSchemas.push(this.activeTableSchema);
-       dbService.CreateTableSchema(this.activeTableSchema);
+       this.activeTableId = Guid.create().toString();
+       this.tableStore.tableSchemas.push({id: this.activeTableId, title: this.tableTitleValue});
+       dbService.CreateTableSchema(this.activeTableId, this.tableTitleValue);
+       this.tableTitleValue = "";
     }
 
-    deleteTable = (tableId: string) => {
-        this.tableStore.tables = this.tableStore.tables.filter(tab => tab.id !== tableId);
-        tableService.save(this.tableStore.tables);
+    deleteTable = () => {
+        this.tableStore.tableSchemas = this.tableStore.tableSchemas.filter(tab => tab.id !== this.activeTableId);
+        dbService.DeleteTableSchema(this.activeTableId);
+        this.activeTableId= "";
     }
 
     addColumn = () => {
-        console.log(this.activeTableSchema.id)
         this.activeColumn.id = Guid.create().toString();
-        this.activeColumn.schemaId = this.activeTableSchema.id;
+        this.activeColumn.schemaId = this.activeTableId;
         dbService.AddColumn(this.activeColumn);
         this.tableStore.columns.push(this.activeColumn);
         creatingStoreService.makeModesFalse(this.modes);
@@ -124,7 +125,7 @@ export class CreatingStore {
         this.activeColumn = {
             id: Guid.create().toString(),
             schemaId: "",
-            type: "",
+            type: "Text",
             label: "",
             selectOptions: "",
             forbiddenSymbols: "",

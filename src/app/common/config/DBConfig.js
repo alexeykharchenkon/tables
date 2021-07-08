@@ -35,6 +35,7 @@ export const DBConfig = {
         storeSchema: [
           { name: 'id', keypath: 'id', options: { unique: true } },
           { name: 'title', keypath: 'title', options: { unique: false } },
+          { name: 'schemaId', keypath: 'schemaId', options: { unique: false } },
         ]
       },
       {

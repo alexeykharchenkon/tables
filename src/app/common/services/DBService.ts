@@ -3,6 +3,7 @@ import { Cell } from '@common/models/Cell';
 import { Row } from '@common/models/Row';
 import { Column } from '@common/models/Column';
 import { TableSchema } from '@common/models/TableSchema';
+import { DataTable } from '@common/models/DataTable';
 
 export const dbService = {
     LoadSchemas: (tableSchemas: TableSchema [] ) => {
@@ -13,9 +14,28 @@ export const dbService = {
         const { getAll } = useIndexedDB('columns');
         getAll().then(data => {columns.push(...data);});
     },
-    CreateTableSchema: (schema: TableSchema) => {
+    LoadDataTables: (tables : DataTable []) => {
+        const { getAll } = useIndexedDB('tables');
+        getAll().then(data => {
+            tables.splice(0);
+            tables.push(...data);
+        });
+    },
+    LoadCells: (cells : Cell []) => {
+        const { getAll } = useIndexedDB('cells');
+        getAll().then(data => {cells.push(...data);});
+    },
+    LoadRows: (rows : Row []) => {
+        const { getAll } = useIndexedDB('rows');
+        getAll().then(data => {rows.push(...data);});
+    },
+    CreateTableSchema: (id: string, title: string) => {
         const { add } = useIndexedDB('tableShemas');
-        add({id: schema.id, title: schema.title});
+        add({id: id, title: title});
+    },
+    DeleteTableSchema: (id: string) => {
+        const { deleteRecord } = useIndexedDB('tableShemas');
+        deleteRecord(id).then(event => {});
     },
     DeleteColumnById: (id: string) => {
         const { deleteRecord } = useIndexedDB('columns');
@@ -29,6 +49,19 @@ export const dbService = {
         const { update } = useIndexedDB('columns');
             update({...column}).then();
     },
+    CreateDataTable: (id: string, title: string, schemaId: string) => {
+        const { add } = useIndexedDB('tables');
+        add({id: id, title: title, schemaId: schemaId});
+    },
+    DeleteDataTable: (id: string) => {
+        const { deleteRecord } = useIndexedDB('tables');
+        deleteRecord(id).then(event => {});
+    },
+    DeleteRow: (id: string) => {
+        const { deleteRecord } = useIndexedDB('row');
+        deleteRecord(id).then(event => {});
+    },
+    
     GetColumnById: (column: Column, id: string) => {
         const { getByIndex } = useIndexedDB('columns');
 
@@ -68,10 +101,6 @@ export const dbService = {
             });
         });
         return rowsArray;
-    },
-    AddTable: (tableId: string, title: string) => {
-        const { add } = useIndexedDB('tables');
-        add({id: tableId, title: title});
     },
     AddRow: (cells: Cell[], rowId: string, tableId: string) => {
         const { add } = useIndexedDB('rows');

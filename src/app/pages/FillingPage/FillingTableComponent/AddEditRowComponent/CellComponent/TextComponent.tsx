@@ -8,10 +8,10 @@ interface TextProps {
     cell: Cell;
     onValueChange: any;
     tableId: string;
-    helperText: any;
+    formatCell: any;
 }
 
-export const TextComponent = ({cell, onValueChange, tableId, helperText}: TextProps) => {    
+export const TextComponent = ({cell, onValueChange, tableId, formatCell}: TextProps) => {    
     return (
             <>
                 <Typography style={{color: 'red'}}>
@@ -21,7 +21,7 @@ export const TextComponent = ({cell, onValueChange, tableId, helperText}: TextPr
                     label = 'Enter Data'
                     value={cell.value}
                     onChange={e => onValueChange(e, tableId, "", "", cell.id, cell.type, Types[Types.CELLCHANGE])}
-                    helperText={helperText(cell)}
+                    helperText={formatCell(cell, Types[Types.HELPERTEXT])}
                 />
             </>
       );

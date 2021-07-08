@@ -16,7 +16,7 @@ interface RootStore {
 
 const tableStore = new TableStore();
 tableStore.loadTables();
-//tableStore.loadData();
+tableStore.loadData();
 
 const creatingStore = new CreatingStore(tableStore);
 const fillingStore = new FillingStore(tableStore);

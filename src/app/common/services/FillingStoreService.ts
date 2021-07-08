@@ -1,8 +1,6 @@
 import { AdditionalTable } from "@common/models/AdditionalTable";
-import { DataType } from "@common/models/DataType";
 import { TableData } from "@common/models/TableData";
 import { Guid } from "guid-typescript";
-import { dbService } from "@common/services/DBService";
 import { validateService } from "./ValidateService";
 
 class FillingStoreService {
@@ -37,7 +35,7 @@ class FillingStoreService {
         return tablesData.rows.find(row => row.id === id);
     }
     saveRow(tables: AdditionalTable[], tableId: string, tableDataId: string) {
-        tables.filter(table => table.id === tableId)
+    /*    tables.filter(table => table.id === tableId)
         .forEach(table => {
             if(validateService.validate(table.activeRow)) {
                 table.tablesData
@@ -64,7 +62,7 @@ class FillingStoreService {
                 table.addEditRowMode = false;
             }
             table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
-        });
+        });*/
     }
     addRow(tables: AdditionalTable[], tableId: string){
      /*   tables.filter(table => table.id === tableId)
@@ -113,12 +111,12 @@ class FillingStoreService {
         });
     }
     cancelAddRow(tables: AdditionalTable[], tableId: string) {
-        tables.filter(table => table.id === tableId)
+    /*    tables.filter(table => table.id === tableId)
         .forEach(table => {            
             table.activeRow = {id: "", cells: []};
             table.addEditRowMode = false;
             table.activeRow.cells = table.activeRow.cells.filter(cell => cell.id !== ""); 
-        });
+        });*/
     }
 }
 

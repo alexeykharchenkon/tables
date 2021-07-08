@@ -3,64 +3,50 @@ import { Container, TableContainer, Paper, IconButton } from '@material-ui/core'
 import { useStyles } from "@pages/FillingPage/common/styles/styles"
 import { TableTitleComponent } from './TableComponent/TableTitleComponent';
 import { TableComponent } from './TableComponent/TableComponent';
-import { AdditionalTable } from '@common/models/AdditionalTable';
-import { TableData } from '@common/models/TableData';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Cell } from '@common/models/Cell';
 import { Row } from '@common/models/Row';
-
+import { DataTable } from '@common/models/DataTable';
+import { Types } from '@common/models/Types';
+import { Column } from '@common/models/Column';
 
 interface FillingTableProps {
-    table: AdditionalTable;
-    addRow: any;
-    saveRow: any;
-    onValueChange: any;
-    editRow: any;
-    deleteRow: any;
-    tabData: TableData;
-    activeTableId: string;
-    deleteTable: any;
+    table: DataTable;
     cells: Cell[];
     rows: Row[];
-    formatDate: any;
-    formatSelect: any;
-    helperText: any;
-    cancelAddRow: any;
+    columns: Column[];
+    crudRow: any;
+    onValueChange: any;
+    addDeleteTable: any;
+    formatCell: any;
+    addEditRowMode: boolean;
 }
 
-export const FillingTableComponent = ({table, addRow, saveRow, 
-    onValueChange, editRow, deleteRow, tabData, activeTableId, 
-    deleteTable, cells, rows, formatDate, formatSelect,
-    helperText, cancelAddRow}: FillingTableProps) => {
+export const FillingTableComponent = ({table, cells, rows, columns,
+    onValueChange, crudRow, addDeleteTable, formatCell, addEditRowMode}: FillingTableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTable}>
             <IconButton style={{marginTop: '-10px'}}
-                 onClick={() => deleteTable(table.id, tabData.id)}
+                 onClick={() => addDeleteTable(Types[Types.DELETETABLE])}
             >
                 <DeleteIcon />
             </IconButton>
             <TableContainer component={Paper}  className={classes.fillingTableTable}>
-                <TableTitleComponent 
+               <TableTitleComponent 
                     table={table}
-                    tabData={tabData} 
-                    addRow={addRow} 
+                    crudRow={crudRow} 
                 />
                 <TableComponent 
-                    tabData={tabData}
                     table={table}
-                    saveRow={saveRow}
+                    crudRow={crudRow}
                     onValueChange={onValueChange}
-                    editRow={editRow}
-                    deleteRow={deleteRow}
-                    activeTableId={activeTableId}
                     cells={cells}
                     rows={rows}
-                    formatDate={formatDate}
-                    formatSelect={formatSelect}
-                    helperText={helperText}
-                    cancelAddRow={cancelAddRow}
-                />
+                    columns={columns}
+                    formatCell={formatCell}
+                    addEditRowMode={addEditRowMode}
+             />
             </TableContainer>
         </Container>
       );

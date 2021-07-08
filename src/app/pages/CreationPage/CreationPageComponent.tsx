@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import Container from '@material-ui/core/Container';
-import { List, ListItem} from '@material-ui/core';
 import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import { useStore } from '@common/stores/rootStore';
 import { TableComponent } from './TableComponent/TableComponent'
 import { CreateTableComponent } from './CreateTableComponent/CreateTableComponent';
+import { ChooseTableComponent } from './ChooseTableComponent/ChooseTableComponent';
 
 export const CreationPageComponent = observer(() => {
     const classes = useStyles();
@@ -13,17 +13,23 @@ export const CreationPageComponent = observer(() => {
 
     return (
         <Container className={classes.creationCo}>
-             <h2>Tables</h2>
+            <h2>Tables Creation</h2>
+            <h3>Create New Table Schema</h3>
             <CreateTableComponent
                 tableTitleValue ={creatingStore.tableTitleValue}
                 OnValueChange={creatingStore.OnValueChange}
                 createTable={creatingStore.createTable}
             />
-            <List>
-                {tableStore.tableSchemas.map(table => {
+             <ChooseTableComponent 
+                tableSchemas={tableStore.tableSchemas}
+                columns={tableStore.columns}
+                chooseTable={creatingStore.chooseTable}
+            />
+                {tableStore.tableSchemas?.map(table => {
                     return (
-                        <ListItem key={table.id}>
+                        table.id === creatingStore.activeTableId &&
                             <TableComponent 
+                                key={table.id}
                                 columns={tableStore.columns}  
                                 table = {table} 
                                 addColumn = {creatingStore.addColumn}
@@ -38,10 +44,8 @@ export const CreationPageComponent = observer(() => {
                                 modes={creatingStore.modes} 
                                 selectValue = {creatingStore.selectValue}
                              />
-                         </ListItem>
                     );
                  })}
-            </List>
         </Container>
       );
 });

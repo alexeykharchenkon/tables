@@ -3,7 +3,7 @@ import { TableModel } from "@common/models/TableModel";
 
 class TableService  {
     load () : any  {
-        const tables: TableModel [] = JSON.parse(localStorage.getItem("tables") || "[]")
+     /*   const tables: TableModel [] = JSON.parse(localStorage.getItem("tables") || "[]")
         const additionalTables: AdditionalTable[] = [];
         tables.forEach(table => {
             additionalTables.push({
@@ -36,7 +36,7 @@ class TableService  {
             });
         });
 
-        return additionalTables;
+        return additionalTables;*/
     }
     save (additionalTables: AdditionalTable[]) {
         const tablesToSave: TableModel [] = [];

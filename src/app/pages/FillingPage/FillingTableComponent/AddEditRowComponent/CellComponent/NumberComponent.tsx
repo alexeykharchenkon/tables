@@ -8,11 +8,10 @@ interface NumberProps {
     cell: Cell;
     onValueChange: any;
     tableId: string;
-    helperText: any;
+    formatCell: any;
 }
 
-export const NumberComponent = ({cell, onValueChange, tableId,
-    helperText}: NumberProps) => {    
+export const NumberComponent = ({cell, onValueChange, tableId, formatCell}: NumberProps) => {    
         return (
             <>
                 <Typography style={{color: 'red'}}>
@@ -22,7 +21,7 @@ export const NumberComponent = ({cell, onValueChange, tableId,
                     type = 'number'
                     label = 'Enter Data'
                     value={cell.value}
-                    helperText={helperText(cell)}
+                    helperText={formatCell(cell, Types[Types.HELPERTEXT])}
                     onChange={e => onValueChange(e, tableId, "", "", cell.id, cell.type, Types[Types.CELLCHANGE])}
                 />
             </>

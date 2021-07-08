@@ -75,4 +75,34 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         marginBottom: '10px',
     },
+    chooseTable: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        marginBottom: '25px',
+    },
+    chooseTableList: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        border: '1px solid #7aab7f',
+        boredRadius: 5,
+    },
+    chooseTableListItem: {
+        display: 'flex',
+        maxWidth: '250px',
+    },
+    chooseTableCo:{
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: theme.palette.grey[200],
+            border: '1px solid #ededee',
+            boredRadius: 5,
+        }
+    },
+    chooseTableCoHead: {
+        background: '#abebeb',
+    },
   }));

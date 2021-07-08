@@ -1,5 +1,7 @@
 export interface Cell {
     id: string;
+    rowId: string;
+    tableId: string;
     type: string;
     value: any;
     selectOptions: string;

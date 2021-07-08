@@ -11,24 +11,24 @@ interface CellProps {
     cell: Cell;
     onValueChange: any;
     tableId: string;
-    helperText: any;
+    formatCell: any;
 }
 
-export const CellComponent = ({cell, onValueChange, tableId, helperText}: CellProps) => {    
+export const CellComponent = ({cell, onValueChange, tableId, formatCell}: CellProps) => {    
         return (
             <>
                 {cell.type === DataType[DataType.Text] &&
                    <TextComponent
                         cell= {cell}
                         tableId= {tableId}
-                        helperText={helperText}
+                        formatCell={formatCell}
                         onValueChange={onValueChange}
                    />}
                 {cell.type === DataType[DataType.Number] &&
                     <NumberComponent
                         cell= {cell}
                         tableId= {tableId}
-                        helperText={helperText}
+                        formatCell={formatCell}
                         onValueChange={onValueChange}
                     />}
                 {cell.type === DataType[DataType.Checkbox] &&
@@ -38,14 +38,14 @@ export const CellComponent = ({cell, onValueChange, tableId, helperText}: CellPr
                 <SelectCellComponent 
                     cell= {cell}
                     tableId= {tableId}
-                    helperText={helperText}
+                    formatCell={formatCell}
                     onValueChange={onValueChange}
                 />
                 {cell.type === DataType[DataType.DatePicker] &&
                     <DateComponent 
                         cell= {cell}
                         tableId= {tableId}
-                        helperText={helperText}
+                        formatCell={formatCell}
                         onValueChange={onValueChange}
                 />}
            </>

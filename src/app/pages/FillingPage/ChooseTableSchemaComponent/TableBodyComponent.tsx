@@ -1,25 +1,26 @@
 import React from 'react';
 import { useStyles } from "@pages/FillingPage/common/styles/styles"
-import { TableModel } from '@common/models/TableModel';
 import { TableContainer, Typography, TableCell, TableRow, TableHead, Table, TableBody, Paper } from '@material-ui/core';
-import { TableRowComponent } from './TableRowComponent';
+import { TableSchema } from '@common/models/TableSchema';
+import { Column } from '@common/models/Column';
 
 
 interface TableBodyProps {
-    table: TableModel;
+    tableSchema: TableSchema;
+    columns: Column[];
     chooseTable: any;
 }
 
-export const TableBodyComponent = ({table, chooseTable} : TableBodyProps) => {
+export const TableBodyComponent = ({tableSchema, columns, chooseTable} : TableBodyProps) => {
     const classes = useStyles();
     return (
         <TableContainer 
             className={classes.fillingTableCo}
             component={Paper}
-            onClick = {() => chooseTable(table.id)}
+            onClick = {() => chooseTable(tableSchema.id)}
         >
-                <Typography variant="h6" id="tableTitle">
-                    {table.title}
+                <Typography variant="h6">
+                    {tableSchema.title}
                 </Typography>
                 <Table size="small" aria-label="a dense table">
                     <TableHead className={classes.fillingTableCoHead}>
@@ -29,8 +30,12 @@ export const TableBodyComponent = ({table, chooseTable} : TableBodyProps) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {table.columns.map((col) => (
-                            <TableRowComponent key={col.id} col = {col} />
+                        {columns.map((col) => (
+                            col.schemaId === tableSchema.id &&   
+                            <TableRow key={col.id}>
+                                <TableCell>{col.label}</TableCell>
+                                <TableCell>{col.type}</TableCell>
+                            </TableRow> 
                         ))}
                     </TableBody>
                 </Table>

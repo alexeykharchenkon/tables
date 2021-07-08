@@ -8,11 +8,10 @@ interface SelectCellProps {
     cell: Cell;
     tableId: string;
     onValueChange: any;
-    helperText: any;
+    formatCell: any;
 }
 
-export const SelectCellComponent = ({cell, tableId, onValueChange,
-    helperText}: SelectCellProps) => {
+export const SelectCellComponent = ({cell, tableId, onValueChange, formatCell}: SelectCellProps) => {
     return (
         <>
                    {cell.type === DataType[DataType.Select]&&
@@ -35,7 +34,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                     >{s}</option>
                                 ))}
                             </Select>
-                            <FormHelperText>{helperText(cell)}</FormHelperText>
+                            <FormHelperText>{formatCell(cell, Types[Types.HELPERTEXT])}</FormHelperText>
                         </FormControl>
                    }
                    {cell.type === DataType[DataType.Select] &&
@@ -59,7 +58,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange,
                                     >{s}</option>
                                 ))}
                             </Select>
-                            <FormHelperText>{helperText(cell)}</FormHelperText>
+                            <FormHelperText>{formatCell(cell, Types[Types.HELPERTEXT])}</FormHelperText>
                         </FormControl>
                    }
           </>

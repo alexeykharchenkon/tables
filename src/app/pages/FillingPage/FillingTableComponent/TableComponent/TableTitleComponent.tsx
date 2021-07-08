@@ -1,26 +1,23 @@
 import React from 'react';
 import { IconButton, Container, Typography} from '@material-ui/core';
 import { useStyles } from "@pages/FillingPage/common/styles/styles";
-import { TableModel } from '@common/models/TableModel';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { TableData } from '@app/common/models/TableData';
-
-
+import { DataTable } from '@common/models/DataTable';
+import { Types } from '@common/models/Types';
 
 interface TableTitleProps {
-    table: TableModel;
-    addRow: any;
-    tabData: TableData;
+    table: DataTable;
+    crudRow: any;
 }
 
-export const TableTitleComponent = React.memo(({table, addRow, tabData}: TableTitleProps) => {
+export const TableTitleComponent = React.memo(({table, crudRow}: TableTitleProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.fillingTableTitle}>
             <Typography variant="h6" id="tableTitle">
-                {tabData.title}
+                {table.title}
             </Typography>
-            <IconButton onClick={() => addRow(table.id, tabData.id)}>
+            <IconButton onClick={() => crudRow("", Types[Types.ADDROW])}>
                 <AddCircleOutlineIcon />
             </IconButton>
         </Container>

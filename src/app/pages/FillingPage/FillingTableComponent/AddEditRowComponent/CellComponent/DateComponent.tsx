@@ -10,11 +10,10 @@ interface DateProps {
     cell: Cell;
     tableId: string;
     onValueChange: any;
-    helperText: any;
+    formatCell: any;
 }
 
-export const DateComponent = ({cell, tableId, onValueChange,
-    helperText}: DateProps) => {    
+export const DateComponent = ({cell, tableId, onValueChange, formatCell}: DateProps) => {    
         return (
             <>
                 <Typography style={{color: 'red'}}>
@@ -24,7 +23,7 @@ export const DateComponent = ({cell, tableId, onValueChange,
                     <KeyboardDatePicker
                         format={cell.dateFormat}
                         value={cell.value}
-                        helperText={helperText(cell)}
+                        helperText={formatCell(cell, Types[Types.HELPERTEXT])}
                         onChange={ e => onValueChange(e, tableId, "", "", cell.id, cell.type,Types[Types.DATECHANGE])}
                     />
                 </MuiPickersUtilsProvider>
