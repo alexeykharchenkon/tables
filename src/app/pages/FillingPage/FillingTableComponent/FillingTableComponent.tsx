@@ -15,6 +15,7 @@ interface FillingTableProps {
     cells: Cell[];
     rows: Row[];
     columns: Column[];
+    activeCells: Cell[];
     crudRow: any;
     onValueChange: any;
     addDeleteTable: any;
@@ -22,7 +23,7 @@ interface FillingTableProps {
     addEditRowMode: boolean;
 }
 
-export const FillingTableComponent = ({table, cells, rows, columns,
+export const FillingTableComponent = ({table, cells, rows, columns, activeCells,
     onValueChange, crudRow, addDeleteTable, formatCell, addEditRowMode}: FillingTableProps) => {
     const classes = useStyles();
     return (
@@ -46,6 +47,7 @@ export const FillingTableComponent = ({table, cells, rows, columns,
                     columns={columns}
                     formatCell={formatCell}
                     addEditRowMode={addEditRowMode}
+                    activeCells={activeCells}
              />
             </TableContainer>
         </Container>

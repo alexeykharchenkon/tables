@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import { CreatingStore } from "./creatingStore";
-import { FillingStore } from "./filllingStore";
+import { CreatingStore } from "@pages/CreationPage/common/stores/creatingStore";
+import { FillingStore } from "@pages/FillingPage/common/stores/filllingStore";
 import { TableStore } from "./tableStore";
 import { initDB } from 'react-indexed-db';
 import { DBConfig } from '@common/config/DBConfig';
@@ -15,7 +15,6 @@ interface RootStore {
 }
 
 const tableStore = new TableStore();
-tableStore.loadTables();
 tableStore.loadData();
 
 const creatingStore = new CreatingStore(tableStore);

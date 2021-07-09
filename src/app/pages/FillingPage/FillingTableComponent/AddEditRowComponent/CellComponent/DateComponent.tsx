@@ -8,13 +8,12 @@ import { Types } from '@common/models/Types';
 
 interface DateProps {
     cell: Cell;
-    tableId: string;
     onValueChange: any;
     formatCell: any;
 }
 
-export const DateComponent = ({cell, tableId, onValueChange, formatCell}: DateProps) => {    
-        return (
+export const DateComponent = ({cell, onValueChange, formatCell}: DateProps) => {    
+    return (
             <>
                 <Typography style={{color: 'red'}}>
                         {cell.error}
@@ -24,7 +23,7 @@ export const DateComponent = ({cell, tableId, onValueChange, formatCell}: DatePr
                         format={cell.dateFormat}
                         value={cell.value}
                         helperText={formatCell(cell, Types[Types.HELPERTEXT])}
-                        onChange={ e => onValueChange(e, tableId, "", "", cell.id, cell.type,Types[Types.DATECHANGE])}
+                        onChange={ e => onValueChange(e, cell.id, Types[Types.DATECHANGE])}
                     />
                 </MuiPickersUtilsProvider>
             </>

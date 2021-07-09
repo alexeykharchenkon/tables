@@ -9,12 +9,11 @@ import { observer } from 'mobx-react-lite';
 
 interface TableBodyProps {
     table: TableSchema;
-    deleteColumn: any;
-    editColumn: any;
+    crudColumn: any;
     columns: Column[];
 }
 
-export const TableBodyComponent = observer(({table, deleteColumn, editColumn, columns} : TableBodyProps) => {
+export const TableBodyComponent = observer(({table, crudColumn, columns} : TableBodyProps) => {
     const classes = useStyles();
     
     return (
@@ -35,8 +34,7 @@ export const TableBodyComponent = observer(({table, deleteColumn, editColumn, co
                             col.schemaId === table.id && 
                             <TableRowComponent
                                 key={col.id}
-                                deleteColumn = {deleteColumn}
-                                editColumn = {editColumn}
+                                crudColumn = {crudColumn}
                                 col = {col}
                             />
                         ))}

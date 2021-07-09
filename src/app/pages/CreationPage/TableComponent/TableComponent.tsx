@@ -7,17 +7,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Column } from '@common/models/Column';
 import { Modes } from '@common/models/Modes';
 import { TableSchema } from '@common/models/TableSchema';
+import { Types } from '@common/models/Types';
 
 
 interface TableProps {
     table: TableSchema;
-    addColumn: any;
-    deleteColumn: any;
-    editColumn: any;
-    saveEditedColumn: any;
-    deleteTable: any;
-    addSelectField: any;
-    deleteSelectField: any;
+    crudColumn: any;
+    addDeleteTable: any;
+    addDeleteSelectField: any;
     modes: Modes;
     columns: Column[];
     selectValue: string;
@@ -25,24 +22,21 @@ interface TableProps {
     activeColumn: Column;
 }
 
-export const TableComponent = React.memo(({table, addColumn, deleteColumn,
-    editColumn, saveEditedColumn, deleteTable, addSelectField, 
-    deleteSelectField, modes, columns, selectValue, OnValueChange, activeColumn} : TableProps) => {
+export const TableComponent = React.memo(({table, crudColumn, addDeleteTable, 
+    addDeleteSelectField, modes, columns, selectValue, OnValueChange, activeColumn} : TableProps) => {
     const classes = useStyles();
     return (
         <Container className={classes.tableCo}>
             <Container>
             <IconButton 
-                    onClick={() => deleteTable()}
+                    onClick={() => addDeleteTable(Types[Types.DELETETABLE])}
             >
                     <DeleteIcon />
                 </IconButton>
             </Container>
             <AddEditColumnsComponent 
-                addColumn = {addColumn}
-                saveEditedColumn ={saveEditedColumn}
-                addSelectField = {addSelectField}
-                deleteSelectField={deleteSelectField}
+                crudColumn = {crudColumn}
+                addDeleteSelectField = {addDeleteSelectField}
                 OnValueChange={OnValueChange}
                 modes={modes}
                 selectValue = {selectValue}
@@ -50,8 +44,7 @@ export const TableComponent = React.memo(({table, addColumn, deleteColumn,
             />
             <TableBodyComponent
                  table ={table}
-                 deleteColumn={deleteColumn}
-                 editColumn={editColumn}
+                 crudColumn={crudColumn}
                  columns={columns}
             />
     </Container>

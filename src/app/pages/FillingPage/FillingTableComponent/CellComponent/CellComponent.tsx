@@ -9,12 +9,9 @@ interface CellProps {
     cell: Cell;
     formatCell: any;
     onValueChange: any;
-    tableId: string;
-    rowId: string;
 }
 
-export const CellComponent = ({cell, formatCell,
-    onValueChange, tableId, rowId}: CellProps) => {
+export const CellComponent = ({cell, formatCell, onValueChange}: CellProps) => {
     return (
         <>
            {cell.type === DataType[DataType.Text] && cell.value}
@@ -23,8 +20,8 @@ export const CellComponent = ({cell, formatCell,
            {cell.type === DataType[DataType.Select] && formatCell(cell, Types[Types.FORMATSELECT])}
            {cell.type === DataType[DataType.Checkbox] && 
             <Checkbox
-                checked={Boolean(cell.value)}
-                onChange={e => onValueChange(e.target.checked, tableId, "", rowId, cell.id, "", Types[Types.CHECKBOXCHANGE])}
+                checked={cell.value === "true"? true: false}
+                onChange={e => onValueChange(e, cell.id, Types[Types.CHECKBOXCHANGE])}
             /> 
            }
         </>

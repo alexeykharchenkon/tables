@@ -21,7 +21,7 @@ export const AddTableComponent = ({addDeleteTable, titleValue, onValueChange}: A
                 <TextField 
                     label = 'Enter Table Title'
                     value={titleValue}
-                    onChange={e => onValueChange(e, "", "", "", "", "", Types[Types.TITLECHANGE])}
+                    onChange={e => onValueChange(e, "", Types[Types.TITLECHANGE])}
                 />
                 <IconButton onClick={() => addDeleteTable(Types[Types.ADDTABLE])}>
                     <AddCircleOutlineIcon />

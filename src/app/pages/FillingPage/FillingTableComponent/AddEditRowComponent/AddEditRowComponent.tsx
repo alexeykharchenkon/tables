@@ -4,27 +4,24 @@ import SaveIcon from '@material-ui/icons/Save';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { CellComponent } from './CellComponent/CellComponent';
 import { Cell } from '@common/models/Cell';
-import { DataTable } from '@common/models/DataTable';
 import { Types } from '@common/models/Types';
 
 interface AddEditRowProps {
-    table: DataTable;
     crudRow: any;
     onValueChange: any;
-    cells: Cell[];
+    activeCells: Cell[];
     formatCell: any;
 }
 
-export const AddEditRowComponent = ({table, crudRow, onValueChange, cells, 
+export const AddEditRowComponent = ({crudRow, onValueChange, activeCells, 
     formatCell}: AddEditRowProps) => {
     return (
         <TableRow>
-            {cells.map(cell => (
+            {activeCells?.map(cell => (
                <TableCell key={cell.id}>
                    <CellComponent
                         cell = {cell} 
                         onValueChange = {onValueChange}
-                        tableId={table.id}
                         formatCell={formatCell}
                    />
                </TableCell>

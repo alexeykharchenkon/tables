@@ -1,15 +1,15 @@
-import { Row } from "@common/models/Row";
 import { DataType } from "@common/models/DataType";
+import { Cell } from "@common/models/Cell";
 
 
 class ValidateService  {
-    validate (row: Row) : boolean {
+    validate (cells : Cell[]) : boolean {
         var isValid = true;
-      /*  row.cells.forEach(cell => {
+        cells.forEach(cell => {
             cell.error = "";
             switch(cell.type){
                 case DataType[DataType.Select]:
-                    if(cell.isRequired && cell.value[0]==="") {
+                    if(cell.isRequired === "true" && cell.value[0]==="") {
                         isValid = false;
                         cell.error = "Required";
                     }
@@ -19,7 +19,7 @@ class ValidateService  {
                     }
                     break;
                 case DataType[DataType.Text]:
-                     if(cell.isRequired && !Boolean(cell.value)) {
+                     if(cell.isRequired === "true" && !Boolean(cell.value)) {
                          isValid = false;
                          cell.error = "Required";
                      }
@@ -29,13 +29,13 @@ class ValidateService  {
                      }
                    break;
                 case DataType[DataType.DatePicker]:
-                    if(cell.isRequired && !Boolean(cell.value)){
+                    if(cell.isRequired === "true" && !Boolean(cell.value)){
                         isValid = false;
                         cell.error = "Required";
                     } 
                     break;
                 case DataType[DataType.Number]:
-                   if(cell.isRequired && !Boolean(cell.value)) {
+                   if(cell.isRequired === "true" && !Boolean(cell.value)) {
                        cell.error = "Required";
                        isValid = false;
                    }
@@ -49,11 +49,8 @@ class ValidateService  {
                     }
                    break;
             }    
-        });*/
+        });
         return isValid;
-    }
-    resetValidationErrors(row: Row) {
-      //  row.cells.forEach(cell => { cell.error = "";});
     }
 }
 

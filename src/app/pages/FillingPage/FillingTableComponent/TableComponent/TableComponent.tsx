@@ -13,6 +13,7 @@ interface TableProps {
     crudRow: any;
     onValueChange: any;
     cells: Cell[];
+    activeCells: Cell[];
     rows: Row[];
     columns: Column[];
     formatCell: any;
@@ -20,7 +21,7 @@ interface TableProps {
 }
 
 export const TableComponent = React.memo(({table, crudRow, onValueChange, 
-    cells, rows, columns, formatCell, addEditRowMode}: TableProps) => {
+    cells, rows, columns, activeCells, formatCell, addEditRowMode}: TableProps) => {
         const classes = useStyles();
         return (
         <Table size="small">
@@ -41,6 +42,7 @@ export const TableComponent = React.memo(({table, crudRow, onValueChange,
                 rows={rows}
                 formatCell={formatCell}
                 addEditRowMode={addEditRowMode}
+                activeCells={activeCells}
             />
         </Table>
       );

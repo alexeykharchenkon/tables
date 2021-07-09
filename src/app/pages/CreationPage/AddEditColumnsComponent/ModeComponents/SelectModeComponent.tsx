@@ -9,15 +9,13 @@ import { Column } from '@common/models/Column';
 import { SelectType } from '@common/models/SelectType';
 
 interface SelectModeProps {
-    addSelectField: any;
-    deleteSelectField: any;
+    addDeleteSelectField: any;
     selectValue: string;
     OnValueChange: any;
     activeColumn: Column;
 }
 
-export const SelectModeComponent = ({addSelectField, 
-    deleteSelectField, selectValue, activeColumn, OnValueChange} : SelectModeProps) => {
+export const SelectModeComponent = ({addDeleteSelectField, selectValue, activeColumn, OnValueChange} : SelectModeProps) => {
     const classes = useStyles();
 
     return (
@@ -30,7 +28,7 @@ export const SelectModeComponent = ({addSelectField,
                         value={ selectValue }
                         onChange={e => OnValueChange(e, Types[Types.SELECTVALUECHANGE])}
                     />
-                    <IconButton onClick={() => addSelectField()}>
+                    <IconButton onClick={() => addDeleteSelectField(Types[Types.ADDSELECTFIELD], 0)}>
                         <AddCircleOutlineIcon />
                     </IconButton>
                 </Container>
@@ -41,7 +39,7 @@ export const SelectModeComponent = ({addSelectField,
                                 key={index}
                                 value={value}
                                 idx={index}
-                                deleteSelectField={deleteSelectField}
+                                addDeleteSelectField={addDeleteSelectField}
                             />
                     ))}
                 </List>

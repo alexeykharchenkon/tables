@@ -57,103 +57,28 @@ export const dbService = {
         const { deleteRecord } = useIndexedDB('tables');
         deleteRecord(id).then(event => {});
     },
-    DeleteRow: (id: string) => {
-        const { deleteRecord } = useIndexedDB('row');
+    DeleteRowById: (id: string) => {
+        const { deleteRecord } = useIndexedDB('rows');
         deleteRecord(id).then(event => {});
     },
-    
-    GetColumnById: (column: Column, id: string) => {
-        const { getByIndex } = useIndexedDB('columns');
-
-        getByIndex('id', id).then(data => {
-            column.id = data.id;
-            column.schemaId = data.schemaId;
-            column.label= data.label;
-            column.type = data.type;
-            column.selectOptions = data.selectOptions;
-            column.forbiddenSymbols = data.forbiddenSymbols;
-            column.multySelectMode = data.multySelectMode;
-            column.dateFormat = data.dateFormat;
-            column.isRequired = data.isRequired;
-            column.maxLength = data.maxLength;
-            column.maxItemsSelected = data.maxItemsSelected;
-            column.minValue = data.minValue;
-            column.maxValue = data.maxValue;
-        });      
-    },
-    GetCellsByRowId : (id: string) : Cell[] => {
-        const cellsArray: Cell[] = [];
-        const { getAll } = useIndexedDB('cells');
-        getAll().then( cells => {
-            cells.forEach(cell => {
-                if(cell.rowId === id)cellsArray.push(cell);
-            });
-        });
-        
-        return cellsArray;
-    },
-    GetRowsByTableId : (id: string) : any => {
-        const rowsArray: Row[] = [];
-        const { getAll } = useIndexedDB('rows');
-        getAll().then( rows => {
-            rows.forEach(row => {
-                if(row.tableId === id)rows.push(row);
-            });
-        });
-        return rowsArray;
-    },
-    AddRow: (cells: Cell[], rowId: string, tableId: string) => {
+    AddRow: (row: Row) => {
         const { add } = useIndexedDB('rows');
-        add({id: rowId, tableId: tableId});
-        dbService.AddCells(cells, rowId, tableId);
+            add({...row}).then();
     },
-    AddCells : (cells: Cell[], rowId: string, tableId: string) => {
-        const { add } = useIndexedDB('cells');
-        for(let cel of cells){
-            add({ 
-                id: cel.id,
-                rowId: rowId,
-                tableId: tableId,
-                type: cel.type,
-                value: cel.value,
-                selectOptions: cel.selectOptions,
-                forbiddenSymbols: cel.forbiddenSymbols,
-                multySelectMode: cel.multySelectMode,
-                dateFormat: cel.dateFormat,
-                isRequired: cel.isRequired,
-                maxLength: cel.maxLength,
-                maxItemsSelected: cel.maxItemsSelected,
-                minValue: cel.minValue,
-                maxValue: cel.maxValue,
-                error: cel.error,
-            }).then();
-        }
-    },
-    UpdateRow: (cells: Cell[], rowId: string, tableId: string) => {
+    UpdateRow: (row: Row) => {
         const { update } = useIndexedDB('rows');
-        update({id: rowId, tableId: tableId});
-        dbService.UpdateCells(cells, rowId, tableId);
+            update({...row}).then();
     },
-    UpdateCells : (cells: Cell[], rowId: string, tableId: string) => {
+    AddCell: (cell: Cell) => {
+        const { add } = useIndexedDB('cells');
+            add({...cell}).then();
+    },
+    DeleteCellById: (id: string) => {
+        const { deleteRecord } = useIndexedDB('cells');
+        deleteRecord(id).then(event => {});
+    },
+    UpdateCell: (cell: Cell) => {
         const { update } = useIndexedDB('cells');
-        for(let cel of cells){
-            update({ 
-                id: cel.id,
-                rowId: rowId,
-                tableId: tableId,
-                type: cel.type,
-                value: cel.value,
-                selectOptions: cel.selectOptions,
-                forbiddenSymbols: cel.forbiddenSymbols,
-                multySelectMode: cel.multySelectMode,
-                dateFormat: cel.dateFormat,
-                isRequired: cel.isRequired,
-                maxLength: cel.maxLength,
-                maxItemsSelected: cel.maxItemsSelected,
-                minValue: cel.minValue,
-                maxValue: cel.maxValue,
-                error: cel.error,
-            }).then();
-        }
+            update({...cell}).then();
     },
 }

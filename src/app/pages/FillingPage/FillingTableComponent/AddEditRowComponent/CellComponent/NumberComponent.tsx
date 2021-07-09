@@ -7,11 +7,10 @@ import { Types } from '@common/models/Types';
 interface NumberProps {
     cell: Cell;
     onValueChange: any;
-    tableId: string;
     formatCell: any;
 }
 
-export const NumberComponent = ({cell, onValueChange, tableId, formatCell}: NumberProps) => {    
+export const NumberComponent = ({cell, onValueChange, formatCell}: NumberProps) => {    
         return (
             <>
                 <Typography style={{color: 'red'}}>
@@ -22,7 +21,7 @@ export const NumberComponent = ({cell, onValueChange, tableId, formatCell}: Numb
                     label = 'Enter Data'
                     value={cell.value}
                     helperText={formatCell(cell, Types[Types.HELPERTEXT])}
-                    onChange={e => onValueChange(e, tableId, "", "", cell.id, cell.type, Types[Types.CELLCHANGE])}
+                    onChange={e => onValueChange(e, cell.id, Types[Types.CELLCHANGE])}
                 />
             </>
       );

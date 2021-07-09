@@ -1,5 +1,5 @@
 import { DataType } from "@common/models/DataType";
-import { Cell } from "@app/common/models/Cell";
+import { Cell } from "@common/models/Cell";
 
 class FormatService {
     checkForbidSymbols(value: string, forbiddenSymbols: string) : string {
@@ -28,18 +28,18 @@ class FormatService {
         var value = "";
         switch(cell.type){
             case DataType[DataType.Text]:
-                if(cell.isRequired) value += "Required ";
+                if(cell.isRequired ==="true") value += "Required ";
                 if(cell.maxLength !== "") value += "Max Length " + cell.maxLength;
                 break;
             case DataType[DataType.Select]:
-                if(cell.isRequired) value += "Required ";
+                if(cell.isRequired ==="true") value += "Required ";
                 if(cell.maxItemsSelected !== "" && cell.multySelectMode)value += "Max Select Items " + cell.maxItemsSelected;
                 break;
             case DataType[DataType.DatePicker]:
-                if(cell.isRequired) value += "Required ";
+                if(cell.isRequired ==="true") value += "Required ";
                 break;
             case DataType[DataType.Number]:
-                if(cell.isRequired) value += "Required ";
+                if(cell.isRequired ==="true") value += "Required ";
                 if(cell.maxValue!== "") value += "Max Value " + cell.maxValue;
                 if(cell.minValue!== "") value += " Min Value " + cell.minValue;
                 break;

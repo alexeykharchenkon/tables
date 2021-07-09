@@ -1,6 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { tableService } from "@common/services/TableService";
-import { AdditionalTable } from "@common/models/AdditionalTable";
 import { dbService } from "@common/services/DBService";
 import { TableSchema } from "@common/models/TableSchema";
 import { Column } from "@common/models/Column";
@@ -14,15 +12,9 @@ export class TableStore {
     dataTables: DataTable[] = [];
     cells: Cell[] = [];
     rows: Row[] = [];
-
-    tables: AdditionalTable[] = [];
     
     constructor(){
         makeAutoObservable(this);
-    }
-
-    loadTables = () => { 
-        this.tables = tableService.load(); 
     }
 
     loadData = () => { 

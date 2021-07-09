@@ -9,25 +9,22 @@ import { Modes } from '@common/models/Modes';
 
 
 interface AddEditColumnsProps {
-    addColumn: any;
-    saveEditedColumn: any;
-    addSelectField: any;
-    deleteSelectField: any;
+    crudColumn: any;
+    addDeleteSelectField: any;
     OnValueChange: any;
     modes: Modes;
     selectValue: string;
     activeColumn: Column;
 }
 
-export const AddEditColumnsComponent = ({addColumn, 
-    saveEditedColumn, addSelectField, deleteSelectField, 
+export const AddEditColumnsComponent = ({crudColumn, addDeleteSelectField, 
     modes, selectValue, OnValueChange, activeColumn} : AddEditColumnsProps) => {      
         return (
         <>
             <AddEditColumns
-                addOrEditColumn = {modes.editMode ? saveEditedColumn : addColumn}
+                crudColumn = {crudColumn}
                 OnValueChange ={OnValueChange}
-                addMode = { !modes.editMode }
+                addMode = { modes.editMode }
                 activeColumn={activeColumn}
             />
             {modes.textMode &&
@@ -37,8 +34,7 @@ export const AddEditColumnsComponent = ({addColumn,
              />}
              {modes.selectMode &&
              <SelectModeComponent
-                addSelectField={addSelectField}
-                deleteSelectField={deleteSelectField}
+                addDeleteSelectField={addDeleteSelectField}
                 selectValue = {selectValue}
                 OnValueChange ={OnValueChange}
                 activeColumn={activeColumn}

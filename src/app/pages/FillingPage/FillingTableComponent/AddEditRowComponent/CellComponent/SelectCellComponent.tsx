@@ -3,19 +3,19 @@ import { FormControl, FormHelperText, Select, Typography } from '@material-ui/co
 import { Cell } from '@common/models/Cell';
 import { DataType } from '@common/models/DataType';
 import { Types } from '@common/models/Types';
+import { SelectType } from '@common/models/SelectType';
 
 interface SelectCellProps {
     cell: Cell;
-    tableId: string;
     onValueChange: any;
     formatCell: any;
 }
 
-export const SelectCellComponent = ({cell, tableId, onValueChange, formatCell}: SelectCellProps) => {
+export const SelectCellComponent = ({cell, onValueChange, formatCell}: SelectCellProps) => {
     return (
         <>
                    {cell.type === DataType[DataType.Select]&&
-                        cell.multySelectMode && 
+                        cell.multySelectMode === SelectType[SelectType.Multy] && 
                         <FormControl>
                             <Typography style={{color: 'red'}}>
                                     {cell.error}
@@ -25,7 +25,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange, formatCell}: 
                                 multiple
                                 style={{minWidth:'100px'}}
                                 value={cell.value}
-                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
+                                onChange={e => onValueChange(e,cell.id,Types[Types.SELECTCHANGE])}
                             >
                                 {cell.selectOptions.split('/').map((s, index) => (
                                     <option 
@@ -38,7 +38,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange, formatCell}: 
                         </FormControl>
                    }
                    {cell.type === DataType[DataType.Select] &&
-                        !cell.multySelectMode && 
+                        cell.multySelectMode === SelectType[SelectType.Single] &&
                         <FormControl>
                             <Typography style={{color: 'red'}}>
                                 {cell.error}
@@ -48,7 +48,7 @@ export const SelectCellComponent = ({cell, tableId, onValueChange, formatCell}: 
                                 style={{minWidth:'100px'}}
                                 value={cell?.value[0]}
                                 label={"Hello"}
-                                onChange={e => onValueChange(e, tableId, "", "", cell.id, "", Types[Types.SELECTCHANGE])}
+                                onChange={e => onValueChange(e,cell.id, Types[Types.SELECTCHANGE])}
                             >
                                 <option></option>
                                 {cell.selectOptions.split('/').map((s, index) => (

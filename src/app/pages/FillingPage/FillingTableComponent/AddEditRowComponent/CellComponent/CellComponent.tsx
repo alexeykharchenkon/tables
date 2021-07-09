@@ -10,24 +10,21 @@ import { NumberComponent } from './NumberComponent';
 interface CellProps {
     cell: Cell;
     onValueChange: any;
-    tableId: string;
     formatCell: any;
 }
 
-export const CellComponent = ({cell, onValueChange, tableId, formatCell}: CellProps) => {    
+export const CellComponent = ({cell, onValueChange, formatCell}: CellProps) => {    
         return (
             <>
                 {cell.type === DataType[DataType.Text] &&
                    <TextComponent
-                        cell= {cell}
-                        tableId= {tableId}
+                        cell={cell}
                         formatCell={formatCell}
                         onValueChange={onValueChange}
                    />}
                 {cell.type === DataType[DataType.Number] &&
                     <NumberComponent
                         cell= {cell}
-                        tableId= {tableId}
                         formatCell={formatCell}
                         onValueChange={onValueChange}
                     />}
@@ -35,16 +32,15 @@ export const CellComponent = ({cell, onValueChange, tableId, formatCell}: CellPr
                      <Checkbox
                         checked={true}
                     />}
+                {cell.type === DataType[DataType.Select] &&
                 <SelectCellComponent 
                     cell= {cell}
-                    tableId= {tableId}
                     formatCell={formatCell}
                     onValueChange={onValueChange}
-                />
+                />}
                 {cell.type === DataType[DataType.DatePicker] &&
                     <DateComponent 
                         cell= {cell}
-                        tableId= {tableId}
                         formatCell={formatCell}
                         onValueChange={onValueChange}
                 />}

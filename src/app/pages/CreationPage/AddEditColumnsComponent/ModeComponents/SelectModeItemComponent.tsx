@@ -2,20 +2,21 @@ import React from 'react';
 import { TextField, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ListItem } from '@material-ui/core';
+import { Types } from '@common/models/Types';
 
 interface SelectModeItemProps {
     value: string;
     idx: number;
-    deleteSelectField: any;
+    addDeleteSelectField: any;
 }
 
-export const SelectModeItemComponent = ({ value, idx, deleteSelectField } : SelectModeItemProps) => {
+export const SelectModeItemComponent = ({ value, idx, addDeleteSelectField } : SelectModeItemProps) => {
     return (
         <ListItem>
             <TextField 
                 value={value}
             />         
-            <IconButton onClick={() => deleteSelectField(idx)}>
+            <IconButton onClick={() => addDeleteSelectField(Types[Types.DELETESELECTFIELD], idx)}>
                 <DeleteIcon />
             </IconButton>
         </ListItem>

@@ -8,11 +8,11 @@ import { Types } from '@common/models/Types';
 interface CreateTableProps {
     tableTitleValue: string;
     OnValueChange: any;
-    createTable: any;
+    addDeleteTable: any;
 }
 
 export const CreateTableComponent = React.memo(({tableTitleValue, 
-    OnValueChange, createTable} : CreateTableProps) => {
+    OnValueChange, addDeleteTable} : CreateTableProps) => {
     const classes = useStyles();
     return (
             <Container className={classes.creationCoUp}>
@@ -22,7 +22,7 @@ export const CreateTableComponent = React.memo(({tableTitleValue,
                     onChange={e => OnValueChange(e, Types[Types.TITLECHANGE])}
                 />
                 <IconButton 
-                    onClick={() => createTable()}
+                    onClick={() => addDeleteTable(Types[Types.ADDTABLE])}
                 >
                     <AddCircleOutlineIcon />
                 </IconButton>

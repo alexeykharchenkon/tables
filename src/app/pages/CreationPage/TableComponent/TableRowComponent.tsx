@@ -4,15 +4,14 @@ import { useStyles } from "@pages/CreationPage/common/styles/styles"
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Column } from '@common/models/Column';
-
+import { Types } from '@common/models/Types';
 
 interface TableRowProps {
-    deleteColumn: any;
-    editColumn: any;
+    crudColumn: any;
     col: Column;
 }
 
-export const TableRowComponent = ({deleteColumn, editColumn, col} : TableRowProps) => {
+export const TableRowComponent = ({crudColumn, col} : TableRowProps) => {
     const classes = useStyles();
 
     return (
@@ -22,12 +21,12 @@ export const TableRowComponent = ({deleteColumn, editColumn, col} : TableRowProp
             <TableCell>
                 <IconButton 
                     style={{marginRight:'5x'}}
-                    onClick={() => deleteColumn(col.id)}
+                    onClick={() => crudColumn(Types[Types.DELETECOLUMN], col.id)}
                 >
                      <DeleteIcon />
                 </IconButton>
                 <IconButton 
-                    onClick={() => editColumn(col.id)}
+                    onClick={() => crudColumn(Types[Types.EDITCOLUMN], col.id)}
                 >
                     <EditIcon />
                 </IconButton>

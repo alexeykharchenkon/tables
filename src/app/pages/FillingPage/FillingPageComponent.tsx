@@ -41,6 +41,7 @@ export const FillingPageComponent = observer(() => {
                             columns={tableStore.columns}
                             cells={tableStore.cells}
                             rows={tableStore.rows}
+                            activeCells={fillingStore.activeCells}
                             crudRow = {fillingStore.crudRow}
                             onValueChange={fillingStore.onValueChange}
                             addDeleteTable={fillingStore.addDeleteTable}

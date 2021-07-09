@@ -9,13 +9,13 @@ import { Types } from '@common/models/Types';
 import { Column } from '@common/models/Column';
 
 interface AddEditColumnsProps {
-    addOrEditColumn: any;
+    crudColumn: any;
     OnValueChange: any;
     addMode: boolean;
     activeColumn: Column;
 }
 
-export const AddEditColumns  = ({ addOrEditColumn, OnValueChange, 
+export const AddEditColumns  = ({ crudColumn, OnValueChange, 
     addMode, activeColumn} : AddEditColumnsProps) => {
     const classes = useStyles();
     return (
@@ -42,9 +42,9 @@ export const AddEditColumns  = ({ addOrEditColumn, OnValueChange,
                         <option value={DataType[DataType.Checkbox]}>Checkbox</option>
                     </Select>
                 </FormControl>
-                <IconButton onClick={() => addOrEditColumn()}>
-                    {!addMode && <SaveIcon />}
-                    {addMode && <AddCircleOutlineIcon />}
+                <IconButton onClick={() => crudColumn(addMode ? Types[Types.SAVECOLUMN] : Types[Types.ADDCOLUMN], "")}>
+                    {addMode && <SaveIcon />}
+                    {!addMode && <AddCircleOutlineIcon />}
                 </IconButton>
             </Container>
     );

@@ -18,7 +18,7 @@ export const CreationPageComponent = observer(() => {
             <CreateTableComponent
                 tableTitleValue ={creatingStore.tableTitleValue}
                 OnValueChange={creatingStore.OnValueChange}
-                createTable={creatingStore.createTable}
+                addDeleteTable={creatingStore.addDeleteTable}
             />
              <ChooseTableComponent 
                 tableSchemas={tableStore.tableSchemas}
@@ -32,13 +32,9 @@ export const CreationPageComponent = observer(() => {
                                 key={table.id}
                                 columns={tableStore.columns}  
                                 table = {table} 
-                                addColumn = {creatingStore.addColumn}
-                                deleteColumn = {creatingStore.deleteColumn}
-                                editColumn = {creatingStore.editColumn}
-                                saveEditedColumn = {creatingStore.saveEditedColumn}
-                                deleteTable = {creatingStore.deleteTable}
-                                addSelectField = {creatingStore.addSelectField}
-                                deleteSelectField={creatingStore.deleteSelectField}
+                                crudColumn = {creatingStore.crudColumn}
+                                addDeleteTable = {creatingStore.addDeleteTable}
+                                addDeleteSelectField = {creatingStore.addDeleteSelectField}
                                 OnValueChange ={creatingStore.OnValueChange} 
                                 activeColumn={creatingStore.activeColumn} 
                                 modes={creatingStore.modes} 

@@ -15,22 +15,22 @@ interface TableBodyProps {
     crudRow: any;
     onValueChange: any;
     cells: Cell[];
+    activeCells: Cell[];
     rows: Row[];
     formatCell: any;
     addEditRowMode: boolean;
 }
 
 export const TableBodyComponent = ({table, cells, rows, crudRow, onValueChange, 
-   formatCell, addEditRowMode}: TableBodyProps) => {
+   formatCell, addEditRowMode, activeCells}: TableBodyProps) => {
     return (
             <TableBody>
                 {addEditRowMode && 
                 <AddEditRowComponent 
-                    table={table} 
                     crudRow={crudRow} 
                     onValueChange={onValueChange}
-                    cells = {cells}
                     formatCell={formatCell}
+                    activeCells={activeCells}
                 />}  
                 {rows?.map(row => (
                     row.tableId === table.id &&
@@ -42,8 +42,6 @@ export const TableBodyComponent = ({table, cells, rows, crudRow, onValueChange,
                                         cell={cell}
                                         formatCell={formatCell}
                                         onValueChange={onValueChange}
-                                        tableId={table.id}
-                                        rowId={row.id}
                                     />
                                 </TableCell>
                          ))}
