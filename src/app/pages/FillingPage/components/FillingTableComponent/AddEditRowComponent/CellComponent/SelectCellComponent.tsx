@@ -12,6 +12,7 @@ interface SelectCellProps {
 }
 
 export const SelectCellComponent = ({cell, onValueChange, formatCell}: SelectCellProps) => {
+    var selVal = cell?.value?.split('/');
     return (
         <>
                    {cell.type === DataType[DataType.Select]&&
@@ -24,7 +25,7 @@ export const SelectCellComponent = ({cell, onValueChange, formatCell}: SelectCel
                                 native
                                 multiple
                                 style={{minWidth:'100px'}}
-                                value={cell.value}
+                                value={selVal}
                                 onChange={e => onValueChange(e,cell.id,Types[Types.SELECTCHANGE])}
                             >
                                 {cell.selectOptions.split('/').map((s, index) => (
@@ -46,7 +47,7 @@ export const SelectCellComponent = ({cell, onValueChange, formatCell}: SelectCel
                             <Select
                                 native
                                 style={{minWidth:'100px'}}
-                                value={cell?.value[0]}
+                                value={cell?.value}
                                 label={"Hello"}
                                 onChange={e => onValueChange(e,cell.id, Types[Types.SELECTCHANGE])}
                             >

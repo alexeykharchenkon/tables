@@ -4,7 +4,7 @@ import { useStyles } from "@pages/CreationPage/common/styles/styles";
 import { List, ListItem} from '@material-ui/core';
 import { TableSchema } from '@common/models/TableSchema';
 import { TableBodyComponent } from './TableBodyComponent';
-import { Column } from '@app/common/models/Column';
+import { Column } from '@common/models/Column';
 
 interface ChooseTableProps {
     tableSchemas: TableSchema[];

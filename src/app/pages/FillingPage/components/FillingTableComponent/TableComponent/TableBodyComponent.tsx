@@ -8,6 +8,7 @@ import { DataTable } from '@common/models/DataTable';
 import { Cell } from '@common/models/Cell';
 import { Row } from '@common/models/Row';
 import { Types } from '@common/models/Types';
+import { Column } from '@common/models/Column';
 
 
 interface TableBodyProps {
@@ -19,9 +20,10 @@ interface TableBodyProps {
     rows: Row[];
     formatCell: any;
     addEditRowMode: boolean;
+    columns: Column[];
 }
 
-export const TableBodyComponent = ({table, cells, rows, crudRow, onValueChange, 
+export const TableBodyComponent = ({table, cells, rows, columns, crudRow, onValueChange, 
    formatCell, addEditRowMode, activeCells}: TableBodyProps) => {
     return (
             <TableBody>
@@ -31,20 +33,22 @@ export const TableBodyComponent = ({table, cells, rows, crudRow, onValueChange,
                     onValueChange={onValueChange}
                     formatCell={formatCell}
                     activeCells={activeCells}
+                    columns={columns}
                 />}  
                 {rows?.map(row => (
                     row.tableId === table.id &&
                      <TableRow key={row.id}>
-                         {cells?.map(cell => (
-                             cell.rowId === row.id &&
-                                <TableCell key={cell.id}>  
-                                    <CellComponent 
-                                        cell={cell}
-                                        formatCell={formatCell}
-                                        onValueChange={onValueChange}
-                                    />
-                                </TableCell>
-                         ))}
+                         {columns?.map(col => (
+                             cells?.map(cell => (
+                                cell.rowId === row.id && cell.colId === col.id &&
+                                    <TableCell key={cell.id}>  
+                                        <CellComponent 
+                                            cell={cell}
+                                            formatCell={formatCell}
+                                            onValueChange={onValueChange}
+                                        />
+                                    </TableCell>
+                         ))))}
                          <TableCell>
                             <IconButton onClick={() => crudRow(row.id, Types[Types.EDITROW])}>
                                 <EditIcon />

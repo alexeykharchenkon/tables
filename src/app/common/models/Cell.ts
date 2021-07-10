@@ -1,6 +1,7 @@
 export interface Cell {
     id: string;
     rowId: string;
+    colId: string;
     tableId: string;
     type: string;
     value: any;

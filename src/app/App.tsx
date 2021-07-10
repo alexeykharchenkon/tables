@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Container from '@material-ui/core/Container';
-import { CreationPageComponent } from '@pages/CreationPage/CreationPageComponent';
-import { FillingPageComponent } from '@pages/FillingPage/FillingPageComponent';
+import { CreationPageComponent } from '@pages/CreationPage/components/CreationPageComponent';
+import { FillingPageComponent } from '@pages/FillingPage/components/FillingPageComponent';
 import { NavBar } from '@common/components/NavBar';
 
 

@@ -52,6 +52,7 @@ export const DBConfig = {
         storeSchema: [
           { name: 'id', keypath: 'id', options: { unique: true } },
           { name: 'rowId', keypath: 'rowId', options: { unique: false } },
+          { name: 'colId', keypath: 'colId', options: { unique: false } },
           { name: 'tableId', keypath: 'tableId', options: { unique: false } },
           { name: 'type', keypath: 'type', options: { unique: false } },
           { name: 'value', keypath: 'value', options: { unique: false } },

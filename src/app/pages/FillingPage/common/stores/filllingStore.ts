@@ -62,7 +62,7 @@ export class FillingStore {
                 this.addEditRowMode = true;
                 break;
             case Types[Types.EDITROW]:
-                fillingStoreService.SetActiveCells(this.activeCells, this.tableStore.cells, rowId);
+                fillingStoreService.SetActiveCellsForRowEdit(this.activeCells, this.tableStore.cells, rowId);
                 this.activeRowId = rowId;
                 this.addEditRowMode = true;
                 this.isNewRow = false;
@@ -83,10 +83,10 @@ export class FillingStore {
                         this.activeRowId = "";
                         this.addEditRowMode = false;
                     }else{
-                        this.activeCells.forEach(cel => dbService.UpdateCell(cel));
                         this.tableStore.cells.forEach(cel => {
-                            cel.value = this.activeCells?.find(acel => acel.id === cel.id)?.value as Cell;
-                        });
+                            this.activeCells.forEach(aCel => {
+                                if(cel.id===aCel.id) cel.value = aCel.value;});});
+                        this.activeCells.forEach(cel => dbService.UpdateCell(cel));
                         this.addEditRowMode = false;
                         this.activeRowId = "";
                     }
@@ -122,15 +122,14 @@ export class FillingStore {
                 const { options } = e.target as HTMLSelectElement;
                 const val: string[] = [];
                 for (let i = 0, l = options.length; i < l; i += 1) 
-                    if (options[i].selected) val.push(options[i].value);    
-                
+                    if (options[i].selected) val.push(options[i].value);
                 this.activeCells.filter(c => c.id === cellId)
-                .forEach(cel=> cel.value = val);
+                .forEach(cel=> cel.value = val.join('/'));
                 this.activeCells = this.activeCells.filter(c => c.id !== "");
                break;
             case Types[Types.CELLCHANGE]:
                 this.activeCells.filter(c => c.id === cellId)
-                .forEach(cel=> cel.value = e.target.value);
+                .forEach(cel=> cel.value = formatService.checkForbidSymbols(e.target.value, cel.forbiddenSymbols));
                 this.activeCells = this.activeCells.filter(c => c.id !== "");
                break;
         } 
@@ -143,7 +142,7 @@ export class FillingStore {
                 result = formatService.formatDate(cell.value, cell.dateFormat);
                 break;
             case Types[Types.FORMATSELECT]:
-                result = cell.value.toString();
+                result = cell.value;
                 break;
             case Types[Types.HELPERTEXT]:
                 result = formatService.formatHelperText(cell);

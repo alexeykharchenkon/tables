@@ -43,6 +43,7 @@ export const TableComponent = React.memo(({table, crudRow, onValueChange,
                 formatCell={formatCell}
                 addEditRowMode={addEditRowMode}
                 activeCells={activeCells}
+                columns={columns}
             />
         </Table>
       );

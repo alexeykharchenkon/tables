@@ -70,6 +70,7 @@ export class CreatingStore {
                     this.activeColumn.schemaId = this.activeTableId;
                     dbService.AddColumn(this.activeColumn);
                     this.tableStore.columns.push(this.activeColumn);
+                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATAADDCOLUMN]);
                     creatingStoreService.makeModesFalse(this.modes);
                     this.setActiveColumnToDefault();
                 }
@@ -77,6 +78,7 @@ export class CreatingStore {
             case Types[Types.DELETECOLUMN]:
                 dbService.DeleteColumnById(id);
                 this.tableStore.columns = this.tableStore.columns.filter(col => col.id !== id);        
+                this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATADELETECOLUMN]);
             break;
             case Types[Types.EDITCOLUMN]:
                 this.modes.editMode = true;
@@ -85,6 +87,7 @@ export class CreatingStore {
             break;
             case Types[Types.SAVECOLUMN]:
                     this.modes.editMode = false;
+                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATAUPDATECOLUMN]);
                     dbService.UpdateColumn(this.activeColumn);
                     creatingStoreService.updateColumns(this.tableStore.columns, this.activeColumn);
                     creatingStoreService.makeModesFalse(this.modes);

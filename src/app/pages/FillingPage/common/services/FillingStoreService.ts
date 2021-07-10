@@ -11,9 +11,6 @@ class FillingStoreService {
         .forEach(col=> {
             var val;
             switch(col.type) {
-                case DataType[DataType.Select]:
-                    val = [""];
-                    break;
                 case DataType[DataType.DatePicker]:
                     val = new Date();
                     break;
@@ -21,8 +18,9 @@ class FillingStoreService {
                     val = "";
             } 
             activeCells.push({
-                id:Guid.create().toString(),
+                id: Guid.create().toString(),
                 rowId: rowId,
+                colId: col.id,
                 tableId: tableId,
                 type: col.type,
                 value: val,
@@ -40,7 +38,7 @@ class FillingStoreService {
         });
     }
 
-    SetActiveCells(activeCells: Cell[], cells: Cell[], rowId: string) {
+    SetActiveCellsForRowEdit(activeCells: Cell[], cells: Cell[], rowId: string) {
         activeCells.splice(0);
         cells.filter(cel => cel.rowId === rowId)
         .forEach(cel => {activeCells.push({...cel});});
