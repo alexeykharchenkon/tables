@@ -68,17 +68,13 @@ export class CreatingStore {
                 if(this.activeColumn.type !== "" && this.activeColumn.label !== ""){
                     this.activeColumn.id = Guid.create().toString();
                     this.activeColumn.schemaId = this.activeTableId;
-                    dbService.AddColumn(this.activeColumn);
-                    this.tableStore.columns.push(this.activeColumn);
-                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATAADDCOLUMN]);
+                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, id, Types[Types.UPDATEDATAADDCOLUMN]);
                     creatingStoreService.makeModesFalse(this.modes);
                     this.setActiveColumnToDefault();
                 }
                 break;
-            case Types[Types.DELETECOLUMN]:
-                dbService.DeleteColumnById(id);
-                this.tableStore.columns = this.tableStore.columns.filter(col => col.id !== id);        
-                this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATADELETECOLUMN]);
+            case Types[Types.DELETECOLUMN]:        
+                this.tableStore.UpdateData(this.activeTableId, this.activeColumn, id, Types[Types.UPDATEDATADELETECOLUMN]);
             break;
             case Types[Types.EDITCOLUMN]:
                 this.modes.editMode = true;
@@ -87,8 +83,7 @@ export class CreatingStore {
             break;
             case Types[Types.SAVECOLUMN]:
                     this.modes.editMode = false;
-                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, Types[Types.UPDATEDATAUPDATECOLUMN]);
-                    dbService.UpdateColumn(this.activeColumn);
+                    this.tableStore.UpdateData(this.activeTableId, this.activeColumn, id, Types[Types.UPDATEDATAUPDATECOLUMN]);
                     creatingStoreService.updateColumns(this.tableStore.columns, this.activeColumn);
                     creatingStoreService.makeModesFalse(this.modes);
                     this.setActiveColumnToDefault();

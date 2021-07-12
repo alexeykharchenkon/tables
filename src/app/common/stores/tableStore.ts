@@ -27,9 +27,11 @@ export class TableStore {
         dbService.LoadCells(this.cells);
     }
 
-    UpdateData = (schemaId: string, col: Column, type: string) => {
+    UpdateData = (schemaId: string, col: Column, id: string, type: string) => {
         switch(type){
             case Types[Types.UPDATEDATAADDCOLUMN]:
+                dbService.AddColumn(col);
+                this.columns.push(col);
                 this.dataTables.filter(table => table.schemaId === schemaId)
                 .forEach(table => {
                     this.rows.filter(row => row.tableId === table.id)
@@ -58,6 +60,8 @@ export class TableStore {
                     });    
                 break;
             case Types[Types.UPDATEDATADELETECOLUMN]:
+                dbService.DeleteColumnById(id);
+                this.columns = this.columns.filter(col => col.id !== id);
                 this.cells.forEach(cel=> {cel.id === col.id && dbService.DeleteCellById(cel.id)});
                 this.cells = this.cells.filter(cel => cel.id !== col.id);
                 break;
@@ -78,7 +82,29 @@ export class TableStore {
 
                     dbService.UpdateCell(cel);
                 });
+                dbService.UpdateColumn(col);
                 break;    
         }
+    }
+
+    AddRow = (activeRowId: string, activeTableId: string, activeCells: Cell[]) => {
+        this.rows.push({id: activeRowId, tableId: activeTableId});
+        this.cells.push(...activeCells);
+        dbService.AddRow({id: activeRowId, tableId: activeTableId});
+        activeCells.forEach(cel => dbService.AddCell(cel));
+    }
+
+    UpdateRow = (activeCells: Cell[]) => {
+        this.cells.forEach(cel => {
+            activeCells.forEach(aCel => {
+                if(cel.id===aCel.id) cel.value = aCel.value;});});
+        activeCells.forEach(cel => dbService.UpdateCell(cel));
+    }
+
+    DeleteRow = (rowId: string) => {
+        dbService.DeleteRowById(rowId);
+        this.cells.forEach(cel => {cel.rowId === rowId && dbService.DeleteCellById(cel.id)});
+        this.rows = this.rows.filter(row => row.id !== rowId);
+        this.cells = this.cells.filter(cell => cell.rowId !== rowId);
     }
 }

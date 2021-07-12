@@ -13,7 +13,7 @@ class ValidateService  {
                         isValid = false;
                         cell.error = "Required";
                     }
-                    if(cell.maxItemsSelected !== "" && cell.multySelectMode && +cell.maxItemsSelected < cell.value.length){
+                    if(cell.maxItemsSelected !== "" && cell.multySelectMode && +cell.maxItemsSelected < cell.value.split('/').length){
                         isValid = false;
                         cell.error = cell.error + "Max Items to Select " + cell.maxItemsSelected;
                     }

@@ -4,81 +4,120 @@ import { Row } from '@common/models/Row';
 import { Column } from '@common/models/Column';
 import { TableSchema } from '@common/models/TableSchema';
 import { DataTable } from '@common/models/DataTable';
+import { action, runInAction} from "mobx"
+import { configure } from "mobx"
+
+configure({
+    enforceActions: "never",
+})
 
 export const dbService = {
-    LoadSchemas: (tableSchemas: TableSchema [] ) => {
+    LoadSchemas: action((tableSchemas: TableSchema [] ) => {
         const { getAll } = useIndexedDB('tableShemas');
-        getAll().then(data => {tableSchemas.push(...data);});
-    },
-    LoadColumns: (columns : Column []) => {
-        const { getAll } = useIndexedDB('columns');
-        getAll().then(data => {columns.push(...data);});
-    },
-    LoadDataTables: (tables : DataTable []) => {
-        const { getAll } = useIndexedDB('tables');
-        getAll().then(data => {
-            tables.splice(0);
-            tables.push(...data);
+        runInAction(() => {
+            getAll().then(data => {tableSchemas.push(...data);});
         });
-    },
-    LoadCells: (cells : Cell []) => {
+    }),
+    LoadColumns: action((columns : Column []) => {
+        const { getAll } = useIndexedDB('columns');
+        runInAction(() => {
+            getAll().then(data => {columns.push(...data);});
+        });
+    }),
+    LoadDataTables: action((tables : DataTable []) => {
+        const { getAll } = useIndexedDB('tables');
+        runInAction(() => {
+            getAll().then(data => {tables.push(...data);});
+        });
+    }),
+    LoadCells: action((cells : Cell []) => {
         const { getAll } = useIndexedDB('cells');
-        getAll().then(data => {cells.push(...data);});
-    },
-    LoadRows: (rows : Row []) => {
+        runInAction(() => {
+            getAll().then(data => {cells.push(...data);});
+        });
+    }),
+    LoadRows: action((rows : Row []) => {
         const { getAll } = useIndexedDB('rows');
-        getAll().then(data => {rows.push(...data);});
-    },
-    CreateTableSchema: (id: string, title: string) => {
+        runInAction(() => {
+            getAll().then(data => {rows.push(...data);});
+        });
+    }),
+    CreateTableSchema: action((id: string, title: string) => {
         const { add } = useIndexedDB('tableShemas');
-        add({id: id, title: title});
-    },
-    DeleteTableSchema: (id: string) => {
+        runInAction(() => {
+            add({id: id, title: title});
+        });
+    }),
+    DeleteTableSchema: action((id: string) => {
         const { deleteRecord } = useIndexedDB('tableShemas');
-        deleteRecord(id).then(event => {});
-    },
-    DeleteColumnById: (id: string) => {
+        runInAction(() => {
+            deleteRecord(id).then(event => {});
+        });
+    }),
+    DeleteColumnById: action((id: string) => {
         const { deleteRecord } = useIndexedDB('columns');
-        deleteRecord(id).then(event => {});
-    },
+        runInAction(() => {
+            deleteRecord(id).then(event => {});
+        });
+    }),
     AddColumn: (column: Column) => {
         const { add } = useIndexedDB('columns');
+        runInAction(() => {
             add({...column}).then();
+        });
     },
-    UpdateColumn: (column: Column) => {
+    UpdateColumn: action((column: Column) => {
         const { update } = useIndexedDB('columns');
+        runInAction(() => {
             update({...column}).then();
-    },
-    CreateDataTable: (id: string, title: string, schemaId: string) => {
+        });
+    }),
+    CreateDataTable: action((id: string, title: string, schemaId: string) => {
         const { add } = useIndexedDB('tables');
-        add({id: id, title: title, schemaId: schemaId});
-    },
-    DeleteDataTable: (id: string) => {
+        runInAction(() => {
+            add({id: id, title: title, schemaId: schemaId});
+        });
+    }),
+    DeleteDataTable: action((id: string) => {
         const { deleteRecord } = useIndexedDB('tables');
-        deleteRecord(id).then(event => {});
-    },
-    DeleteRowById: (id: string) => {
+        runInAction(() => {
+            deleteRecord(id).then(event => {});
+        });
+    }),
+    DeleteRowById: action((id: string) => {
         const { deleteRecord } = useIndexedDB('rows');
-        deleteRecord(id).then(event => {});
-    },
-    AddRow: (row: Row) => {
+        runInAction(() => {
+            deleteRecord(id).then(event => {});
+        });
+    }),
+    AddRow: action((row: Row) => {
         const { add } = useIndexedDB('rows');
+        runInAction(() => {
             add({...row}).then();
-    },
-    UpdateRow: (row: Row) => {
+        });
+    }),
+    UpdateRow: action((row: Row) => {
         const { update } = useIndexedDB('rows');
+        runInAction(() => {
             update({...row}).then();
-    },
-    AddCell: (cell: Cell) => {
+        });
+    }),
+    AddCell: action((cell: Cell) => {
         const { add } = useIndexedDB('cells');
+        runInAction(() => {
             add({...cell}).then();
-    },
-    DeleteCellById: (id: string) => {
+        });
+    }),
+    DeleteCellById: action((id: string) => {
         const { deleteRecord } = useIndexedDB('cells');
-        deleteRecord(id).then(event => {});
-    },
-    UpdateCell: (cell: Cell) => {
+        runInAction(() => {
+            deleteRecord(id).then(event => {});
+        });
+    }),
+    UpdateCell: action((cell: Cell) => {
         const { update } = useIndexedDB('cells');
+        runInAction(() => {
             update({...cell}).then();
-    },
+        });
+    }),
 }

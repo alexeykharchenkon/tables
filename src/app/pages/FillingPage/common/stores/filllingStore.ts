@@ -68,25 +68,16 @@ export class FillingStore {
                 this.isNewRow = false;
                 break;
             case Types[Types.DELETEROW]:
-                dbService.DeleteRowById(rowId);
-                this.tableStore.cells.forEach(cel => {cel.rowId === rowId && dbService.DeleteCellById(cel.id)});
-                this.tableStore.rows = this.tableStore.rows.filter(row => row.id !== rowId);
-                this.tableStore.cells = this.tableStore.cells.filter(cell => cell.rowId !== rowId);
+                this.tableStore.DeleteRow(rowId);
                 break;
             case Types[Types.SAVEROW]:
                 if(validateService.validate(this.activeCells)){
                     if(this.isNewRow){
-                        this.tableStore.rows.push({id: this.activeRowId, tableId: this.activeTableId});
-                        this.tableStore.cells.push(...this.activeCells);
-                        dbService.AddRow({id: this.activeRowId, tableId: this.activeTableId});
-                        this.activeCells.forEach(cel => dbService.AddCell(cel));
+                        this.tableStore.AddRow(this.activeRowId,this.activeTableId,this.activeCells);
                         this.activeRowId = "";
                         this.addEditRowMode = false;
                     }else{
-                        this.tableStore.cells.forEach(cel => {
-                            this.activeCells.forEach(aCel => {
-                                if(cel.id===aCel.id) cel.value = aCel.value;});});
-                        this.activeCells.forEach(cel => dbService.UpdateCell(cel));
+                        this.tableStore.UpdateRow(this.activeCells);
                         this.addEditRowMode = false;
                         this.activeRowId = "";
                     }
