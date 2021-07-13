@@ -14,36 +14,23 @@ interface CellProps {
 }
 
 export const CellComponent = ({cell, onValueChange, formatCell}: CellProps) => {    
-        return (
+   const props = {
+    cell: cell,
+    formatCell: formatCell,
+    onValueChange: onValueChange,
+   }  
+    return (
             <>
                 {cell.type === DataType[DataType.Text] &&
-                   <TextComponent
-                        cell={cell}
-                        formatCell={formatCell}
-                        onValueChange={onValueChange}
-                   />}
+                   <TextComponent {...props} />}
                 {cell.type === DataType[DataType.Number] &&
-                    <NumberComponent
-                        cell= {cell}
-                        formatCell={formatCell}
-                        onValueChange={onValueChange}
-                    />}
+                    <NumberComponent {...props} />}
                 {cell.type === DataType[DataType.Checkbox] &&
-                     <Checkbox
-                        checked={true}
-                    />}
+                     <Checkbox checked={true} />}
                 {cell.type === DataType[DataType.Select] &&
-                <SelectCellComponent 
-                    cell= {cell}
-                    formatCell={formatCell}
-                    onValueChange={onValueChange}
-                />}
+                    <SelectCellComponent {...props} />}
                 {cell.type === DataType[DataType.DatePicker] &&
-                    <DateComponent 
-                        cell= {cell}
-                        formatCell={formatCell}
-                        onValueChange={onValueChange}
-                />}
+                    <DateComponent {...props} />}
            </>
       );
 }

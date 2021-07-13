@@ -18,7 +18,6 @@ export const TextComponent = ({cell, onValueChange, formatCell}: TextProps) => {
                 </Typography>
                 <TextField 
                     label = 'Enter Data'
-                   
                     value={cell.value}
                     onChange={e => onValueChange(e, cell.id, Types[Types.CELLCHANGE])}
                     helperText={formatCell(cell, Types[Types.HELPERTEXT])}
