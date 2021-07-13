@@ -1,6 +1,5 @@
 import { DataType } from "@common/models/DataType";
 import { Modes } from "@common/models/Modes";
-import { Column } from "@common/models/Column";
 
 class CreatingStoreService {
     switchSelectMode (modes: Modes, value: string) {

@@ -94,8 +94,8 @@ export class TableStore {
                     coll.forbiddenSymbols = col.forbiddenSymbols;
                     coll.multySelectMode =  col.multySelectMode;
                     coll.dateFormat = col.dateFormat;
-                    coll.isRequired =  col.isRequired;
-                    coll.maxLength =   col.maxLength;
+                    coll.isRequired = col.isRequired;
+                    coll.maxLength = col.maxLength;
                     coll.maxItemsSelected = col.maxItemsSelected;
                     coll.minValue = col.minValue;
                     coll.maxValue = col.maxValue;
