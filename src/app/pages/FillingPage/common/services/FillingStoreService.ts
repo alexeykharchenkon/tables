@@ -36,8 +36,6 @@ class FillingStoreService {
                 error: "",
             });
         });
-
-        console.log(activeCells)
     }
 
     SetActiveCellsForRowEdit(activeCells: Cell[], cells: Cell[], rowId: string) {

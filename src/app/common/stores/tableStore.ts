@@ -37,13 +37,21 @@ export class TableStore {
                 .forEach(table => {
                     this.rows.filter(row => row.tableId === table.id)
                     .forEach(row => {
-                            const cell = {
+                        var val;
+                        switch(col.type) {
+                            case DataType[DataType.DatePicker]:
+                                val = new Date();
+                                break;
+                            default:
+                                val = "";
+                        } 
+                        const cell = {
                                 id: Guid.create().toString(),
                                 rowId: row.id,
                                 colId: col.id,
                                 tableId: table.id,
                                 type: col.type,
-                                value: "",
+                                value: val,
                                 selectOptions: col.selectOptions,
                                 forbiddenSymbols: col.forbiddenSymbols,
                                 multySelectMode: col.multySelectMode,
@@ -116,8 +124,7 @@ export class TableStore {
 
     AddSchema = (id: string, title: string) => {
         this.tableSchemas.push({id: id, title: title});
-        dbService.CreateTableSchema(id, title);
-                
+        dbService.CreateTableSchema(id, title);           
     }
 
     DeleteSchema = (id: string) => {

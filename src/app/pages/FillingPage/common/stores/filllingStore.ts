@@ -76,7 +76,7 @@ export class FillingStore {
                         this.activeRowId = "";
                     }
                 }
-                this.activeCells = this.activeCells.filter(c => c.id !== "");
+                this.activeCells = [...this.activeCells];
                 break;
             case Types[Types.CANCELADDROW]:
                 this.addEditRowMode = false;
@@ -90,7 +90,7 @@ export class FillingStore {
             case Types[Types.DATECHANGE]:
                 this.activeCells.filter(c => c.id === cellId)
                 .forEach(cel=> cel.value = e);
-                this.activeCells = this.activeCells.filter(c => c.id !== "");
+                this.activeCells = [...this.activeCells];
                break;
             case Types[Types.CHECKBOXCHANGE]:
                 this.tableStore.cells.filter(c => c.id === cellId)
@@ -98,7 +98,7 @@ export class FillingStore {
                     cel.value = e.target.checked ? "true" : "false";
                     dbService.UpdateCell(cel);
                 });
-                this.tableStore.cells = this.tableStore.cells.filter(c => c.id !== "");  
+                this.activeCells = [...this.activeCells];
                break;
            case Types[Types.TITLECHANGE]:
                this.titleValue = e.target.value;
@@ -110,13 +110,13 @@ export class FillingStore {
                     if (options[i].selected) val.push(options[i].value);
                 this.activeCells.filter(c => c.id === cellId)
                 .forEach(cel=> cel.value = val.join('/'));
-                this.activeCells = this.activeCells.filter(c => c.id !== "");
+                this.activeCells = [...this.activeCells];
                break;
             case Types[Types.CELLCHANGE]:
                 this.activeCells.filter(c => c.id === cellId)
                 .forEach(cel=> cel.value = formatService.checkForbidSymbols(e.target.value, cel.forbiddenSymbols));
-                this.activeCells = this.activeCells.filter(c => c.id !== "");
-               break;
+                this.activeCells = [...this.activeCells];
+                break;
         } 
     }
 
