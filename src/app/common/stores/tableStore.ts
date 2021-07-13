@@ -83,6 +83,23 @@ export class TableStore {
                     dbService.UpdateCell(cel);
                 });
                 dbService.UpdateColumn(col);
+
+                this.columns.filter(coll => coll.id === col.id)
+                .forEach(coll => {
+                    coll.id = col.id;
+                    coll.schemaId = col.schemaId;
+                    coll.type = col.type;
+                    coll.label =  col.label;
+                    coll.selectOptions =  col.selectOptions;
+                    coll.forbiddenSymbols = col.forbiddenSymbols;
+                    coll.multySelectMode =  col.multySelectMode;
+                    coll.dateFormat = col.dateFormat;
+                    coll.isRequired =  col.isRequired;
+                    coll.maxLength =   col.maxLength;
+                    coll.maxItemsSelected = col.maxItemsSelected;
+                    coll.minValue = col.minValue;
+                    coll.maxValue = col.maxValue;
+                });
                 break;    
         }
     }

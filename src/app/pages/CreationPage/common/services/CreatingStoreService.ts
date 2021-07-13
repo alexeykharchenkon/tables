@@ -35,25 +35,6 @@ class CreatingStoreService {
         modes.textMode = false;
         modes.numberMode = false;
     }
-    updateColumns(columns: Column[], column: Column) {
-        columns.filter(col => col.id === column.id)
-        .forEach(col => {
-            col.id = column.id;
-            col.schemaId = column.schemaId;
-            col.type = column.type;
-            col.label =  column.label;
-            col.selectOptions =  column.selectOptions;
-            col.forbiddenSymbols = column.forbiddenSymbols;
-            col.multySelectMode =  column.multySelectMode;
-            col.dateFormat = column.dateFormat;
-            col.isRequired =  column.isRequired;
-            col.maxLength =   column.maxLength;
-            col.maxItemsSelected = column.maxItemsSelected;
-            col.minValue = column.minValue;
-            col.maxValue = column.maxValue;
-        });
-       
-    }
 }
 
 export const creatingStoreService = new CreatingStoreService();

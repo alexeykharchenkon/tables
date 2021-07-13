@@ -84,7 +84,6 @@ export class CreatingStore {
             case Types[Types.SAVECOLUMN]:
                     this.modes.editMode = false;
                     this.tableStore.UpdateData(this.activeTableId, this.activeColumn, id, Types[Types.UPDATEDATAUPDATECOLUMN]);
-                    creatingStoreService.updateColumns(this.tableStore.columns, this.activeColumn);
                     creatingStoreService.makeModesFalse(this.modes);
                     this.setActiveColumnToDefault();
                     this.tableStore.columns = this.tableStore.columns.filter(col => col.id !== "");
