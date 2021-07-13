@@ -7,6 +7,7 @@ import { Cell} from "@common/models/Cell";
 import { Row } from "@common/models/Row";
 import { Guid } from "guid-typescript";
 import { Types } from "@common/models/Types";
+import { DataType } from "@common/models/DataType";
 
 export class TableStore {
     tableSchemas: TableSchema[] = [];
@@ -69,6 +70,7 @@ export class TableStore {
                 this.cells.filter(cel=> cel.colId === col.id)
                 .forEach(cel => {
                     cel.value = cel.type === col.type ? cel.value : "";
+                    if(col.type === DataType[DataType.DatePicker]) cel.value = new Date();
                     cel.type = col.type;
                     cel.selectOptions= col.selectOptions;
                     cel.forbiddenSymbols= col.forbiddenSymbols;
@@ -84,7 +86,7 @@ export class TableStore {
                 });
                 dbService.UpdateColumn(col);
 
-                this.columns = this.columns.map(coll=>{
+                this.columns = this.columns?.map(coll=>{
                     if(coll.id === col.id) {return {...col};
                     }else{return {...coll}}});
                 break;    

@@ -135,7 +135,7 @@ export class CreatingStore {
             selectOptions: "",
             forbiddenSymbols: "",
             multySelectMode: "Single",
-            dateFormat: "",
+            dateFormat: "dd/MM/yyyy",
             isRequired: "false",
             maxLength: "",
             maxItemsSelected: "",
