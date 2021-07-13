@@ -37,17 +37,11 @@ export class FillingStore {
         switch(action){
             case Types[Types.ADDTABLE]:
                 this.activeTableId = Guid.create().toString();
-                this.tableStore.dataTables.push({id: this.activeTableId, title: this.titleValue, schemaId: this.activeSchemaId});
-                dbService.CreateDataTable(this.activeTableId, this.titleValue, this.activeSchemaId);
+                this.tableStore.CreateTable(this.activeTableId, this.activeSchemaId,this.titleValue)
                 this.titleValue = "";
                 break;
             case Types[Types.DELETETABLE]:
-                this.tableStore.dataTables = this.tableStore.dataTables.filter(tab => tab.id !== this.activeTableId);
-                dbService.DeleteDataTable(this.activeTableId);
-                this.tableStore.cells.forEach(cel => {cel.tableId === this.activeTableId && dbService.DeleteCellById(cel.id)});
-                this.tableStore.rows.forEach(row => {row.tableId === this.activeTableId && dbService.DeleteRowById(row.id)});
-                this.tableStore.rows = this.tableStore.rows.filter(row => row.tableId !== this.activeTableId);
-                this.tableStore.cells = this.tableStore.cells.filter(cell => cell.tableId !== this.activeTableId);
+                this.tableStore.DeleteTable(this.activeTableId);
                 this.activeTableId= "";
                 break;
         }

@@ -50,13 +50,11 @@ export class CreatingStore {
         switch(type){
             case Types[Types.ADDTABLE]:
                 this.activeTableId = Guid.create().toString();
-                this.tableStore.tableSchemas.push({id: this.activeTableId, title: this.tableTitleValue});
-                dbService.CreateTableSchema(this.activeTableId, this.tableTitleValue);
+                this.tableStore.AddSchema(this.activeTableId, this.tableTitleValue);
                 this.tableTitleValue = "";
                 break;
             case Types[Types.DELETETABLE]:
-                this.tableStore.tableSchemas = this.tableStore.tableSchemas.filter(tab => tab.id !== this.activeTableId);
-                dbService.DeleteTableSchema(this.activeTableId);
+                this.tableStore.DeleteSchema(this.activeTableId);
                 this.activeTableId= "";
                 break;
         }

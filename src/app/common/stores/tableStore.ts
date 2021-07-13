@@ -124,4 +124,29 @@ export class TableStore {
         this.rows = this.rows.filter(row => row.id !== rowId);
         this.cells = this.cells.filter(cell => cell.rowId !== rowId);
     }
+
+    AddSchema = (id: string, title: string) => {
+        this.tableSchemas.push({id: id, title: title});
+        dbService.CreateTableSchema(id, title);
+                
+    }
+
+    DeleteSchema = (id: string) => {
+        this.tableSchemas = this.tableSchemas.filter(tab => tab.id !== id);
+        dbService.DeleteTableSchema(id);       
+    }
+
+    CreateTable =(id: string, schemaId: string, title: string) => {
+        this.dataTables.push({id: id, title: title, schemaId: schemaId});
+        dbService.CreateDataTable(id, title, schemaId);
+    }
+
+    DeleteTable = (id: string) => {
+        this.dataTables = this.dataTables.filter(tab => tab.id !== id);
+        dbService.DeleteDataTable(id);
+        this.cells.forEach(cel => {cel.tableId === id && dbService.DeleteCellById(cel.id)});
+        this.rows.forEach(row => {row.tableId === id && dbService.DeleteRowById(row.id)});
+        this.rows = this.rows.filter(row => row.tableId !== id);
+        this.cells = this.cells.filter(cell => cell.tableId !== id);
+    }
 }
