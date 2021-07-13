@@ -83,7 +83,6 @@ export class CreatingStore {
                     this.tableStore.UpdateData(this.activeTableId, this.activeColumn, id, Types[Types.UPDATEDATAUPDATECOLUMN]);
                     creatingStoreService.makeModesFalse(this.modes);
                     this.setActiveColumnToDefault();
-                    this.tableStore.columns = this.tableStore.columns.filter(col => col.id !== "");
             break;
         }
     }
